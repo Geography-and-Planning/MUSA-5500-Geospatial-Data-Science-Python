@@ -28,9 +28,13 @@ const schedule = [
       {label: "3.2 Intro to GeoPandas and vector data", href: `${base}labs/week-3-more-data-viz-geodata/week3-geospatial-data-concepts.html`}
     ]
   },
-
-  { w: 4, date: "9/18/25", topic: "Geospatial data mapping", 
-    lab: "Use GeoPandas and Leaflet to do analysis and create maps" },
+  { w: 4, date: "9/18/25", 
+    topic: "Geospatial data mapping", 
+    lab: [
+      {label: "4.1 More about geospatial data mapping", href: `${base}labs/week-4-geospatial-data-mapping/week-4A-spatial-data-viz.html`},
+      {label: "4.2 Interactive spatial data visualization", href: `${base}labs/week-4-geospatial-data-mapping/week-4B-interactive-spatial-data-viz.html`}
+    ]
+  },
   { w: 5, date: "9/25/25", topic: "Raster data operations in Python", 
     lab: "Rasterio, NumPy, Xarray to manipulate raster data" },
   { w: 6, date: "10/2/25", topic: "Advanced geospatial analysis", 
