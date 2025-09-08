@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Week-6A-Using Fiona to manipuate shapefiles and do spatial analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="SpatialAnalysis_Fiona_Shapely_files/libs/clipboard/clipboard.min.js"></script>
+<script src="SpatialAnalysis_Fiona_Shapely_files/libs/quarto-html/quarto.js"></script>
+<script src="SpatialAnalysis_Fiona_Shapely_files/libs/quarto-html/popper.min.js"></script>
+<script src="SpatialAnalysis_Fiona_Shapely_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="SpatialAnalysis_Fiona_Shapely_files/libs/quarto-html/anchor.min.js"></script>
+<link href="SpatialAnalysis_Fiona_Shapely_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="SpatialAnalysis_Fiona_Shapely_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="SpatialAnalysis_Fiona_Shapely_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="SpatialAnalysis_Fiona_Shapely_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="SpatialAnalysis_Fiona_Shapely_files/libs/bootstrap/bootstrap-81e35ebdb4125010edbabe6010586085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#topic-of-today" id="toc-topic-of-today" class="nav-link active" data-scroll-target="#topic-of-today"><span class="header-section-number">1</span> Topic of today</a>
+  <ul class="collapse">
+  <li><a href="#this-session-will-include-some-major-sections" id="toc-this-session-will-include-some-major-sections" class="nav-link" data-scroll-target="#this-session-will-include-some-major-sections"><span class="header-section-number">1.1</span> This session will include some major sections,</a></li>
+  <li><a href="#read-the-metadata-of-shapefiles-using-fiona" id="toc-read-the-metadata-of-shapefiles-using-fiona" class="nav-link" data-scroll-target="#read-the-metadata-of-shapefiles-using-fiona"><span class="header-section-number">1.2</span> 1. Read the metadata of shapefiles using fiona</a></li>
+  <li><a href="#create-a-buffer-of-the-shape" id="toc-create-a-buffer-of-the-shape" class="nav-link" data-scroll-target="#create-a-buffer-of-the-shape"><span class="header-section-number">1.3</span> create a buffer of the shape</a></li>
+  </ul></li>
+  <li><a href="#create-shapefile-based-on-the-longitude-and-latitude-information-in-the-csvfile." id="toc-create-shapefile-based-on-the-longitude-and-latitude-information-in-the-csvfile." class="nav-link" data-scroll-target="#create-shapefile-based-on-the-longitude-and-latitude-information-in-the-csvfile."><span class="header-section-number">2</span> 2. Create shapefile based on the longitude and latitude information in the csvfile.</a>
+  <ul class="collapse">
+  <li><a href="#let-first-read-the-csv-file-into-dataframe-using-pandas" id="toc-let-first-read-the-csv-file-into-dataframe-using-pandas" class="nav-link" data-scroll-target="#let-first-read-the-csv-file-into-dataframe-using-pandas"><span class="header-section-number">2.1</span> 2.1 Let first read the csv file into dataframe using pandas</a></li>
+  <li><a href="#change-the-projection-of-the-point-shapefile" id="toc-change-the-projection-of-the-point-shapefile" class="nav-link" data-scroll-target="#change-the-projection-of-the-point-shapefile"><span class="header-section-number">2.2</span> 2.2 Change the projection of the point shapefile</a></li>
+  <li><a href="#convert-the-shapefile-in-a-local-projection-of-massachusetts-unit-is-feet" id="toc-convert-the-shapefile-in-a-local-projection-of-massachusetts-unit-is-feet" class="nav-link" data-scroll-target="#convert-the-shapefile-in-a-local-projection-of-massachusetts-unit-is-feet"><span class="header-section-number">2.3</span> 2.3. Convert the shapefile in a local projection of Massachusetts, unit is feet</a></li>
+  <li><a href="#reproject-the-traffic-accident-shapefile" id="toc-reproject-the-traffic-accident-shapefile" class="nav-link" data-scroll-target="#reproject-the-traffic-accident-shapefile"><span class="header-section-number">2.4</span> Reproject the traffic accident shapefile</a></li>
+  <li><a href="#convert-the-car-crash-shapefile-projection-to-the-same-project-with-the-census-tract" id="toc-convert-the-car-crash-shapefile-projection-to-the-same-project-with-the-census-tract" class="nav-link" data-scroll-target="#convert-the-car-crash-shapefile-projection-to-the-same-project-with-the-census-tract"><span class="header-section-number">2.5</span> Convert the car crash shapefile projection to the same project with the census tract</a></li>
+  </ul></li>
+  <li><a href="#r-tree-for-overlay-of-two-shapefile" id="toc-r-tree-for-overlay-of-two-shapefile" class="nav-link" data-scroll-target="#r-tree-for-overlay-of-two-shapefile"><span class="header-section-number">3</span> 3. R-tree for overlay of two shapefile</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week-6A-Using Fiona to manipuate shapefiles and do spatial analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-0" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pyproj</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: pyproj in /Users/senseablecity/anaconda3/envs/geospatial/lib/python3.9/site-packages (2.6.1.post1)</code></pre>
+</div>
+</div>
+<p>Fiona is an excellent tool for spatial manipulation. This session show you how to use fiona to read shapefile and metadata, use <code>Shapely</code> and <code>Fiona</code> to do spatial analysis, and and write shapefiles. These libraries are essentially wrappers for GEOS and OGR, respectively, which provide clean, Pythonic interfaces for performing the processing, while still keeping the performance capabilities of the underlying libraries.</p>
+<p>Fiona is used for reading and writing vector files (here we’re using Shapefiles), while Shapely is used for doing the manipulation and analysis of the geometric objects.</p>
+<section id="topic-of-today" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="topic-of-today"><span class="header-section-number">1</span> Topic of today</h2>
+<section id="this-session-will-include-some-major-sections" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="this-session-will-include-some-major-sections"><span class="header-section-number">1.1</span> This session will include some major sections,</h3>
+<ol type="1">
+<li><p>Read metadata, attributes, geometry of features in shapfile using fiona</p></li>
+<li><p>Create shapefile based on the longitude and latitude</p></li>
+<li><p>Convert the projection of shapefiles using pyproj</p></li>
+<li><p>Do buffer analysis using fiona+shapely</p></li>
+<li><p>Do intersection of point feature class and polygon feature class</p></li>
+</ol>
+<p><strong>References</strong>:</p>
+<ul>
+<li><p>Fiona Manual, <a href="http://toblerity.org/fiona/manual.html">http://toblerity.org/fiona/manual.html</a></p></li>
+<li><p>Shapely Manual, <a href="http://toblerity.org/shapely/manual.html">http://toblerity.org/shapely/manual.html</a></p></li>
+<li><p>AZAVEA Research Blog, Using Shapely and Fiona to Locate High-Risk Traffic Areas, <a href="https://www.azavea.com/blog/2016/10/05/philippines-road-safety-using-shapely-fiona-locate-high-risk-traffic-areas/">https://www.azavea.com/blog/2016/10/05/philippines-road-safety-using-shapely-fiona-locate-high-risk-traffic-areas/</a></p></li>
+</ul>
+</section>
+<section id="read-the-metadata-of-shapefiles-using-fiona" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="read-the-metadata-of-shapefiles-using-fiona"><span class="header-section-number">1.2</span> 1. Read the metadata of shapefiles using fiona</h3>
+<div id="cell-4" class="cell" data-scrolled="false" data-execution_count="1">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the meta data of shapefile, such as spatial reference, field names, etc</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fiona</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fiona.crs <span class="im">import</span> to_string</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> mapping, shape</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>census_shp <span class="op">=</span> <span class="st">'data/philadelphia-census-tract.shp'</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(census_shp, <span class="st">'r'</span>) <span class="im">as</span> nb_lyr:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    driver <span class="op">=</span> nb_lyr.driver <span class="co"># the driver of the shapefile</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> nb_lyr.schema  <span class="co">#schema of shapefile</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    crs <span class="op">=</span> nb_lyr.crs   <span class="co"># coordinate reference system of the shapefile</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    meta <span class="op">=</span> nb_lyr.meta <span class="co"># more details about the metadata of the shapefile</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s take a look at what those metadata look like</p>
+<div id="cell-7" class="cell" data-scrolled="false" data-execution_count="2">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'The driver is:'</span>, driver)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'The schema is:'</span>, schema)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'The coordinate reference system is:'</span>, crs)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'the metadata is:'</span>, meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The driver is: ESRI Shapefile
+The schema is: {'properties': OrderedDict([('STATEFP', 'str:80'), ('COUNTYFP', 'str:80'), ('TRACTCE', 'str:80'), ('GEOID', 'str:80'), ('NAME_x', 'str:80'), ('NAMELSAD', 'str:80'), ('MTFCC', 'str:80'), ('FUNCSTAT', 'str:80'), ('ALAND', 'int:18'), ('AWATER', 'int:18'), ('INTPTLAT', 'str:80'), ('INTPTLON', 'str:80'), ('NAME_y', 'str:80'), ('GEO_ID', 'str:80'), ('white_popu', 'str:80'), ('non-hispan', 'str:80'), ('black_popu', 'str:80'), ('asian_popu', 'str:80'), ('hispanic_p', 'str:80'), ('total_popu', 'str:80'), ('median_hou', 'str:80'), ('per_capita', 'str:80'), ('built_age', 'str:80'), ('less_highs', 'str:80'), ('bachelor', 'str:80'), ('totaleduca', 'str:80'), ('male_und18', 'str:80'), ('female_und', 'str:80'), ('male65_66', 'str:80'), ('male67_69', 'str:80'), ('male70_74', 'str:80'), ('male75_79', 'str:80'), ('male80_84', 'str:80'), ('male85_', 'str:80'), ('fema_65_66', 'str:80'), ('fema_67_69', 'str:80'), ('fema70_74', 'str:80'), ('fema75_79', 'str:80'), ('fema80_84', 'str:80'), ('fema85_', 'str:80'), ('state', 'str:80'), ('county', 'str:80'), ('tract', 'str:80')]), 'geometry': 'Polygon'}
+The coordinate reference system is: {'init': 'epsg:2272'}
+the metadata is: {'driver': 'ESRI Shapefile', 'schema': {'properties': OrderedDict([('STATEFP', 'str:80'), ('COUNTYFP', 'str:80'), ('TRACTCE', 'str:80'), ('GEOID', 'str:80'), ('NAME_x', 'str:80'), ('NAMELSAD', 'str:80'), ('MTFCC', 'str:80'), ('FUNCSTAT', 'str:80'), ('ALAND', 'int:18'), ('AWATER', 'int:18'), ('INTPTLAT', 'str:80'), ('INTPTLON', 'str:80'), ('NAME_y', 'str:80'), ('GEO_ID', 'str:80'), ('white_popu', 'str:80'), ('non-hispan', 'str:80'), ('black_popu', 'str:80'), ('asian_popu', 'str:80'), ('hispanic_p', 'str:80'), ('total_popu', 'str:80'), ('median_hou', 'str:80'), ('per_capita', 'str:80'), ('built_age', 'str:80'), ('less_highs', 'str:80'), ('bachelor', 'str:80'), ('totaleduca', 'str:80'), ('male_und18', 'str:80'), ('female_und', 'str:80'), ('male65_66', 'str:80'), ('male67_69', 'str:80'), ('male70_74', 'str:80'), ('male75_79', 'str:80'), ('male80_84', 'str:80'), ('male85_', 'str:80'), ('fema_65_66', 'str:80'), ('fema_67_69', 'str:80'), ('fema70_74', 'str:80'), ('fema75_79', 'str:80'), ('fema80_84', 'str:80'), ('fema85_', 'str:80'), ('state', 'str:80'), ('county', 'str:80'), ('tract', 'str:80')]), 'geometry': 'Polygon'}, 'crs': {'init': 'epsg:2272'}, 'crs_wkt': 'PROJCS["NAD83 / Pennsylvania South (ftUS)",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Lambert_Conformal_Conic_2SP"],PARAMETER["latitude_of_origin",39.3333333333333],PARAMETER["central_meridian",-77.75],PARAMETER["standard_parallel_1",40.9666666666667],PARAMETER["standard_parallel_2",39.9333333333333],PARAMETER["false_easting",1968500],PARAMETER["false_northing",0],UNIT["US survey foot",0.304800609601219,AUTHORITY["EPSG","9003"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","2272"]]'}</code></pre>
+</div>
+</div>
+<div id="cell-8" class="cell" data-scrolled="true" data-execution_count="3">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>{'init': 'epsg:2272'}</code></pre>
+</div>
+</div>
+<p>Let’s print the geometry and attribute of the features in shapefile</p>
+<div id="cell-10" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(census_shp, <span class="st">'r'</span>) <span class="im">as</span> nb_lyr:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> feat <span class="kw">in</span> nb_lyr:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># attribute of the neighborhood features</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        attr <span class="op">=</span> feat[<span class="st">'properties'</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> attr[<span class="st">'TRACTCE'</span>]  <span class="co">#you can find other attribute based on the metadata of the shapefile</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         print ('The neighborhod is:', name)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get the geometry of the polygon feature</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        geom <span class="op">=</span> feat[<span class="st">'geometry'</span>]</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#         print ('geom is:', geom)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can convert the dictionary <code>geom</code> variable into a shapely Polygon object using shapely. Here is one example of using shapely to deal with the geometry of features in shapefile.</p>
+<div id="cell-13" class="cell" data-scrolled="true" data-execution_count="5">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the shape is a function in shapely, we import "from shapely.geometry import shape"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>shape(geom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<figure class="figure">
+<p><img src="SpatialAnalysis_Fiona_Shapely_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="create-a-buffer-of-the-shape" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="create-a-buffer-of-the-shape"><span class="header-section-number">1.3</span> create a buffer of the shape</h3>
+<div id="cell-15" class="cell" data-scrolled="true" data-execution_count="6">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>buff_geom <span class="op">=</span> shape(geom).<span class="bu">buffer</span>(<span class="dv">100</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>buff_geom</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># mapping(shape(point['geometry']).buffer(5.0))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<figure class="figure">
+<p><img src="SpatialAnalysis_Fiona_Shapely_files/figure-html/cell-10-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="create-shapefile-based-on-the-longitude-and-latitude-information-in-the-csvfile." class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="create-shapefile-based-on-the-longitude-and-latitude-information-in-the-csvfile."><span class="header-section-number">2</span> 2. Create shapefile based on the longitude and latitude information in the csvfile.</h2>
+<p>Using pandas to read the csv file and create shapefile based on the longitude and latitude. Pandas is just like MS Excel, it makes dealing with spreadsheet super easy. Let get started!</p>
+<p>Reference:</p>
+<p>https://www.tutorialspoint.com/python_pandas/index.htm</p>
+<p>https://pandas.pydata.org/pandas-docs/stable/tutorials.html</p>
+<section id="let-first-read-the-csv-file-into-dataframe-using-pandas" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="let-first-read-the-csv-file-into-dataframe-using-pandas"><span class="header-section-number">2.1</span> 2.1 Let first read the csv file into dataframe using pandas</h3>
+<p>Read the csv file using pandas</p>
+<div id="cell-19" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read the csv file and create shapefile</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>coffee_shop_csv <span class="op">=</span> <span class="st">'data/cambridge_coffee_shops.csv'</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>coffee_shop_sheet <span class="op">=</span> pd.read_csv(coffee_shop_csv)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># coffee_shop_sheet</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Print the first 5 records of the dataframe, this will help you know the structure of the dataframe</p>
+<div id="cell-21" class="cell" data-scrolled="true" data-execution_count="8">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this will print the first 10 records of the data frame</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>coffee_shop_sheet.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">address</th>
+<th data-quarto-table-cell-role="th">city</th>
+<th data-quarto-table-cell-role="th">state</th>
+<th data-quarto-table-cell-role="th">zip</th>
+<th data-quarto-table-cell-role="th">lat</th>
+<th data-quarto-table-cell-role="th">lon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1369 Coffee House</td>
+<td>1369 Cambridge St</td>
+<td>Cambridge</td>
+<td>MA</td>
+<td>2139</td>
+<td>42.373695</td>
+<td>-71.100440</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>1369 Coffee House</td>
+<td>757 Massachusetts Ave</td>
+<td>Cambridge</td>
+<td>MA</td>
+<td>2139</td>
+<td>42.366432</td>
+<td>-71.105430</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>Aceituna Cafe</td>
+<td>605 W Kendall St</td>
+<td>Cambridge</td>
+<td>MA</td>
+<td>2142</td>
+<td>42.364370</td>
+<td>-71.081924</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>Al's Deli Cafe-Cambridge</td>
+<td>1354 Massachusetts Ave</td>
+<td>Cambridge</td>
+<td>MA</td>
+<td>2138</td>
+<td>42.373238</td>
+<td>-71.118340</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>Algiers Coffee House</td>
+<td>40 Brattle St # 3</td>
+<td>Cambridge</td>
+<td>MA</td>
+<td>2138</td>
+<td>42.373840</td>
+<td>-71.121380</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>We can create a shapefile easily using Geopandas</p>
+<div id="cell-24" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geopandas <span class="im">import</span> GeoDataFrame <span class="im">as</span> gdf</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>crs <span class="op">=</span> {<span class="st">'init'</span>: <span class="st">'epsg:4326'</span>} <span class="co">#http://www.spatialreference.org/ref/epsg/2263/</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># crs = {'epsg': 4326} #http://www.spatialreference.org/ref/epsg/2263/</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create a geo-dataframe</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>points_gdf<span class="op">=</span> gdf(coffee_shop_sheet, crs<span class="op">=</span>crs, <span class="op">\</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                geometry<span class="op">=</span>gpd.points_from_xy(coffee_shop_sheet.lon, coffee_shop_sheet.lat))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># save the geo-dataframe as a shapefile</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>points_gdf.to_file(<span class="st">"data/coffe_shop.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/senseablecity/anaconda3/envs/geospatial/lib/python3.9/site-packages/pyproj/crs/crs.py:53: FutureWarning: '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
+  return _prepare_from_string(" ".join(pjargs))</code></pre>
+</div>
+</div>
+<p>create a shapefile using <code>Fiona</code> based on the coordinate and attributes information in the csv file</p>
+<div id="cell-27" class="cell" data-scrolled="true" data-execution_count="10">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point, mapping</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the schema and crs of the output shapefile</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'geometry'</span>: <span class="st">'Point'</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'properties'</span>: {</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'id'</span>: <span class="st">'str: 20'</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'name'</span>: <span class="st">'str: 20'</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'address'</span>: <span class="st">'str: 20'</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'city'</span>: <span class="st">'str: 20'</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'state'</span>:<span class="st">'str: 20'</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'zip'</span>: <span class="st">'str: 7'</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>crs <span class="op">=</span> {<span class="st">'init'</span>: <span class="st">u'epsg:4326'</span>}</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># The output shapefile</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>coffee_shop_shp <span class="op">=</span> <span class="st">'data/cambridge_coffee_shops2.shp'</span> </span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(coffee_shop_shp, <span class="st">'w'</span>, driver <span class="op">=</span> <span class="st">"ESRI Shapefile"</span>, crs <span class="op">=</span> crs, schema<span class="op">=</span>schema) <span class="im">as</span> output:</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> coffee_shop_sheet.iterrows():</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        lon <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">7</span>]</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        lat <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">6</span>]</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>        id_ <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">0</span>]</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">1</span>]</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>        address <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">2</span>]</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        city <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">3</span>]</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        state <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">4</span>]</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        zipcode <span class="op">=</span> row[<span class="dv">1</span>][<span class="dv">5</span>]</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>        point <span class="op">=</span> Point(<span class="bu">float</span>(lon), <span class="bu">float</span>(lat))</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>        output.write({<span class="st">'properties'</span>:{<span class="st">'id'</span>: id_,</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'name'</span>: name,</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'address'</span>: address,</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'city'</span>: city,</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'state'</span>: state,</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">'zip'</span>: zipcode</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>                                    },</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'geometry'</span>: mapping(point)</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>                     })</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'You have export the shapefile successfully'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>You have export the shapefile successfully</code></pre>
+</div>
+</div>
+</section>
+<section id="change-the-projection-of-the-point-shapefile" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="change-the-projection-of-the-point-shapefile"><span class="header-section-number">2.2</span> 2.2 Change the projection of the point shapefile</h3>
+<p>We will use Pyproj to change the projection of the shapefile</p>
+<div id="cell-30" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyproj <span class="im">import</span> Transformer, transform</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>transformer <span class="op">=</span> Transformer.from_crs(<span class="dv">2263</span>, <span class="dv">4326</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>x_coords <span class="op">=</span> <span class="dv">80481</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>y_coords <span class="op">=</span> <span class="dv">224831</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>transformer <span class="op">=</span> Transformer.from_crs(<span class="dv">2263</span>, <span class="dv">4326</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>transformer.transform(x_coords, y_coords)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>(40.73759340928393, -77.26199309733204)</code></pre>
+</div>
+</div>
+</section>
+<section id="convert-the-shapefile-in-a-local-projection-of-massachusetts-unit-is-feet" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="convert-the-shapefile-in-a-local-projection-of-massachusetts-unit-is-feet"><span class="header-section-number">2.3</span> 2.3. Convert the shapefile in a local projection of Massachusetts, unit is feet</h3>
+<p>The epsg code of Massachusetts is 6492. For more information about the projection and the epsg code can be find here, http://spatialreference.org/ref/epsg/?search=massachusetts&amp;srtext=Search</p>
+<div id="cell-33" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> repeat</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyproj <span class="im">import</span> Transformer</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>transformer <span class="op">=</span> Transformer.from_crs(<span class="dv">4326</span>, <span class="dv">6492</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>crs <span class="op">=</span> {<span class="st">'init'</span>: <span class="st">'epsg:6492'</span>}</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>coffee_shop_shp <span class="op">=</span> <span class="st">'data/cambridge_coffee_shops2.shp'</span> </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>coffee_shop_shp_reproj <span class="op">=</span> <span class="st">'data/cambridge_coffee_shops2_massproj.shp'</span>    </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># write the reprojected point feature to shapefile</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(coffee_shop_shp) <span class="im">as</span> source:</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> source.schema</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> fiona.<span class="bu">open</span>(coffee_shop_shp_reproj, <span class="st">'w'</span>, driver<span class="op">=</span>source.driver, crs<span class="op">=</span>crs,schema<span class="op">=</span>schema) <span class="im">as</span> dest:</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> feat <span class="kw">in</span> source:</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>            feat_geom <span class="op">=</span> feat[<span class="st">'geometry'</span>]</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> feat[<span class="st">'properties'</span>]</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>            coordinates <span class="op">=</span> feat_geom[<span class="st">'coordinates'</span>]</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(coordinates)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Transform the coordinates of every ring.</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>            reprojCoords <span class="op">=</span> transformer.transform(coordinates[<span class="dv">1</span>], coordinates[<span class="dv">0</span>])</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># copy the geom object, but update the reprojected coordinate</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>            reproj_geom <span class="op">=</span> feat_geom</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>            reproj_geom[<span class="st">'coordinates'</span>] <span class="op">=</span> reprojCoords</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>            dest.write({<span class="st">'geometry'</span>: mapping(shape(reproj_geom)),<span class="st">'properties'</span>: data})</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(-71.10044, 42.373695)
+(-71.10543, 42.366432)
+(-71.081924, 42.36437)
+(-71.11834, 42.373238)
+(-71.12138, 42.37384)
+(-71.091286, 42.36342)
+(-71.08602, 42.36341)
+(-71.14083, 42.387756)
+(-71.090858, 42.366606)
+(-71.12067, 42.37198)
+(-71.11313, 42.374096)
+(-71.12708, 42.39454)
+(-71.1157, 42.371605)
+(-71.11851, 42.38885)
+(-71.09102, 42.37246)
+(-71.099236, 42.36276)
+(-71.12187, 42.375237)
+(-71.121185, 42.37364)
+(-71.11014, 42.36896)
+(-71.12072, 42.374268)
+(-71.124954, 42.37409)
+(-71.1095, 42.374847)
+(-71.08831, 42.36659)
+(-71.08262, 42.362)
+(-71.11892, 42.38863)
+(-71.076715, 42.36858)
+(-71.093704, 42.372818)
+(-71.11141, 42.369423)
+(-71.14297, 42.389206)
+(-71.094, 42.36653)
+(-71.13211, 42.398865)
+(-71.07953, 42.37242)
+(-71.14183, 42.39465)
+(-71.1415, 42.387127)
+(-71.12106, 42.37413)
+(-71.10325, 42.365105)
+(-71.12099, 42.371624)
+(-71.11589, 42.36088)
+(-71.0942, 42.359676)
+(-71.12099, 42.371624)
+(-71.10432, 42.370617)
+(-71.093605, 42.366386)
+(-71.13474, 42.402267)
+(-71.114914, 42.37314)
+(-71.14265, 42.38961)
+(-71.1415, 42.387127)
+(-71.093605, 42.366386)
+(-71.10064, 42.36359)
+(-71.10082, 42.363686)
+(-71.07228, 42.36886)
+(-71.088774, 42.362997)
+(-71.097305, 42.361603)
+(-71.120735, 42.3728)
+(-71.08598, 42.366653)
+(-71.11726, 42.371063)
+(-71.0835, 42.371494)
+(-71.110695, 42.369167)
+(-71.13006, 42.397156)
+(-71.076121, 42.367463)
+(-71.10289, 42.36617)
+(-71.118866, 42.373714)
+(-71.087937, 42.363893)
+(-71.14286, 42.38805)
+(-71.12038, 42.374393)
+(-71.11998, 42.37278)
+(-71.11313, 42.374096)
+(-71.08598, 42.3629)
+(-71.10389, 42.36553)
+(-71.120053, 42.381899)
+(-71.115295, 42.35772)
+(-71.09108, 42.372467)
+(-71.080154, 42.371063)
+(-71.08952, 42.372257)
+(-71.120834, 42.373253)
+(-71.0766, 42.367104)
+(-71.11955, 42.384068)
+(-71.08952, 42.372257)
+(-71.128845, 42.39609)
+(-71.08267, 42.36528)
+(-71.08914, 42.372208)
+(-71.119738, 42.384598)
+(-71.148877, 42.375159)
+(-71.118901, 42.3873)</code></pre>
+</div>
+</div>
+</section>
+<section id="reproject-the-traffic-accident-shapefile" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="reproject-the-traffic-accident-shapefile"><span class="header-section-number">2.4</span> Reproject the traffic accident shapefile</h3>
+<p>Here are a few tricks to try out if you want to optimize your transformations. https://pyproj4.github.io/pyproj/stable/advanced_examples.html#optimize-transformations</p>
+<div id="cell-36" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>traffic_accident <span class="op">=</span> <span class="st">'data/crash_data_collision_crash_2007_2017.shp'</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> fiona.<span class="bu">open</span>(traffic_accident)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>crs <span class="op">=</span> layer.crs</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> layer.schema</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> feat <span class="kw">in</span> layer:</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    feat_geom <span class="op">=</span> feat[<span class="st">'geometry'</span>]</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    coordinates <span class="op">=</span> feat_geom[<span class="st">'coordinates'</span>]</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(time.time() <span class="op">-</span> t0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>6.42966103553772</code></pre>
+</div>
+</div>
+<p>Check the coordinate reference system of the shapefile</p>
+</section>
+<section id="convert-the-car-crash-shapefile-projection-to-the-same-project-with-the-census-tract" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="convert-the-car-crash-shapefile-projection-to-the-same-project-with-the-census-tract"><span class="header-section-number">2.5</span> Convert the car crash shapefile projection to the same project with the census tract</h3>
+<div id="cell-40" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> repeat</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyproj <span class="im">import</span> Transformer</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the name of the ouput reprojected shapefile</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>trafficAccident_reproj <span class="op">=</span> <span class="st">'data/crash_data_collision_crash_2007_2017_reproj.shp'</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>transformer <span class="op">=</span> Transformer.from_crs(<span class="dv">4326</span>, <span class="dv">2272</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># write the reprojected point feature to shapefile</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(traffic_accident) <span class="im">as</span> source:</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    crs<span class="op">=</span>{<span class="st">'init'</span>: <span class="st">'epsg:2272'</span>}</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> source.schema</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> fiona.<span class="bu">open</span>(trafficAccident_reproj, <span class="st">'w'</span>, driver<span class="op">=</span>source.driver, <span class="op">\</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                    crs<span class="op">=</span>crs,schema<span class="op">=</span>schema) <span class="im">as</span> dest:</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> feat <span class="kw">in</span> source:</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>            feat_geom <span class="op">=</span> feat[<span class="st">'geometry'</span>]</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> feat[<span class="st">'properties'</span>]</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>            coordinates <span class="op">=</span> feat_geom[<span class="st">'coordinates'</span>]</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(coordinates)</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Transform the coordinates of every ring.</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>            reprojCoords <span class="op">=</span> transformer.transform(coordinates[<span class="dv">1</span>], coordinates[<span class="dv">0</span>])</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>            reproj_geom <span class="op">=</span> feat_geom</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>            reproj_geom[<span class="st">'coordinates'</span>] <span class="op">=</span> reprojCoords</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>            dest.write({<span class="st">'geometry'</span>: mapping(shape(reproj_geom)),<span class="st">'properties'</span>: data})</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>You may find it slower than GeoPandas, this is because we use <code>for loop</code> here and do the transform one by one. There are several tricks to increase the efficiency, like use numpy array. In this class, we are not going to increase the efficiency here. If you interested, you can also check the implementation in GeoPandas. https://github.com/geopandas/geopandas</p>
+</section>
+</section>
+<section id="r-tree-for-overlay-of-two-shapefile" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="r-tree-for-overlay-of-two-shapefile"><span class="header-section-number">3</span> 3. R-tree for overlay of two shapefile</h2>
+<p>The core idea behind the&nbsp;<code>R-tree</code>&nbsp;is to form a tree-like data structure where nearby objects are grouped together, and their geographical extent (minimum bounding box) is inserted into the data structure (i.e.&nbsp;R-tree). This bounding box then represents the whole group of geometries as one level (typically called as “page” or “node”) in the data structure.</p>
+<section id="build-and-fill-rtree" class="level4" data-number="3.0.1">
+<h4 data-number="3.0.1" class="anchored" data-anchor-id="build-and-fill-rtree"><span class="header-section-number">3.0.1</span> Build and fill Rtree</h4>
+<p>First step is to build the Rtree on the point feature. If you have question about which shapefile should be used as base for the Rtree, a tip is to use the shapefile has more features.</p>
+<div id="cell-47" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rtree</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fiona</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, os.path</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statistics <span class="im">import</span> median</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.ops <span class="im">import</span> transform</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>neighborhood_shp <span class="op">=</span> <span class="st">'data/philadelphia-census-tract.shp'</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>trafficAccident_reproj <span class="op">=</span> <span class="st">'data/crash_data_collision_crash_2007_2017_reproj.shp'</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>outPolygonShp <span class="op">=</span> <span class="st">'data/census-traffic-accident.shp'</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>pnt_lyr <span class="op">=</span> fiona.<span class="bu">open</span>(trafficAccident_reproj, <span class="st">'r'</span>)     </span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create an empty spatial index object</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> rtree.index.Index()</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="co"># populate the spatial index, the polygon features</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fid, feature <span class="kw">in</span> pnt_lyr.items():</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">%</span> <span class="dv">10000</span> <span class="op">==</span> <span class="dv">0</span>: <span class="bu">print</span> (i)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    geometry <span class="op">=</span> shape(feature[<span class="st">'geometry'</span>])</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add a buffer in order to create a r-tree</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    geometry_buffered <span class="op">=</span> geometry.<span class="bu">buffer</span>(<span class="dv">10</span>) </span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    geotype <span class="op">=</span> feature[<span class="st">'geometry'</span>][<span class="st">'type'</span>]</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    index.insert(fid, geometry_buffered.bounds)</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>10000
+20000
+30000
+40000
+50000
+60000
+70000</code></pre>
+</div>
+</div>
+<div id="cell-49" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pnt_lyr.crs</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># loop all polygons and assign GVI values</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(neighborhood_shp, <span class="st">'r'</span>) <span class="im">as</span> polygon_lyr:</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> polygon_lyr.schema.copy()</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    schema[<span class="st">'properties'</span>][<span class="st">'AcciNum'</span>]<span class="op">=</span><span class="st">'float'</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    input_crs <span class="op">=</span> polygon_lyr.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-50" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>polygon_lyr.crs</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>pnt_lyr.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>{'init': 'epsg:2272'}</code></pre>
+</div>
+</div>
+</section>
+<section id="start-the-overlay-based-on-the-built-rtree" class="level4" data-number="3.0.2">
+<h4 data-number="3.0.2" class="anchored" data-anchor-id="start-the-overlay-based-on-the-built-rtree"><span class="header-section-number">3.0.2</span> Start the overlay based on the built rtree</h4>
+<p>Based on the built Rtree to loop all features in the polygon and calculate the attribute</p>
+<div id="cell-53" class="cell" data-execution_count="25">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loop all polygons and assign GVI values</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(neighborhood_shp, <span class="st">'r'</span>) <span class="im">as</span> polygon_lyr:</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> polygon_lyr.schema.copy()</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    schema[<span class="st">'properties'</span>][<span class="st">'AcciNum'</span>]<span class="op">=</span><span class="st">'float'</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    input_crs <span class="op">=</span> polygon_lyr.crs</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># write the intersected point into the new shapefile</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> fiona.<span class="bu">open</span>(outPolygonShp, <span class="st">'w'</span>, <span class="st">'ESRI Shapefile'</span>, schema, input_crs) <span class="im">as</span> output:</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># loop the polygon feature</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> idx, featPoly <span class="kw">in</span> <span class="bu">enumerate</span>(polygon_lyr):</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Polygon:'</span>, idx)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>            geomPoly <span class="op">=</span> shape(featPoly[<span class="st">'geometry'</span>])                </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>            attriPoly <span class="op">=</span> featPoly[<span class="st">'properties'</span>]</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># using the bounding box to find the close but may not intersected point feature</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>            fids <span class="op">=</span> [<span class="bu">int</span>(i) <span class="cf">for</span> i <span class="kw">in</span> index.intersection(geomPoly.bounds)]</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># count the number of accidents</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>            count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>            <span class="co"># loop all features in bounding box and then judge if they are intersected</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> fid <span class="kw">in</span> fids:</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>                featPnt <span class="op">=</span> pnt_lyr[fid]</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>                geomPnt <span class="op">=</span> shape(featPnt[<span class="st">'geometry'</span>])</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>                <span class="co"># if the point is intersected with the polygon, then save the point feature into the output shapefile</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> geomPoly.intersects(geomPnt):</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>                    count <span class="op">=</span> count <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>            attriPoly[<span class="st">'AcciNum'</span>]<span class="op">=</span>count</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>            output.write({<span class="st">'geometry'</span>: mapping(geomPoly),<span class="st">'properties'</span>: attriPoly})</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Polygon: 0
+The count is: 9
+Polygon: 1
+The count is: 40
+Polygon: 2
+The count is: 8
+Polygon: 3
+The count is: 19
+Polygon: 4
+The count is: 16
+Polygon: 5
+The count is: 17
+Polygon: 6
+The count is: 32
+Polygon: 7
+The count is: 24
+Polygon: 8
+The count is: 69
+Polygon: 9
+The count is: 48
+Polygon: 10
+The count is: 5
+Polygon: 11
+The count is: 35
+Polygon: 12
+The count is: 20
+Polygon: 13
+The count is: 14
+Polygon: 14
+The count is: 15
+Polygon: 15
+The count is: 1
+Polygon: 16
+The count is: 38
+Polygon: 17
+The count is: 5
+Polygon: 18
+The count is: 13
+Polygon: 19
+The count is: 7
+Polygon: 20
+The count is: 19
+Polygon: 21
+The count is: 8
+Polygon: 22
+The count is: 6
+Polygon: 23
+The count is: 121
+Polygon: 24
+The count is: 17
+Polygon: 25
+The count is: 15
+Polygon: 26
+The count is: 20
+Polygon: 27
+The count is: 38
+Polygon: 28
+The count is: 32
+Polygon: 29
+The count is: 76
+Polygon: 30
+The count is: 75
+Polygon: 31
+The count is: 158
+Polygon: 32
+The count is: 92
+Polygon: 33
+The count is: 11
+Polygon: 34
+The count is: 47
+Polygon: 35
+The count is: 149
+Polygon: 36
+The count is: 45
+Polygon: 37
+The count is: 32
+Polygon: 38
+The count is: 14
+Polygon: 39
+The count is: 5
+Polygon: 40
+The count is: 6
+Polygon: 41
+The count is: 11
+Polygon: 42
+The count is: 11
+Polygon: 43
+The count is: 7
+Polygon: 44
+The count is: 5
+Polygon: 45
+The count is: 9
+Polygon: 46
+The count is: 39
+Polygon: 47
+The count is: 47
+Polygon: 48
+The count is: 23
+Polygon: 49
+The count is: 33
+Polygon: 50
+The count is: 23
+Polygon: 51
+The count is: 2
+Polygon: 52
+The count is: 4
+Polygon: 53
+The count is: 2
+Polygon: 54
+The count is: 17
+Polygon: 55
+The count is: 12
+Polygon: 56
+The count is: 25
+Polygon: 57
+The count is: 40
+Polygon: 58
+The count is: 20
+Polygon: 59
+The count is: 39
+Polygon: 60
+The count is: 36
+Polygon: 61
+The count is: 33
+Polygon: 62
+The count is: 25
+Polygon: 63
+The count is: 23
+Polygon: 64
+The count is: 10
+Polygon: 65
+The count is: 33
+Polygon: 66
+The count is: 34
+Polygon: 67
+The count is: 64
+Polygon: 68
+The count is: 54
+Polygon: 69
+The count is: 41
+Polygon: 70
+The count is: 56
+Polygon: 71
+The count is: 48
+Polygon: 72
+The count is: 18
+Polygon: 73
+The count is: 9
+Polygon: 74
+The count is: 13
+Polygon: 75
+The count is: 21
+Polygon: 76
+The count is: 4
+Polygon: 77
+The count is: 14
+Polygon: 78
+The count is: 9
+Polygon: 79
+The count is: 11
+Polygon: 80
+The count is: 11
+Polygon: 81
+The count is: 9
+Polygon: 82
+The count is: 21
+Polygon: 83
+The count is: 33
+Polygon: 84
+The count is: 11
+Polygon: 85
+The count is: 49
+Polygon: 86
+The count is: 28
+Polygon: 87
+The count is: 11
+Polygon: 88
+The count is: 24
+Polygon: 89
+The count is: 19
+Polygon: 90
+The count is: 33
+Polygon: 91
+The count is: 39
+Polygon: 92
+The count is: 7
+Polygon: 93
+The count is: 18
+Polygon: 94
+The count is: 13
+Polygon: 95
+The count is: 19
+Polygon: 96
+The count is: 6
+Polygon: 97
+The count is: 14
+Polygon: 98
+The count is: 23
+Polygon: 99
+The count is: 12
+Polygon: 100
+The count is: 13
+Polygon: 101
+The count is: 2
+Polygon: 102
+The count is: 1
+Polygon: 103
+The count is: 3
+Polygon: 104
+The count is: 4
+Polygon: 105
+The count is: 8
+Polygon: 106
+The count is: 13
+Polygon: 107
+The count is: 22
+Polygon: 108
+The count is: 9
+Polygon: 109
+The count is: 19
+Polygon: 110
+The count is: 12
+Polygon: 111
+The count is: 22
+Polygon: 112
+The count is: 19
+Polygon: 113
+The count is: 9
+Polygon: 114
+The count is: 22
+Polygon: 115
+The count is: 26
+Polygon: 116
+The count is: 19
+Polygon: 117
+The count is: 28
+Polygon: 118
+The count is: 22
+Polygon: 119
+The count is: 32
+Polygon: 120
+The count is: 24
+Polygon: 121
+The count is: 24
+Polygon: 122
+The count is: 13
+Polygon: 123
+The count is: 19
+Polygon: 124
+The count is: 13
+Polygon: 125
+The count is: 41
+Polygon: 126
+The count is: 124
+Polygon: 127
+The count is: 53
+Polygon: 128
+The count is: 14
+Polygon: 129
+The count is: 53
+Polygon: 130
+The count is: 32
+Polygon: 131
+The count is: 23
+Polygon: 132
+The count is: 7
+Polygon: 133
+The count is: 27
+Polygon: 134
+The count is: 27
+Polygon: 135
+The count is: 24
+Polygon: 136
+The count is: 46
+Polygon: 137
+The count is: 17
+Polygon: 138
+The count is: 18
+Polygon: 139
+The count is: 5
+Polygon: 140
+The count is: 11
+Polygon: 141
+The count is: 14
+Polygon: 142
+The count is: 30
+Polygon: 143
+The count is: 10
+Polygon: 144
+The count is: 11
+Polygon: 145
+The count is: 6
+Polygon: 146
+The count is: 5
+Polygon: 147
+The count is: 32
+Polygon: 148
+The count is: 15
+Polygon: 149
+The count is: 22
+Polygon: 150
+The count is: 16
+Polygon: 151
+The count is: 24
+Polygon: 152
+The count is: 52
+Polygon: 153
+The count is: 14
+Polygon: 154
+The count is: 7
+Polygon: 155
+The count is: 18
+Polygon: 156
+The count is: 31
+Polygon: 157
+The count is: 36
+Polygon: 158
+The count is: 48
+Polygon: 159
+The count is: 28
+Polygon: 160
+The count is: 5
+Polygon: 161
+The count is: 27
+Polygon: 162
+The count is: 20
+Polygon: 163
+The count is: 12
+Polygon: 164
+The count is: 25
+Polygon: 165
+The count is: 16
+Polygon: 166
+The count is: 20
+Polygon: 167
+The count is: 10
+Polygon: 168
+The count is: 6
+Polygon: 169
+The count is: 20
+Polygon: 170
+The count is: 41
+Polygon: 171
+The count is: 19
+Polygon: 172
+The count is: 32
+Polygon: 173
+The count is: 46
+Polygon: 174
+The count is: 24
+Polygon: 175
+The count is: 18
+Polygon: 176
+The count is: 21
+Polygon: 177
+The count is: 19
+Polygon: 178
+The count is: 11
+Polygon: 179
+The count is: 14
+Polygon: 180
+The count is: 12
+Polygon: 181
+The count is: 27
+Polygon: 182
+The count is: 14
+Polygon: 183
+The count is: 11
+Polygon: 184
+The count is: 23
+Polygon: 185
+The count is: 23
+Polygon: 186
+The count is: 10
+Polygon: 187
+The count is: 5
+Polygon: 188
+The count is: 28
+Polygon: 189
+The count is: 17
+Polygon: 190
+The count is: 28
+Polygon: 191
+The count is: 13
+Polygon: 192
+The count is: 13
+Polygon: 193
+The count is: 11
+Polygon: 194
+The count is: 14
+Polygon: 195
+The count is: 44
+Polygon: 196
+The count is: 6
+Polygon: 197
+The count is: 19
+Polygon: 198
+The count is: 11
+Polygon: 199
+The count is: 22
+Polygon: 200
+The count is: 56
+Polygon: 201
+The count is: 58
+Polygon: 202
+The count is: 25
+Polygon: 203
+The count is: 92
+Polygon: 204
+The count is: 42
+Polygon: 205
+The count is: 195
+Polygon: 206
+The count is: 21
+Polygon: 207
+The count is: 9
+Polygon: 208
+The count is: 9
+Polygon: 209
+The count is: 43
+Polygon: 210
+The count is: 13
+Polygon: 211
+The count is: 16
+Polygon: 212
+The count is: 14
+Polygon: 213
+The count is: 16
+Polygon: 214
+The count is: 22
+Polygon: 215
+The count is: 14
+Polygon: 216
+The count is: 20
+Polygon: 217
+The count is: 23
+Polygon: 218
+The count is: 7
+Polygon: 219
+The count is: 12
+Polygon: 220
+The count is: 31
+Polygon: 221
+The count is: 16
+Polygon: 222
+The count is: 25
+Polygon: 223
+The count is: 25
+Polygon: 224
+The count is: 55
+Polygon: 225
+The count is: 40
+Polygon: 226
+The count is: 10
+Polygon: 227
+The count is: 53
+Polygon: 228
+The count is: 12
+Polygon: 229
+The count is: 53
+Polygon: 230
+The count is: 11
+Polygon: 231
+The count is: 15
+Polygon: 232
+The count is: 31
+Polygon: 233
+The count is: 8
+Polygon: 234
+The count is: 5
+Polygon: 235
+The count is: 6
+Polygon: 236
+The count is: 7
+Polygon: 237
+The count is: 20
+Polygon: 238
+The count is: 28
+Polygon: 239
+The count is: 12
+Polygon: 240
+The count is: 29
+Polygon: 241
+The count is: 27
+Polygon: 242
+The count is: 33
+Polygon: 243
+The count is: 14
+Polygon: 244
+The count is: 4
+Polygon: 245
+The count is: 64
+Polygon: 246
+The count is: 20
+Polygon: 247
+The count is: 19
+Polygon: 248
+The count is: 23
+Polygon: 249
+The count is: 33
+Polygon: 250
+The count is: 27
+Polygon: 251
+The count is: 24
+Polygon: 252
+The count is: 46
+Polygon: 253
+The count is: 27
+Polygon: 254
+The count is: 30
+Polygon: 255
+The count is: 14
+Polygon: 256
+The count is: 20
+Polygon: 257
+The count is: 33
+Polygon: 258
+The count is: 59
+Polygon: 259
+The count is: 23
+Polygon: 260
+The count is: 30
+Polygon: 261
+The count is: 36
+Polygon: 262
+The count is: 49
+Polygon: 263
+The count is: 14
+Polygon: 264
+The count is: 11
+Polygon: 265
+The count is: 10
+Polygon: 266
+The count is: 23
+Polygon: 267
+The count is: 5
+Polygon: 268
+The count is: 14
+Polygon: 269
+The count is: 26
+Polygon: 270
+The count is: 29
+Polygon: 271
+The count is: 30
+Polygon: 272
+The count is: 9
+Polygon: 273
+The count is: 18
+Polygon: 274
+The count is: 30
+Polygon: 275
+The count is: 38
+Polygon: 276
+The count is: 36
+Polygon: 277
+The count is: 7
+Polygon: 278
+The count is: 29
+Polygon: 279
+The count is: 5
+Polygon: 280
+The count is: 20
+Polygon: 281
+The count is: 10
+Polygon: 282
+The count is: 18
+Polygon: 283
+The count is: 23
+Polygon: 284
+The count is: 133
+Polygon: 285
+The count is: 6
+Polygon: 286
+The count is: 12
+Polygon: 287
+The count is: 12
+Polygon: 288
+The count is: 6
+Polygon: 289
+The count is: 31
+Polygon: 290
+The count is: 7
+Polygon: 291
+The count is: 15
+Polygon: 292
+The count is: 9
+Polygon: 293
+The count is: 15
+Polygon: 294
+The count is: 37
+Polygon: 295
+The count is: 62
+Polygon: 296
+The count is: 17
+Polygon: 297
+The count is: 13
+Polygon: 298
+The count is: 26
+Polygon: 299
+The count is: 10
+Polygon: 300
+The count is: 15
+Polygon: 301
+The count is: 5
+Polygon: 302
+The count is: 6
+Polygon: 303
+The count is: 21
+Polygon: 304
+The count is: 18
+Polygon: 305
+The count is: 23
+Polygon: 306
+The count is: 17
+Polygon: 307
+The count is: 21
+Polygon: 308
+The count is: 13
+Polygon: 309
+The count is: 13
+Polygon: 310
+The count is: 6
+Polygon: 311
+The count is: 323
+Polygon: 312
+The count is: 10
+Polygon: 313
+The count is: 15
+Polygon: 314
+The count is: 8
+Polygon: 315
+The count is: 22
+Polygon: 316
+The count is: 494
+Polygon: 317
+The count is: 21
+Polygon: 318
+The count is: 15
+Polygon: 319
+The count is: 12
+Polygon: 320
+The count is: 3
+Polygon: 321
+The count is: 10
+Polygon: 322
+The count is: 3
+Polygon: 323
+The count is: 47
+Polygon: 324
+The count is: 20
+Polygon: 325
+The count is: 7
+Polygon: 326
+The count is: 24
+Polygon: 327
+The count is: 17
+Polygon: 328
+The count is: 32
+Polygon: 329
+The count is: 25
+Polygon: 330
+The count is: 36
+Polygon: 331
+The count is: 6
+Polygon: 332
+The count is: 17
+Polygon: 333
+The count is: 93
+Polygon: 334
+The count is: 22
+Polygon: 335
+The count is: 9
+Polygon: 336
+The count is: 10
+Polygon: 337
+The count is: 70
+Polygon: 338
+The count is: 18
+Polygon: 339
+The count is: 22
+Polygon: 340
+The count is: 11
+Polygon: 341
+The count is: 19
+Polygon: 342
+The count is: 6
+Polygon: 343
+The count is: 18
+Polygon: 344
+The count is: 20
+Polygon: 345
+The count is: 18
+Polygon: 346
+The count is: 17
+Polygon: 347
+The count is: 9
+Polygon: 348
+The count is: 39
+Polygon: 349
+The count is: 14
+Polygon: 350
+The count is: 8
+Polygon: 351
+The count is: 24
+Polygon: 352
+The count is: 5
+Polygon: 353
+The count is: 11
+Polygon: 354
+The count is: 131
+Polygon: 355
+The count is: 6
+Polygon: 356
+The count is: 15
+Polygon: 357
+The count is: 18
+Polygon: 358
+The count is: 43
+Polygon: 359
+The count is: 10
+Polygon: 360
+The count is: 55
+Polygon: 361
+The count is: 3
+Polygon: 362
+The count is: 19
+Polygon: 363
+The count is: 25
+Polygon: 364
+The count is: 14
+Polygon: 365
+The count is: 13
+Polygon: 366
+The count is: 9
+Polygon: 367
+The count is: 24
+Polygon: 368
+The count is: 12
+Polygon: 369
+The count is: 13
+Polygon: 370
+The count is: 6
+Polygon: 371
+The count is: 17
+Polygon: 372
+The count is: 25
+Polygon: 373
+The count is: 12
+Polygon: 374
+The count is: 8
+Polygon: 375
+The count is: 19
+Polygon: 376
+The count is: 16
+Polygon: 377
+The count is: 7
+Polygon: 378
+The count is: 15
+Polygon: 379
+The count is: 21
+Polygon: 380
+The count is: 10
+Polygon: 381
+The count is: 10
+Polygon: 382
+The count is: 9
+Polygon: 383
+The count is: 30</code></pre>
+</div>
+</div>
+<div id="cell-55" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>featPnt[<span class="st">'properties'</span>][<span class="st">'crash_year'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>2011</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

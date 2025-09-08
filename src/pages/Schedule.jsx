@@ -23,8 +23,12 @@ const schedule = [
   },
   { w: 3, date: "9/11/25", topic: "More on Data Visualization and Intro to Vector Data & GeoPandas",
     // single string → auto-map to lab{ww}.html
-    lab: "Read file and create visualizations using Pandas, Matplotlib",
+    lab: [
+      {label: "More about data visualization", href: `${base}labs/week-3-more-data-viz.html`}, 
+      {label: "Intro to GeoPandas and vector data", href: `${base}labs/week3-geospatial-data-concepts.html`}
+    ]
   },
+  
   { w: 4, date: "9/18/25", topic: "Geospatial data mapping", 
     lab: "Use GeoPandas and Leaflet to do analysis and create maps" },
   { w: 5, date: "9/25/25", topic: "Raster data operations in Python", 
