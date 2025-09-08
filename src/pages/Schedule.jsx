@@ -9,26 +9,26 @@ const schedule = [
   { w: 1, date: "8/28/25", topic: "Course introduction and programming environment setup",
     // multiple labs → different HTMLs
     lab: [
-      { label: "Environment setup and Python basics", href: `${base}labs/week-1-intro-python/week-1A-python-basics.html` },
-      { label: "More about Python", href: `${base}labs/week-1-intro-python/week-1B-more-about-python.html` },
+      { label: "1.1 Environment setup and Python basics", href: `${base}labs/week-1-intro-python/week-1A-python-basics.html` },
+      { label: "1.2 More about Python", href: `${base}labs/week-1-intro-python/week-1B-more-about-python.html` },
     ],
   },
   { w: 2, date: "9/4/25", topic: "Data Visualization Fundamentals",
     // if you just give strings, we’ll auto-map to lab{ww}-{index}.html
     lab: [ 
-      { label: "Exploratory data science", href: `${base}labs/week-2-data-viz-fundamentals/week-2A-exploratory-data-science-Python.html` }, 
-      { label: "data visualization fundamentals-A", href: `${base}labs/week-2-data-viz-fundamentals/week-2B1-data-visualization-fundamentals-A.html` }, 
-      { label: "data visualization fundamentals-B", href: `${base}labs/week-2-data-viz-fundamentals/week-2B2-data-visualization-fundamentals-B.html` }
+      { label: "2.1 Exploratory data science", href: `${base}labs/week-2-data-viz-fundamentals/week-2A-exploratory-data-science-Python.html` }, 
+      { label: "2.2 data visualization fundamentals-A", href: `${base}labs/week-2-data-viz-fundamentals/week-2B1-data-visualization-fundamentals-A.html` }, 
+      { label: "2.3 data visualization fundamentals-B", href: `${base}labs/week-2-data-viz-fundamentals/week-2B2-data-visualization-fundamentals-B.html` }
     ],
   },
   { w: 3, date: "9/11/25", topic: "More on Data Visualization and Intro to Vector Data & GeoPandas",
     // single string → auto-map to lab{ww}.html
     lab: [
-      {label: "More about data visualization", href: `${base}labs/week-3-more-data-viz.html`}, 
-      {label: "Intro to GeoPandas and vector data", href: `${base}labs/week3-geospatial-data-concepts.html`}
+      {label: "3.1 More about data visualization", href: `${base}labs/week-3-more-data-viz-geodata/week-3-more-data-viz.html`}, 
+      {label: "3.2 Intro to GeoPandas and vector data", href: `${base}labs/week-3-more-data-viz-geodata/week3-geospatial-data-concepts.html`}
     ]
   },
-  
+
   { w: 4, date: "9/18/25", topic: "Geospatial data mapping", 
     lab: "Use GeoPandas and Leaflet to do analysis and create maps" },
   { w: 5, date: "9/25/25", topic: "Raster data operations in Python", 
