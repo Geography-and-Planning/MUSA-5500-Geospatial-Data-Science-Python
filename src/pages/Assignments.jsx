@@ -110,7 +110,10 @@ export default function Assignments() {
               <strong>Submit your notebook to Canvas</strong>
                 <ul>
                   <li>
-                    Use GitHub Classroom for submissions. Each assignment creates a private repo.
+                    Please submit your assigment together with your data to canvas. 
+                  </li>
+                  <li>You can upload the zipped file or just sumbit all of them together. 
+                    
                   </li>
                 </ul>
               </li>

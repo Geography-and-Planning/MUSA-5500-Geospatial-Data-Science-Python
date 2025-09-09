@@ -31,12 +31,16 @@ const schedule = [
   { w: 4, date: "9/18/25", 
     topic: "Geospatial data mapping", 
     lab: [
-      {label: "4.1 More about geospatial data mapping", href: `${base}labs/week-4-geospatial-data-mapping/week-4A-spatial-data-viz.html`},
-      {label: "4.2 Interactive spatial data visualization", href: `${base}labs/week-4-geospatial-data-mapping/week-4B-interactive-spatial-data-viz.html`}
+      {label: "4.1 More about geospatial data mapping", href: `${base}labs/week-4-spatial-data-mapping/week-4A-spatial-data-viz.html`},
+      {label: "4.2 Interactive spatial data visualization", href: `${base}labs/week-4-spatial-data-mapping/week-4B-interactive-spatial-data-viz.html`}
     ]
   },
   { w: 5, date: "9/25/25", topic: "Raster data operations in Python", 
-    lab: "Rasterio, NumPy, Xarray to manipulate raster data" },
+    lab: [
+      {label: "5.1 Raster data operations", href: `${base}labs/week-5-raster-data/week-5A-rasterio.html`},
+      {label: "5.2 Overlay of shapefile and raster data", href: `${base}labs/week-5-raster-data/week-5B-numpy.html`}
+    ]
+  },
   { w: 6, date: "10/2/25", topic: "Advanced geospatial analysis", 
     lab: "NetworkX, OSMnx; Fiona+Shapely+Rasterio; Zonal statistics; road network analysis" },
   { w: 7, date: "10/9/25", topic: "Fall break — No class", 
