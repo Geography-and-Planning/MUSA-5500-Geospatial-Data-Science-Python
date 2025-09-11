@@ -148,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Introduction to GeoPandas and vector data</li>
 <li>Spatial relationships and joins</li>
 </ul>
-<div id="cell-3" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="1">
+<div id="cell-3" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="2">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's setup the imports we'll need first</span></span>
@@ -195,9 +195,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>.dbf</strong>: tabular data format storing the attributes for each geometry</li>
 </ul>
 <p>And many optional files for documentation, projection information, etc.</p>
-<p>Let’s take a look at an example shapefile:</p>
+<p>Let’s take a look at an example shapefile. Please download the zipped shapefile <a href="data/ne_110m_admin_0_countries.zip">here</a>, please unzip it to your data folder.</p>
 <p>We’ll use the <code>%ls</code> command to <em>list</em> out all of the files in an example shapefile in the <code>data/</code> folder</p>
-<div id="cell-10" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="2">
+<div id="cell-10" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>ls <span class="st">"data/ne_110m_admin_0_countries/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -237,7 +237,7 @@ Additional GeoJSON resources
 <h3 data-number="2.3" class="anchored" data-anchor-id="analyzing-vector-data-with-geopandas"><span class="header-section-number">2.3</span> Analyzing vector data with GeoPandas</h3>
 <p><code>geopandas</code> provides a simple, intuitive for the main types of geospatial vector file formats</p>
 <p><img src="imgs/geopandas-logo.jpeg" class="img-fluid" width="600"></p>
-<div id="cell-14" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="3">
+<div id="cell-14" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="2">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The import statement</span></span>
@@ -247,19 +247,20 @@ Additional GeoJSON resources
 <p><strong>Example:</strong> Let’s load a shape file of countries in the world…</p>
 <p><a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/110m-admin-0-countries/">Source: Natural Earth Data</a></p>
 <p>We can use the <a href="https://geopandas.org/docs/reference/api/geopandas.read_file.html">read_file()</a> function to read shapefiles and GeoJSON files.</p>
-<div id="cell-17" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="4">
+<div id="cell-18" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="7">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the shape file, giving the name of the directory</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> gpd.read_file(<span class="st">"./data/ne_110m_admin_0_countries"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the shape file, giving the name of the directory</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> gpd.read_file(<span class="st">"./data/ne_110m_admin_0_countries"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-18" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="5">
+<div id="cell-19" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="8">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>countries.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -301,7 +302,7 @@ Additional GeoJSON resources
 <td>Europe</td>
 <td>3047987.0</td>
 <td>33900.0</td>
-<td>POLYGON ((21.02004 40.84273, 20.99999 40.58000...</td>
+<td>POLYGON ((21.02004 40.84273, 20.99999 40.58, 2...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
@@ -310,7 +311,7 @@ Additional GeoJSON resources
 <td>Asia</td>
 <td>6072475.0</td>
 <td>667200.0</td>
-<td>POLYGON ((51.57952 24.24550, 51.75744 24.29407...</td>
+<td>POLYGON ((51.57952 24.2455, 51.75744 24.29407,...</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
@@ -327,12 +328,12 @@ Additional GeoJSON resources
 </div>
 </div>
 </div>
-<div id="cell-19" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="6">
+<div id="cell-20" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="9">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>geopandas.geodataframe.GeoDataFrame</code></pre>
 </div>
 </div>
@@ -342,35 +343,35 @@ Additional GeoJSON resources
 <p>Just like a <code>DataFrame</code> but with a new, special <code>geometry</code> column:</p>
 <p><img src="imgs/geodataframe.svg"></p>
 <p>Print out the first 10 entires of the “geometry” column:</p>
-<div id="cell-24" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="7">
+<div id="cell-25" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="10">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>countries[<span class="st">"geometry"</span>].head(n<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>0    POLYGON ((61.21082 35.65007, 62.23065 35.27066...
 1    MULTIPOLYGON (((23.90415 -11.72228, 24.07991 -...
-2    POLYGON ((21.02004 40.84273, 20.99999 40.58000...
-3    POLYGON ((51.57952 24.24550, 51.75744 24.29407...
+2    POLYGON ((21.02004 40.84273, 20.99999 40.58, 2...
+3    POLYGON ((51.57952 24.2455, 51.75744 24.29407,...
 4    MULTIPOLYGON (((-66.95992 -54.89681, -67.56244...
 5    POLYGON ((43.58275 41.09214, 44.97248 41.24813...
 6    MULTIPOLYGON (((-59.57209 -80.04018, -59.86585...
-7    POLYGON ((68.93500 -48.62500, 69.58000 -48.940...
+7    POLYGON ((68.935 -48.625, 69.58 -48.94, 70.525...
 8    MULTIPOLYGON (((145.39798 -40.79255, 146.36412...
-9    POLYGON ((16.97967 48.12350, 16.90375 47.71487...
+9    POLYGON ((16.97967 48.1235, 16.90375 47.71487,...
 Name: geometry, dtype: geometry</code></pre>
 </div>
 </div>
 <p>Take a look at the first geometry polygon by using the <code>.iloc[]</code> selector:</p>
-<div id="cell-26" class="cell" data-execution_count="8">
+<div id="cell-27" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>countries[<span class="st">'geometry'</span>].iloc[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-10-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -379,25 +380,25 @@ Name: geometry, dtype: geometry</code></pre>
 <section id="we-can-still-leverage-the-power-of-pandas" class="level3" data-number="2.5">
 <h3 data-number="2.5" class="anchored" data-anchor-id="we-can-still-leverage-the-power-of-pandas"><span class="header-section-number">2.5</span> We can still leverage the power of <code>pandas</code>…</h3>
 <p>Calculate the total world population:</p>
-<div id="cell-29" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="9">
+<div id="cell-30" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="12">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>countries[<span class="st">"pop_est"</span>].<span class="bu">sum</span>() <span class="op">/</span> <span class="fl">1e9</span>  <span class="co"># In billions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>7.383089462</code></pre>
 </div>
 </div>
 <p>Calculate the total population on each continent:</p>
-<div id="cell-31" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="10">
+<div id="cell-32" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="13">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> countries.groupby(<span class="st">"continent"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>grouped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x3131a0190&gt;</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x14fd17fa0&gt;</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Remember">
@@ -414,14 +415,14 @@ Remember
 </div>
 </div>
 <p>Access the “pop_est” column from the groupby variable (“grouped”) and then call the <code>.sum()</code> function to calculate our desired statistic:</p>
-<div id="cell-34" class="cell" data-tags="[]" data-execution_count="11">
+<div id="cell-35" class="cell" data-tags="[]" data-execution_count="14">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pop_by_continent <span class="op">=</span> grouped[<span class="st">"pop_est"</span>].<span class="bu">sum</span>()</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pop_by_continent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>continent
 Africa                     1.219176e+09
 Antarctica                 4.050000e+03
@@ -434,7 +435,7 @@ South America              4.185407e+08
 Name: pop_est, dtype: float64</code></pre>
 </div>
 </div>
-<div id="cell-35" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="12">
+<div id="cell-37" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="15">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort values</span></span>
@@ -443,7 +444,7 @@ Name: pop_est, dtype: float64</code></pre>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Output sorted values from cell</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>pop_by_continent <span class="op">/</span> <span class="fl">1e9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>continent
 Asia                       4.389145e+00
 Africa                     1.219176e+00
@@ -457,7 +458,7 @@ Name: pop_est, dtype: float64</code></pre>
 </div>
 </div>
 <p>Filter the data frame based on a boolean selection:</p>
-<div id="cell-37" class="cell" data-tags="[]" data-execution_count="13">
+<div id="cell-39" class="cell" data-tags="[]" data-execution_count="16">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Is the country name USA?</span></span>
@@ -465,7 +466,7 @@ Name: pop_est, dtype: float64</code></pre>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>is_USA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>0      False
 1      False
 2      False
@@ -480,7 +481,7 @@ Name: pop_est, dtype: float64</code></pre>
 Name: name, Length: 177, dtype: bool</code></pre>
 </div>
 </div>
-<div id="cell-38" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="14">
+<div id="cell-40" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="17">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the row with USA</span></span>
@@ -488,7 +489,7 @@ Name: name, Length: 177, dtype: bool</code></pre>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>USA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 
 
@@ -512,7 +513,7 @@ Name: name, Length: 177, dtype: bool</code></pre>
 <td>North America</td>
 <td>326625791.0</td>
 <td>18560000.0</td>
-<td>MULTIPOLYGON (((-122.84000 49.00000, -120.0000...</td>
+<td>MULTIPOLYGON (((-122.84 49, -120 49, -117.0312...</td>
 </tr>
 </tbody>
 </table>
@@ -520,14 +521,14 @@ Name: name, Length: 177, dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-39" class="cell" data-execution_count="16">
+<div id="cell-41" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#you can see the type is a shapely polygon object. Geopandas is </span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># built on Shapely. We will talk more on this later</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>USA.squeeze().geometry, <span class="bu">type</span>(USA.squeeze().geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>(&lt;MULTIPOLYGON (((-122.84 49, -120 49, -117.031 49, -116.048 49, -113 49, -11...&gt;,
  shapely.geometry.multipolygon.MultiPolygon)</code></pre>
 </div>
@@ -545,7 +546,7 @@ Reminder: the squeeze() function
 <p>The <code>squeeze()</code> function does just one it sounds like: if you have a DataFrame with only one row, it will “squeeze” the row dimension by removing it, returning just a Series object:</p>
 </div>
 </div>
-<div id="cell-41" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="17">
+<div id="cell-43" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="19">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Squeeze</span></span>
@@ -560,7 +561,7 @@ Reminder: the squeeze() function
 <div class="cell-output cell-output-stdout">
 <pre><code>The type of USA is:  &lt;class 'pandas.core.series.Series'&gt;</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>iso_a3                                                      USA
 name                                   United States of America
 continent                                         North America
@@ -571,12 +572,12 @@ Name: 168, dtype: object</code></pre>
 </div>
 </div>
 <p>The simple features (Lines, Points, Polygons) are implemented by the <a href="https://shapely.readthedocs.io/en/stable/manual.html">shapely</a> library</p>
-<div id="cell-43" class="cell" data-tags="[]" data-execution_count="18">
+<div id="cell-45" class="cell" data-tags="[]" data-execution_count="20">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>USA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>iso_a3                                                      USA
 name                                   United States of America
 continent                                         North America
@@ -586,26 +587,26 @@ geometry      MULTIPOLYGON (((-122.84000000000005 49.0000000...
 Name: 168, dtype: object</code></pre>
 </div>
 </div>
-<div id="cell-44" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="19">
+<div id="cell-46" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="21">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(USA.geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>shapely.geometry.multipolygon.MultiPolygon</code></pre>
 </div>
 </div>
 <p>JupyterLab renders <code>shapely</code> geometries automatically:</p>
-<div id="cell-46" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="19">
+<div id="cell-48" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="22">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a mini USA</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>USA.geometry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-20-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-22-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -615,12 +616,12 @@ Name: 168, dtype: object</code></pre>
 <h3 data-number="2.6" class="anchored" data-anchor-id="how-does-geopandas-handle-coordinate-systems-and-map-projections"><span class="header-section-number">2.6</span> How does <code>geopandas</code> handle coordinate systems and map projections?</h3>
 <p>A <strong>coordinate reference system</strong> (CRS) relates the position of a geometry object on the spherical earth to its two-dimensional coordinates.</p>
 <p>A <code>GeoDataFrame</code> or <code>GeoSeries</code> has a <code>.crs</code> attribute which specifies the coordinate reference system.</p>
-<div id="cell-48" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="20">
+<div id="cell-50" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="23">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>countries.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>&lt;Geographic 2D CRS: EPSG:4326&gt;
 Name: WGS 84
 Axis Info [ellipsoidal]:
@@ -647,22 +648,24 @@ Datum: World Geodetic System 1984 ensemble
 <h3 data-number="2.8" class="anchored" data-anchor-id="how-to-plot-all-of-the-geometries-at-once"><span class="header-section-number">2.8</span> How to plot all of the geometries at once?</h3>
 <p>Use the <code>plot()</code> function to get a quick and dirty plot of all of the geometry features.</p>
 <p><strong>Note:</strong> the <code>plot()</code> returns the current maplotlib axes, allowing you to format the chart after plotting.</p>
-<div id="cell-51" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="21">
+<div id="cell-53" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="24">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the countries on our axes</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> countries.plot(ax<span class="op">=</span>ax, facecolor<span class="op">=</span><span class="st">"none"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Equirectangular Projection"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the countries on our axes</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> countries.plot(ax<span class="op">=</span>ax, facecolor<span class="op">=</span><span class="st">"none"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Equirectangular Projection"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -678,7 +681,7 @@ Datum: World Geodetic System 1984 ensemble
 <section id="lets-convert-to-the-mercator-projection" class="level4" data-number="2.9.1">
 <h4 data-number="2.9.1" class="anchored" data-anchor-id="lets-convert-to-the-mercator-projection"><span class="header-section-number">2.9.1</span> Let’s convert to the Mercator projection</h4>
 <p><a href="http://spatialreference.org/ref/epsg/wgs-84-world-mercator/">EPSG code: 3395</a></p>
-<div id="cell-55" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="22">
+<div id="cell-57" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="33">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Antartica, as the Mercator projection</span></span>
@@ -686,7 +689,7 @@ Datum: World Geodetic System 1984 ensemble
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>no_antarctica <span class="op">=</span> countries.loc[(countries[<span class="st">"name"</span>] <span class="op">!=</span> <span class="st">"Antarctica"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-56" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="23">
+<div id="cell-58" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="36">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two ways to specify the EPSG code</span></span>
@@ -696,12 +699,12 @@ Datum: World Geodetic System 1984 ensemble
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># countries_mercator = no_antartica.to_crs("EPSG:3395")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-57" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="24">
+<div id="cell-59" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="38">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>countries_mercator.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="24">
+<div class="cell-output cell-output-display" data-execution_count="38">
 <div>
 
 
@@ -725,7 +728,7 @@ Datum: World Geodetic System 1984 ensemble
 <td>Asia</td>
 <td>34124811.0</td>
 <td>64080.0</td>
-<td>POLYGON ((6813956.990 4227673.562, 6927484.435...</td>
+<td>POLYGON ((6813956.99 4227673.562, 6927484.435 ...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
@@ -734,7 +737,7 @@ Datum: World Geodetic System 1984 ensemble
 <td>Africa</td>
 <td>29310273.0</td>
 <td>189000.0</td>
-<td>MULTIPOLYGON (((2660998.216 -1305442.810, 2680...</td>
+<td>MULTIPOLYGON (((2660998.216 -1305442.81, 26805...</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -786,7 +789,7 @@ Tip
 <section id="now-lets-plot-it" class="level4" data-number="2.9.2">
 <h4 data-number="2.9.2" class="anchored" data-anchor-id="now-lets-plot-it"><span class="header-section-number">2.9.2</span> Now let’s plot it!</h4>
 <p>The easy way…with geopandas built-in <code>plot()</code> function</p>
-<div id="cell-60" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="25">
+<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="39">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the figure and axes</span></span>
@@ -801,7 +804,7 @@ Tip
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-28-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -834,15 +837,15 @@ Tip: Choosing the right CRS
 </section>
 <section id="lets-load-the-city-limits-for-philadelphia" class="level3" data-number="2.10">
 <h3 data-number="2.10" class="anchored" data-anchor-id="lets-load-the-city-limits-for-philadelphia"><span class="header-section-number">2.10</span> Let’s load the city limits for Philadelphia</h3>
-<p>We’ll use the provided <code>City_Limits</code> shape file in the <code>data/</code> folder</p>
-<div id="cell-65" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="26">
+<p>We’ll use the provided <a href="data/City_Limits.zip"><code>City_Limits</code></a> shape file in the <code>data/</code> folder</p>
+<div id="cell-67" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="27">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>city_limits <span class="op">=</span> gpd.read_file(<span class="st">"./data/City_Limits"</span>)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>city_limits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 
 
@@ -873,12 +876,12 @@ Tip: Choosing the right CRS
 <section id="whats-the-crs" class="level4" data-number="2.10.1">
 <h4 data-number="2.10.1" class="anchored" data-anchor-id="whats-the-crs"><span class="header-section-number">2.10.1</span> What’s the CRS?</h4>
 <p>Use the <code>.crs</code> attribute to find out!</p>
-<div id="cell-67" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="27">
+<div id="cell-69" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="28">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>city_limits.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>&lt;Geographic 2D CRS: EPSG:4326&gt;
 Name: WGS 84
 Axis Info [ellipsoidal]:
@@ -893,7 +896,7 @@ Datum: World Geodetic System 1984 ensemble
 </div>
 </div>
 <p>Plot it with the EPSG=4326 CRS:</p>
-<div id="cell-69" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="28">
+<div id="cell-71" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="29">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our figure and axes</span></span>
@@ -910,14 +913,14 @@ Datum: World Geodetic System 1984 ensemble
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-31-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>This is <em>not</em> what Philadelphia looks like..</p>
 <p>Let’s try EPSG=3857 instead:</p>
-<div id="cell-71" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="29">
+<div id="cell-73" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="30">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure</span></span>
@@ -936,7 +939,7 @@ Datum: World Geodetic System 1984 ensemble
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -958,14 +961,14 @@ Important
 <section id="saving-geodataframes" class="level4" data-number="2.10.2">
 <h4 data-number="2.10.2" class="anchored" data-anchor-id="saving-geodataframes"><span class="header-section-number">2.10.2</span> Saving GeoDataFrames</h4>
 <p>Use the <code>to_file()</code> function and specify the driver.</p>
-<div id="cell-74" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="30">
+<div id="cell-76" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="46">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ESRI shape file</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>city_limits_3857.to_file(<span class="st">"./data/city_limits_3857"</span>, driver<span class="op">=</span><span class="st">"Shapefile"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>city_limits_3857.to_file(<span class="st">"./data/city_limits_3857.shp"</span>, driver<span class="op">=</span><span class="st">"ESRI Shapefile"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-75" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="31">
+<div id="cell-77" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="48">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GeoJSON is also an option</span></span>
@@ -976,21 +979,21 @@ Important
 <section id="how-about-as-a-csv-file" class="level4" data-number="2.10.3">
 <h4 data-number="2.10.3" class="anchored" data-anchor-id="how-about-as-a-csv-file"><span class="header-section-number">2.10.3</span> How about as a CSV file?</h4>
 <p>Yes, but reading requires more work…</p>
-<div id="cell-77" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="30">
+<div id="cell-79" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="50">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save a csv file</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>city_limits_3857.to_csv(<span class="st">"./data/city_limits_3857.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-78" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="31">
+<div id="cell-80" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="51">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"./data/city_limits_3857.csv"</span>)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display" data-execution_count="51">
 <div>
 
 
@@ -1022,12 +1025,12 @@ Important
 <section id="looks-similar" class="level4" data-number="2.10.4">
 <h4 data-number="2.10.4" class="anchored" data-anchor-id="looks-similar"><span class="header-section-number">2.10.4</span> Looks similar…</h4>
 <p><strong>But,</strong> the “geometry” column is just stored as a string…it’s not a shapely Polygon</p>
-<div id="cell-80" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="32">
+<div id="cell-82" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="52">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df.geometry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="52">
 <pre><code>0    POLYGON ((-8350627.97509646 4886006.88680784, ...
 Name: geometry, dtype: object</code></pre>
 </div>
@@ -1035,7 +1038,7 @@ Name: geometry, dtype: object</code></pre>
 </section>
 <section id="use-shapely-to-parse-the-string-version-of-the-polygons" class="level4" data-number="2.10.5">
 <h4 data-number="2.10.5" class="anchored" data-anchor-id="use-shapely-to-parse-the-string-version-of-the-polygons"><span class="header-section-number">2.10.5</span> Use <code>shapely</code> to parse the string version of the polygons</h4>
-<div id="cell-82" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="33">
+<div id="cell-84" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="53">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely <span class="im">import</span> wkt</span>
@@ -1044,15 +1047,15 @@ Name: geometry, dtype: object</code></pre>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"geometry"</span>] <span class="op">=</span> df[<span class="st">"geometry"</span>].<span class="bu">apply</span>(wkt.loads)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-83" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="34">
+<div id="cell-85" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="54">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>df.geometry.iloc[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="54">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-37-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-39-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1080,7 +1083,7 @@ Watch out!
 </div>
 </div>
 <p>In this case, the geometry column was saved in Web Mercator EPSG=3857</p>
-<div id="cell-87" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="35">
+<div id="cell-89" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="55">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make specifying the name of the geometry column and CRS</span></span>
@@ -1095,7 +1098,7 @@ Watch out!
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-38-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1104,7 +1107,7 @@ Watch out!
 <section id="lets-convert-back-to-4326-and-plot" class="level4" data-number="2.10.7">
 <h4 data-number="2.10.7" class="anchored" data-anchor-id="lets-convert-back-to-4326-and-plot"><span class="header-section-number">2.10.7</span> Let’s convert back to 4326 and plot</h4>
 <p>The tilt should be a bit more obvious now…</p>
-<div id="cell-89" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="36">
+<div id="cell-91" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="57">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> gdf.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>).plot(facecolor<span class="op">=</span><span class="st">"none"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
@@ -1115,7 +1118,7 @@ Watch out!
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-39-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-41-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1158,20 +1161,20 @@ Note
 </section>
 <section id="part-2-spatial-relationships-and-joins" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="part-2-spatial-relationships-and-joins"><span class="header-section-number">3</span> Part 2: Spatial Relationships and Joins</h2>
-<p>Let’s explore joins and merges between GeoDataFrames based on geospatial relationships…</p>
-<div id="cell-94" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="37">
+<p>Let’s explore joins and merges between GeoDataFrames based on geospatial relationships… Download the <a href="data/ne_110m_admin_0_countries.zip">ne_110m_populated_places</a> from the <code>data/</code> folder and unzip it.</p>
+<div id="cell-96" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="31">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some cities data from the data/ folder</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>cities <span class="op">=</span> gpd.read_file(<span class="st">"./data/ne_110m_populated_places"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-95" class="cell" data-execution_count="38">
+<div id="cell-97" class="cell" data-execution_count="32">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>cities</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="38">
+<div class="cell-output cell-output-display" data-execution_count="32">
 <div>
 
 
@@ -1192,7 +1195,7 @@ Note
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>San Marino</td>
-<td>POINT (12.44177 43.93610)</td>
+<td>POINT (12.44177 43.9361)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1202,12 +1205,12 @@ Note
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>Lobamba</td>
-<td>POINT (31.20000 -26.46667)</td>
+<td>POINT (31.2 -26.46667)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>Luxembourg</td>
-<td>POINT (6.13000 49.61166)</td>
+<td>POINT (6.13 49.61166)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -1255,7 +1258,7 @@ Note
 <h3 data-number="3.1" class="anchored" data-anchor-id="a-quick-example"><span class="header-section-number">3.1</span> A quick example</h3>
 <p>What country is New York in?</p>
 <p><strong>Spoiler</strong>: the USA</p>
-<div id="cell-99" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="39">
+<div id="cell-101" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="33">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the Point representing New York City</span></span>
@@ -1263,29 +1266,29 @@ Note
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>new_york</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="33">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-42-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-44-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-100" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="40">
+<div id="cell-102" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="34">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(new_york)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell-output cell-output-display" data-execution_count="34">
 <pre><code>shapely.geometry.point.Point</code></pre>
 </div>
 </div>
-<div id="cell-101" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="41">
+<div id="cell-103" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="35">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>countries.contains(new_york)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="41">
+<div class="cell-output cell-output-display" data-execution_count="35">
 <pre><code>0      False
 1      False
 2      False
@@ -1300,13 +1303,13 @@ Note
 Length: 177, dtype: bool</code></pre>
 </div>
 </div>
-<div id="cell-102" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="42">
+<div id="cell-104" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="36">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the country that contains New York</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>countries.loc[countries.contains(new_york)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 
 
@@ -1330,7 +1333,7 @@ Length: 177, dtype: bool</code></pre>
 <td>North America</td>
 <td>326625791.0</td>
 <td>18560000.0</td>
-<td>MULTIPOLYGON (((-122.84000 49.00000, -120.0000...</td>
+<td>MULTIPOLYGON (((-122.84 49, -120 49, -117.0312...</td>
 </tr>
 </tbody>
 </table>
@@ -1338,17 +1341,17 @@ Length: 177, dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-103" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="43">
+<div id="cell-105" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="37">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the geometry column of the country containing NYC</span></span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>USA <span class="op">=</span> countries.loc[countries.contains(new_york)].squeeze().geometry</span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>USA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="37">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-46-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-48-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1366,34 +1369,34 @@ Note
 <p>The <code>.loc[]</code> function can take the index selector as the first argument, and the name of a column as a second argument (separated by a comma)</p>
 </div>
 </div>
-<div id="cell-105" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="44">
+<div id="cell-107" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="38">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(USA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display" data-execution_count="38">
 <pre><code>shapely.geometry.multipolygon.MultiPolygon</code></pre>
 </div>
 </div>
-<div id="cell-106" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="45">
+<div id="cell-108" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="39">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Is New York within the USA?</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>new_york.within(USA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="39">
 <pre><code>True</code></pre>
 </div>
 </div>
-<div id="cell-107" class="cell" data-execution_count="46">
+<div id="cell-109" class="cell" data-execution_count="40">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>USA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-49-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-51-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1428,7 +1431,7 @@ Note
 <p>In this case, we want to join the <code>cities</code> dataframe, containing <code>Point</code> geometries, with the information of the <code>countries</code> dataframe, containing <code>Polygon</code> geometries.</p>
 <p>To match cities with countries, we’ll use the <code>within</code> spatial relationship.</p>
 <p>The <a href="https://geopandas.org/reference/geopandas.sjoin.html"><code>geopandas.sjoin()</code></a> function performs this operation:</p>
-<div id="cell-111" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="47">
+<div id="cell-113" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="41">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> gpd.sjoin(</span>
@@ -1441,12 +1444,12 @@ Note
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-112" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="48">
+<div id="cell-114" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="42">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>joined.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="48">
+<div class="cell-output cell-output-display" data-execution_count="42">
 <div>
 
 
@@ -1479,7 +1482,7 @@ Note
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>San Marino</td>
-<td>POINT (12.44177 43.93610)</td>
+<td>POINT (12.44177 43.9361)</td>
 <td>79.0</td>
 <td>ITA</td>
 <td>Italy</td>
@@ -1501,7 +1504,7 @@ Note
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>Lobamba</td>
-<td>POINT (31.20000 -26.46667)</td>
+<td>POINT (31.2 -26.46667)</td>
 <td>152.0</td>
 <td>SWZ</td>
 <td>Swaziland</td>
@@ -1512,7 +1515,7 @@ Note
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>Luxembourg</td>
-<td>POINT (6.13000 49.61166)</td>
+<td>POINT (6.13 49.61166)</td>
 <td>97.0</td>
 <td>LUX</td>
 <td>Luxembourg</td>
@@ -1528,13 +1531,13 @@ Note
 </div>
 <p>As we can see above, the attributes of the cities (left) and countries (right) have been merged based on whether the city is inside the country.</p>
 <p>Let’s select cities in Italy only:</p>
-<div id="cell-115" class="cell" data-execution_count="49">
+<div id="cell-117" class="cell" data-execution_count="43">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>cities_in_italy <span class="op">=</span> joined.loc[joined[<span class="st">"name_country"</span>] <span class="op">==</span> <span class="st">"Italy"</span>]</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>cities_in_italy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="49">
+<div class="cell-output cell-output-display" data-execution_count="43">
 <div>
 
 
@@ -1567,7 +1570,7 @@ Note
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>San Marino</td>
-<td>POINT (12.44177 43.93610)</td>
+<td>POINT (12.44177 43.9361)</td>
 <td>79.0</td>
 <td>ITA</td>
 <td>Italy</td>
@@ -1578,7 +1581,7 @@ Note
 <tr class="odd">
 <td data-quarto-table-cell-role="th">226</td>
 <td>Rome</td>
-<td>POINT (12.48131 41.89790)</td>
+<td>POINT (12.48131 41.8979)</td>
 <td>79.0</td>
 <td>ITA</td>
 <td>Italy</td>
@@ -1592,7 +1595,7 @@ Note
 </div>
 </div>
 </div>
-<div id="cell-116" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="50">
+<div id="cell-118" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="44">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract Italy</span></span>
@@ -1611,7 +1614,7 @@ Note
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-53-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-55-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1622,18 +1625,18 @@ Note
 <p>We can also perform the “join” operation on the <strong>geometries</strong> rather than just combining <strong>attributes</strong>.</p>
 <p>The <code>overlay()</code> function combines geometries, e.g.&nbsp;by taking the intersection of the geometries.</p>
 <p>Select all countries in Africa:</p>
-<div id="cell-119" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="51">
+<div id="cell-121" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="45">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>africa <span class="op">=</span> countries.loc[countries[<span class="st">"continent"</span>] <span class="op">==</span> <span class="st">"Africa"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-120" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="52">
+<div id="cell-122" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="46">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>africa.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div class="cell-output cell-output-display" data-execution_count="46">
 <div>
 
 
@@ -1666,7 +1669,7 @@ Note
 <td>Africa</td>
 <td>11466756.0</td>
 <td>7892.0</td>
-<td>POLYGON ((29.34000 -4.49998, 29.27638 -3.29391...</td>
+<td>POLYGON ((29.34 -4.49998, 29.27638 -3.29391, 2...</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">13</td>
@@ -1675,7 +1678,7 @@ Note
 <td>Africa</td>
 <td>11038805.0</td>
 <td>24310.0</td>
-<td>POLYGON ((2.69170 6.25882, 1.86524 6.14216, 1....</td>
+<td>POLYGON ((2.6917 6.25882, 1.86524 6.14216, 1.6...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">14</td>
@@ -1702,12 +1705,12 @@ Note
 </div>
 </div>
 <p>What is the CRS?</p>
-<div id="cell-122" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="53">
+<div id="cell-124" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="47">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>africa.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="53">
+<div class="cell-output cell-output-display" data-execution_count="47">
 <pre><code>&lt;Geographic 2D CRS: EPSG:4326&gt;
 Name: WGS 84
 Axis Info [ellipsoidal]:
@@ -1721,7 +1724,7 @@ Datum: World Geodetic System 1984 ensemble
 - Prime Meridian: Greenwich</code></pre>
 </div>
 </div>
-<div id="cell-123" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="54">
+<div id="cell-125" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="48">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's transform to a CRS that uses meters</span></span>
@@ -1730,7 +1733,7 @@ Datum: World Geodetic System 1984 ensemble
 <span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>africa.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="54">
+<div class="cell-output cell-output-display" data-execution_count="48">
 <pre><code>&lt;Projected CRS: EPSG:3857&gt;
 Name: WGS 84 / Pseudo-Mercator
 Axis Info [cartesian]:
@@ -1748,7 +1751,7 @@ Datum: World Geodetic System 1984 ensemble
 </div>
 </div>
 <p>Plot it:</p>
-<div id="cell-125" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="55">
+<div id="cell-127" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="49">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
@@ -1761,19 +1764,19 @@ Datum: World Geodetic System 1984 ensemble
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-58-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-60-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-126" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="56">
+<div id="cell-128" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="50">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Important CRS needs to match!</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>cities_3857 <span class="op">=</span> cities.to_crs(epsg<span class="op">=</span><span class="dv">3857</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-127" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="57">
+<div id="cell-129" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="51">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a copy of the GeoDataFrame</span></span>
@@ -1785,7 +1788,7 @@ Datum: World Geodetic System 1984 ensemble
 </div>
 <section id="plot-the-difference-of-the-two-geometries" class="level4" data-number="3.4.1">
 <h4 data-number="3.4.1" class="anchored" data-anchor-id="plot-the-difference-of-the-two-geometries"><span class="header-section-number">3.4.1</span> Plot the difference of the two geometries</h4>
-<div id="cell-129" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="58">
+<div id="cell-131" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="52">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
@@ -1805,19 +1808,19 @@ Datum: World Geodetic System 1984 ensemble
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-61-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-63-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-130" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="59">
+<div id="cell-132" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="53">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data attributes are the same as the first data frame (africa)</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with an updated geometry column</span></span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>diff.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="59">
+<div class="cell-output cell-output-display" data-execution_count="53">
 <div>
 
 
@@ -1841,7 +1844,7 @@ Datum: World Geodetic System 1984 ensemble
 <td>Africa</td>
 <td>29310273.0</td>
 <td>189000.0</td>
-<td>MULTIPOLYGON (((2673464.087 -1449571.330, 2441...</td>
+<td>MULTIPOLYGON (((2673464.087 -1449571.33, 24416...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
@@ -1888,7 +1891,7 @@ Datum: World Geodetic System 1984 ensemble
 </section>
 <section id="plot-the-intersection-of-the-two-geometries" class="level4" data-number="3.4.2">
 <h4 data-number="3.4.2" class="anchored" data-anchor-id="plot-the-intersection-of-the-two-geometries"><span class="header-section-number">3.4.2</span> Plot the intersection of the two geometries</h4>
-<div id="cell-132" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="60">
+<div id="cell-134" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="54">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
@@ -1904,7 +1907,7 @@ Datum: World Geodetic System 1984 ensemble
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-63-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-65-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1935,8 +1938,8 @@ Find out more…
 <p>Trash collection was a big concern in Philadelphia when the pandemic began. Check out <a href="https://www.inquirer.com/news/philadephia-trash-recycling-collection-delays-covid-20200806.html">this article</a> in the Philadelphia Inquirer for more details!</p>
 </div>
 </div>
-<p>First, let’s load our data from the <code>data/</code> folder. I downloaded the data from <a href="https://www.opendataphilly.org/dataset/311-service-and-information-requests">OpenDataPhilly</a> for tickets from 2020 and trimmed to those requests that have been categorized as “Rubbish/Recyclable Material Collection”. These are tickets related to missed trash pickup by the City’s Streets Department.</p>
-<div id="cell-136" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="61">
+<p>First, let’s load our data from the <code>data/</code> folder. I downloaded the data from <a href="https://www.opendataphilly.org/dataset/311-service-and-information-requests">OpenDataPhilly</a> for tickets from 2020 and trimmed to those requests that have been categorized as “Rubbish/Recyclable Material Collection”. These are tickets related to missed trash pickup by the City’s Streets Department. You can simpoly access the file from <a href="data/trash_311_requests_2020.csv">here</a>.</p>
+<div id="cell-138" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="82">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data from a CSV file into a pandas DataFrame</span></span>
@@ -1945,7 +1948,7 @@ Find out more…
 <span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-137" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="62">
+<div id="cell-139" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="83">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"number of requests = "</span>, <span class="bu">len</span>(trash_requests_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1954,12 +1957,12 @@ Find out more…
 <pre><code>number of requests =  47730</code></pre>
 </div>
 </div>
-<div id="cell-138" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="63">
+<div id="cell-140" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="84">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>trash_requests_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="63">
+<div class="cell-output cell-output-display" data-execution_count="84">
 <div>
 
 
@@ -2090,7 +2093,7 @@ Find out more…
 <section id="first-convert-to-a-geodataframe" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="first-convert-to-a-geodataframe"><span class="header-section-number">4.1</span> First, convert to a GeoDataFrame</h3>
 <p>Remove the requests missing lat/lon coordinates</p>
-<div id="cell-141" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="64">
+<div id="cell-143" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="85">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>trash_requests_df <span class="op">=</span> trash_requests_df.dropna(subset<span class="op">=</span>[<span class="st">"lat"</span>, <span class="st">"lon"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2098,7 +2101,7 @@ Find out more…
 </div>
 <p>Create Point objects for each <code>lat</code> and <code>lon</code> combination.</p>
 <p>We can use the helper utility function: <a href="https://geopandas.org/en/stable/docs/reference/api/geopandas.points_from_xy.html"><code>geopandas.points_from_xy()</code></a></p>
-<div id="cell-143" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="65">
+<div id="cell-145" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="86">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>trash_requests_df[<span class="st">"geometry"</span>] <span class="op">=</span> gpd.points_from_xy(</span>
@@ -2106,14 +2109,14 @@ Find out more…
 <span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-144" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="66">
+<div id="cell-146" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="87">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>trash_requests_df[<span class="st">"geometry"</span>].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="66">
+<div class="cell-output cell-output-display" data-execution_count="87">
 <pre><code>0    POINT (-75.10652 40.03439)
-1    POINT (-75.16350 39.93616)
+1     POINT (-75.1635 39.93616)
 2    POINT (-75.01835 40.05874)
 3    POINT (-75.02235 40.06366)
 4    POINT (-75.24473 39.95819)
@@ -2144,7 +2147,7 @@ Important
 <p><strong>Our data must be in the usual lat/lng EPSG=4326!</strong></p>
 <p><img src="imgs/lat-lng-point-example.png" class="img-fluid"></p>
 <p>Finally, let’s create our GeoDataFrame:</p>
-<div id="cell-148" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="67">
+<div id="cell-150" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="88">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>trash_requests_gdf <span class="op">=</span> gpd.GeoDataFrame(</span>
@@ -2156,12 +2159,12 @@ Important
 <section id="lets-plot-the-monthly-trash-requests" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="lets-plot-the-monthly-trash-requests"><span class="header-section-number">4.2</span> Let’s plot the monthly trash requests</h3>
 <p>Let’s add some new columns based on the “requested_datetime”. Right now, this column is a string, denoted by the dtype “object” in pandas language:</p>
-<div id="cell-150" class="cell" data-tags="[]" data-execution_count="68">
+<div id="cell-152" class="cell" data-tags="[]" data-execution_count="89">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>trash_requests_gdf[<span class="st">"requested_datetime"</span>].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="68">
+<div class="cell-output cell-output-display" data-execution_count="89">
 <pre><code>0    2020-04-02 19:22:24
 1    2020-04-02 08:40:53
 2    2020-01-02 19:17:55
@@ -2171,7 +2174,7 @@ Name: requested_datetime, dtype: object</code></pre>
 </div>
 </div>
 <p>We can now use the <code>pd.to_datetime()</code> function to convert to a column of special <code>Datetime</code> objects, which have all sorts of useful functionality.</p>
-<div id="cell-152" class="cell" data-execution_count="69">
+<div id="cell-154" class="cell" data-execution_count="90">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the requested datetime to a column of Datetime objects</span></span>
@@ -2180,12 +2183,12 @@ Name: requested_datetime, dtype: object</code></pre>
 <span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-153" class="cell" data-tags="[]" data-execution_count="70">
+<div id="cell-155" class="cell" data-tags="[]" data-execution_count="91">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>trash_requests_gdf[<span class="st">"requested_datetime_dt"</span>].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="70">
+<div class="cell-output cell-output-display" data-execution_count="91">
 <pre><code>0   2020-04-02 19:22:24
 1   2020-04-02 08:40:53
 2   2020-01-02 19:17:55
@@ -2212,7 +2215,7 @@ Tip: The strftime() function
 <p><strong>Helpful reference</strong>: Use <a href="https://strftime.org/">this strftime guide</a> to look up the syntax!</p>
 </div>
 </div>
-<div id="cell-156" class="cell" data-tags="[]" data-execution_count="71">
+<div id="cell-158" class="cell" data-tags="[]" data-execution_count="78">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the .dt attribute to extract out the month integer (starting at 0)</span></span>
@@ -2222,12 +2225,12 @@ Tip: The strftime() function
 <span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>trash_requests_gdf[<span class="st">"month"</span>] <span class="op">=</span> trash_requests_gdf[<span class="st">"requested_datetime_dt"</span>].dt.strftime(<span class="st">"%B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-157" class="cell" data-tags="[]" data-execution_count="72">
+<div id="cell-159" class="cell" data-tags="[]" data-execution_count="79">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>trash_requests_gdf.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="72">
+<div class="cell-output cell-output-display" data-execution_count="79">
 <div>
 
 
@@ -2299,7 +2302,7 @@ Tip: The strftime() function
 <td>NaN</td>
 <td>39.936164</td>
 <td>-75.163497</td>
-<td>POINT (-75.16350 39.93616)</td>
+<td>POINT (-75.1635 39.93616)</td>
 <td>2020-04-02 08:40:53</td>
 <td>4</td>
 <td>April</td>
@@ -2380,7 +2383,7 @@ Tip: The strftime() function
 </div>
 </div>
 <p>Now, let’s group by the month integer and month name, and get the size of the groups using the built-in <code>.size()</code> function of the groupby object:</p>
-<div id="cell-159" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="73">
+<div id="cell-161" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="80">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>totals_by_month <span class="op">=</span> trash_requests_gdf.groupby(</span>
@@ -2389,7 +2392,7 @@ Tip: The strftime() function
 <span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>totals_by_month</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="73">
+<div class="cell-output cell-output-display" data-execution_count="80">
 <div>
 
 
@@ -2499,31 +2502,39 @@ Note
 <section id="plot-a-bar-chart-with-seaborn" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="plot-a-bar-chart-with-seaborn"><span class="header-section-number">4.3</span> Plot a bar chart with seaborn</h3>
 <p>For making static bar charts with Python, seaborn’s <a href="https://seaborn.pydata.org/generated/seaborn.barplot.html"><code>sns.barplot()</code></a> is usually the best option!</p>
-<div id="cell-162" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="74">
+<div id="cell-164" class="cell" data-execution_count="85">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize figure/axes</span></span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
-<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
-<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
-<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"month_int"</span>,</span>
-<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"size"</span>,</span>
-<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>totals_by_month,</span>
-<span id="cb102-9"><a href="#cb102-9" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#2176d2"</span>,</span>
-<span id="cb102-10"><a href="#cb102-10" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
-<span id="cb102-11"><a href="#cb102-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb102-12"><a href="#cb102-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-13"><a href="#cb102-13" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(totals_by_month[<span class="st">"month"</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install seaborn</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-165" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="86">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize figure/axes</span></span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
+<span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"month_int"</span>,</span>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"size"</span>,</span>
+<span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>totals_by_month,</span>
+<span id="cb103-11"><a href="#cb103-11" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#2176d2"</span>,</span>
+<span id="cb103-12"><a href="#cb103-12" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb103-13"><a href="#cb103-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb103-14"><a href="#cb103-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-15"><a href="#cb103-15" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(totals_by_month[<span class="st">"month"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/7g/px0llbj54z37p076r6853ggh0000gn/T/ipykernel_16623/3879603526.py:13: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+<pre><code>/var/folders/71/pbz44c1s167ggg_nfc4s_c480000gq/T/ipykernel_38952/4109176871.py:15: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
   ax.set_xticklabels(totals_by_month["month"]);</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-77-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-80-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -2533,65 +2544,65 @@ Note
 <h3 data-number="4.4" class="anchored" data-anchor-id="reference-lets-improve-the-aesthetics-via-matplotlib"><span class="header-section-number">4.4</span> Reference: Let’s improve the aesthetics via matplotlib</h3>
 <p>The trend is clear in the previous chart, but can we do a better job with the aesthetics? Yes!</p>
 <p>For reference, here is a common way to clean up charts in matplotlib:</p>
-<div id="cell-164" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="75">
+<div id="cell-167" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="87">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize figure/axes</span></span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
-<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
-<span id="cb104-6"><a href="#cb104-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"month"</span>,</span>
-<span id="cb104-7"><a href="#cb104-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"size"</span>,</span>
-<span id="cb104-8"><a href="#cb104-8" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>totals_by_month,</span>
-<span id="cb104-9"><a href="#cb104-9" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#2176d2"</span>,</span>
-<span id="cb104-10"><a href="#cb104-10" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
-<span id="cb104-11"><a href="#cb104-11" aria-hidden="true" tabindex="-1"></a>    order<span class="op">=</span>[</span>
-<span id="cb104-12"><a href="#cb104-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"January"</span>,</span>
-<span id="cb104-13"><a href="#cb104-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"February"</span>,</span>
-<span id="cb104-14"><a href="#cb104-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"March"</span>,</span>
-<span id="cb104-15"><a href="#cb104-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"April"</span>,</span>
-<span id="cb104-16"><a href="#cb104-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"May"</span>,</span>
-<span id="cb104-17"><a href="#cb104-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"June"</span>,</span>
-<span id="cb104-18"><a href="#cb104-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"July"</span>,</span>
-<span id="cb104-19"><a href="#cb104-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"August"</span>,</span>
-<span id="cb104-20"><a href="#cb104-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"September"</span>,</span>
-<span id="cb104-21"><a href="#cb104-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"October"</span>,</span>
-<span id="cb104-22"><a href="#cb104-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"November"</span>,</span>
-<span id="cb104-23"><a href="#cb104-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"December"</span>,</span>
-<span id="cb104-24"><a href="#cb104-24" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb104-25"><a href="#cb104-25" aria-hidden="true" tabindex="-1"></a>    zorder<span class="op">=</span><span class="dv">999</span>,  <span class="co"># Make sure the bar charts are on top of the grid</span></span>
-<span id="cb104-26"><a href="#cb104-26" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb104-27"><a href="#cb104-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-28"><a href="#cb104-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x/y axis labels</span></span>
-<span id="cb104-29"><a href="#cb104-29" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">""</span>)</span>
-<span id="cb104-30"><a href="#cb104-30" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">""</span>)</span>
-<span id="cb104-31"><a href="#cb104-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-32"><a href="#cb104-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the yticks to go from 0 to 10,000 with 2,000 step</span></span>
-<span id="cb104-33"><a href="#cb104-33" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="dv">0</span>, <span class="fl">1e4</span> <span class="op">+</span> <span class="dv">1</span>, <span class="fl">2e3</span>))</span>
-<span id="cb104-34"><a href="#cb104-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-35"><a href="#cb104-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Format the ytick labels to use a comma and no decimal places</span></span>
-<span id="cb104-36"><a href="#cb104-36" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels([<span class="ss">f"</span><span class="sc">{</span>yval<span class="sc">:,.0f}</span><span class="ss">"</span> <span class="cf">for</span> yval <span class="kw">in</span> ax.get_yticks()])</span>
-<span id="cb104-37"><a href="#cb104-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-38"><a href="#cb104-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotate the xticks</span></span>
-<span id="cb104-39"><a href="#cb104-39" aria-hidden="true" tabindex="-1"></a>plt.setp(ax.get_xticklabels(), rotation<span class="op">=</span><span class="dv">60</span>)</span>
-<span id="cb104-40"><a href="#cb104-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-41"><a href="#cb104-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a grid backgrou d</span></span>
-<span id="cb104-42"><a href="#cb104-42" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, axis<span class="op">=</span><span class="st">"y"</span>)</span>
-<span id="cb104-43"><a href="#cb104-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-44"><a href="#cb104-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the top and right axes lines</span></span>
-<span id="cb104-45"><a href="#cb104-45" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb104-46"><a href="#cb104-46" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
-<span id="cb104-47"><a href="#cb104-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb104-48"><a href="#cb104-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
-<span id="cb104-49"><a href="#cb104-49" aria-hidden="true" tabindex="-1"></a>ax.set_title(</span>
-<span id="cb104-50"><a href="#cb104-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Philadelphia's Trash-Related 311 Requests in 2020"</span>, weight<span class="op">=</span><span class="st">"bold"</span>, fontsize<span class="op">=</span><span class="dv">16</span></span>
-<span id="cb104-51"><a href="#cb104-51" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize figure/axes</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"month"</span>,</span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"size"</span>,</span>
+<span id="cb105-8"><a href="#cb105-8" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>totals_by_month,</span>
+<span id="cb105-9"><a href="#cb105-9" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#2176d2"</span>,</span>
+<span id="cb105-10"><a href="#cb105-10" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb105-11"><a href="#cb105-11" aria-hidden="true" tabindex="-1"></a>    order<span class="op">=</span>[</span>
+<span id="cb105-12"><a href="#cb105-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"January"</span>,</span>
+<span id="cb105-13"><a href="#cb105-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"February"</span>,</span>
+<span id="cb105-14"><a href="#cb105-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"March"</span>,</span>
+<span id="cb105-15"><a href="#cb105-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"April"</span>,</span>
+<span id="cb105-16"><a href="#cb105-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"May"</span>,</span>
+<span id="cb105-17"><a href="#cb105-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"June"</span>,</span>
+<span id="cb105-18"><a href="#cb105-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"July"</span>,</span>
+<span id="cb105-19"><a href="#cb105-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"August"</span>,</span>
+<span id="cb105-20"><a href="#cb105-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"September"</span>,</span>
+<span id="cb105-21"><a href="#cb105-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"October"</span>,</span>
+<span id="cb105-22"><a href="#cb105-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"November"</span>,</span>
+<span id="cb105-23"><a href="#cb105-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"December"</span>,</span>
+<span id="cb105-24"><a href="#cb105-24" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb105-25"><a href="#cb105-25" aria-hidden="true" tabindex="-1"></a>    zorder<span class="op">=</span><span class="dv">999</span>,  <span class="co"># Make sure the bar charts are on top of the grid</span></span>
+<span id="cb105-26"><a href="#cb105-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb105-27"><a href="#cb105-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-28"><a href="#cb105-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x/y axis labels</span></span>
+<span id="cb105-29"><a href="#cb105-29" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">""</span>)</span>
+<span id="cb105-30"><a href="#cb105-30" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">""</span>)</span>
+<span id="cb105-31"><a href="#cb105-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-32"><a href="#cb105-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the yticks to go from 0 to 10,000 with 2,000 step</span></span>
+<span id="cb105-33"><a href="#cb105-33" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(np.arange(<span class="dv">0</span>, <span class="fl">1e4</span> <span class="op">+</span> <span class="dv">1</span>, <span class="fl">2e3</span>))</span>
+<span id="cb105-34"><a href="#cb105-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-35"><a href="#cb105-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Format the ytick labels to use a comma and no decimal places</span></span>
+<span id="cb105-36"><a href="#cb105-36" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels([<span class="ss">f"</span><span class="sc">{</span>yval<span class="sc">:,.0f}</span><span class="ss">"</span> <span class="cf">for</span> yval <span class="kw">in</span> ax.get_yticks()])</span>
+<span id="cb105-37"><a href="#cb105-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-38"><a href="#cb105-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Rotate the xticks</span></span>
+<span id="cb105-39"><a href="#cb105-39" aria-hidden="true" tabindex="-1"></a>plt.setp(ax.get_xticklabels(), rotation<span class="op">=</span><span class="dv">60</span>)</span>
+<span id="cb105-40"><a href="#cb105-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-41"><a href="#cb105-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a grid backgrou d</span></span>
+<span id="cb105-42"><a href="#cb105-42" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, axis<span class="op">=</span><span class="st">"y"</span>)</span>
+<span id="cb105-43"><a href="#cb105-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-44"><a href="#cb105-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the top and right axes lines</span></span>
+<span id="cb105-45"><a href="#cb105-45" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb105-46"><a href="#cb105-46" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb105-47"><a href="#cb105-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-48"><a href="#cb105-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb105-49"><a href="#cb105-49" aria-hidden="true" tabindex="-1"></a>ax.set_title(</span>
+<span id="cb105-50"><a href="#cb105-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Philadelphia's Trash-Related 311 Requests in 2020"</span>, weight<span class="op">=</span><span class="st">"bold"</span>, fontsize<span class="op">=</span><span class="dv">16</span></span>
+<span id="cb105-51"><a href="#cb105-51" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-78-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week3-geospatial-data-concepts_files/figure-html/cell-81-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
