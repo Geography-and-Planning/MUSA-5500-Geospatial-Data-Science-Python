@@ -247,7 +247,7 @@ Additional GeoJSON resources
 <p><strong>Example:</strong> Let’s load a shape file of countries in the world…</p>
 <p><a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/110m-admin-0-countries/">Source: Natural Earth Data</a></p>
 <p>We can use the <a href="https://geopandas.org/docs/reference/api/geopandas.read_file.html">read_file()</a> function to read shapefiles and GeoJSON files.</p>
-<div id="cell-18" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="7">
+<div id="cell-18" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
@@ -255,12 +255,12 @@ Additional GeoJSON resources
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> gpd.read_file(<span class="st">"./data/ne_110m_admin_0_countries"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-19" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="8">
+<div id="cell-19" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="2">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>countries.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -328,12 +328,12 @@ Additional GeoJSON resources
 </div>
 </div>
 </div>
-<div id="cell-20" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="9">
+<div id="cell-20" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="3">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>geopandas.geodataframe.GeoDataFrame</code></pre>
 </div>
 </div>
@@ -343,12 +343,12 @@ Additional GeoJSON resources
 <p>Just like a <code>DataFrame</code> but with a new, special <code>geometry</code> column:</p>
 <p><img src="imgs/geodataframe.svg"></p>
 <p>Print out the first 10 entires of the “geometry” column:</p>
-<div id="cell-25" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="10">
+<div id="cell-25" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="4">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>countries[<span class="st">"geometry"</span>].head(n<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>0    POLYGON ((61.21082 35.65007, 62.23065 35.27066...
 1    MULTIPOLYGON (((23.90415 -11.72228, 24.07991 -...
 2    POLYGON ((21.02004 40.84273, 20.99999 40.58, 2...
@@ -363,12 +363,12 @@ Name: geometry, dtype: geometry</code></pre>
 </div>
 </div>
 <p>Take a look at the first geometry polygon by using the <code>.iloc[]</code> selector:</p>
-<div id="cell-27" class="cell" data-execution_count="11">
+<div id="cell-27" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>countries[<span class="st">'geometry'</span>].iloc[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <figure class="figure">
 <p><img src="week3-geospatial-data-concepts_files/figure-html/cell-10-output-1.svg" class="img-fluid figure-img"></p>
@@ -616,12 +616,12 @@ Name: 168, dtype: object</code></pre>
 <h3 data-number="2.6" class="anchored" data-anchor-id="how-does-geopandas-handle-coordinate-systems-and-map-projections"><span class="header-section-number">2.6</span> How does <code>geopandas</code> handle coordinate systems and map projections?</h3>
 <p>A <strong>coordinate reference system</strong> (CRS) relates the position of a geometry object on the spherical earth to its two-dimensional coordinates.</p>
 <p>A <code>GeoDataFrame</code> or <code>GeoSeries</code> has a <code>.crs</code> attribute which specifies the coordinate reference system.</p>
-<div id="cell-50" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="23">
+<div id="cell-50" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="7">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>countries.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="23">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>&lt;Geographic 2D CRS: EPSG:4326&gt;
 Name: WGS 84
 Axis Info [ellipsoidal]:
@@ -648,7 +648,7 @@ Datum: World Geodetic System 1984 ensemble
 <h3 data-number="2.8" class="anchored" data-anchor-id="how-to-plot-all-of-the-geometries-at-once"><span class="header-section-number">2.8</span> How to plot all of the geometries at once?</h3>
 <p>Use the <code>plot()</code> function to get a quick and dirty plot of all of the geometry features.</p>
 <p><strong>Note:</strong> the <code>plot()</code> returns the current maplotlib axes, allowing you to format the chart after plotting.</p>
-<div id="cell-53" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="24">
+<div id="cell-53" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="8">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
@@ -681,7 +681,7 @@ Datum: World Geodetic System 1984 ensemble
 <section id="lets-convert-to-the-mercator-projection" class="level4" data-number="2.9.1">
 <h4 data-number="2.9.1" class="anchored" data-anchor-id="lets-convert-to-the-mercator-projection"><span class="header-section-number">2.9.1</span> Let’s convert to the Mercator projection</h4>
 <p><a href="http://spatialreference.org/ref/epsg/wgs-84-world-mercator/">EPSG code: 3395</a></p>
-<div id="cell-57" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="33">
+<div id="cell-57" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="10">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove Antartica, as the Mercator projection</span></span>
@@ -689,7 +689,7 @@ Datum: World Geodetic System 1984 ensemble
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>no_antarctica <span class="op">=</span> countries.loc[(countries[<span class="st">"name"</span>] <span class="op">!=</span> <span class="st">"Antarctica"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-58" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="36">
+<div id="cell-58" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="11">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two ways to specify the EPSG code</span></span>
@@ -699,12 +699,12 @@ Datum: World Geodetic System 1984 ensemble
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># countries_mercator = no_antartica.to_crs("EPSG:3395")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-59" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="38">
+<div id="cell-59" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="12">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>countries_mercator.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="38">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 
@@ -789,7 +789,7 @@ Tip
 <section id="now-lets-plot-it" class="level4" data-number="2.9.2">
 <h4 data-number="2.9.2" class="anchored" data-anchor-id="now-lets-plot-it"><span class="header-section-number">2.9.2</span> Now let’s plot it!</h4>
 <p>The easy way…with geopandas built-in <code>plot()</code> function</p>
-<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="39">
+<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="13">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the figure and axes</span></span>
@@ -838,14 +838,14 @@ Tip: Choosing the right CRS
 <section id="lets-load-the-city-limits-for-philadelphia" class="level3" data-number="2.10">
 <h3 data-number="2.10" class="anchored" data-anchor-id="lets-load-the-city-limits-for-philadelphia"><span class="header-section-number">2.10</span> Let’s load the city limits for Philadelphia</h3>
 <p>We’ll use the provided <a href="data/City_Limits.zip"><code>City_Limits</code></a> shape file in the <code>data/</code> folder</p>
-<div id="cell-67" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="27">
+<div id="cell-67" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="15">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>city_limits <span class="op">=</span> gpd.read_file(<span class="st">"./data/City_Limits"</span>)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>city_limits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 
 
@@ -876,12 +876,12 @@ Tip: Choosing the right CRS
 <section id="whats-the-crs" class="level4" data-number="2.10.1">
 <h4 data-number="2.10.1" class="anchored" data-anchor-id="whats-the-crs"><span class="header-section-number">2.10.1</span> What’s the CRS?</h4>
 <p>Use the <code>.crs</code> attribute to find out!</p>
-<div id="cell-69" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="28">
+<div id="cell-69" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="16">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>city_limits.crs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>&lt;Geographic 2D CRS: EPSG:4326&gt;
 Name: WGS 84
 Axis Info [ellipsoidal]:
@@ -896,7 +896,7 @@ Datum: World Geodetic System 1984 ensemble
 </div>
 </div>
 <p>Plot it with the EPSG=4326 CRS:</p>
-<div id="cell-71" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="29">
+<div id="cell-71" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="17">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our figure and axes</span></span>
@@ -920,7 +920,7 @@ Datum: World Geodetic System 1984 ensemble
 </div>
 <p>This is <em>not</em> what Philadelphia looks like..</p>
 <p>Let’s try EPSG=3857 instead:</p>
-<div id="cell-73" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="30">
+<div id="cell-73" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="18">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure</span></span>
@@ -1161,20 +1161,20 @@ Note
 </section>
 <section id="part-2-spatial-relationships-and-joins" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="part-2-spatial-relationships-and-joins"><span class="header-section-number">3</span> Part 2: Spatial Relationships and Joins</h2>
-<p>Let’s explore joins and merges between GeoDataFrames based on geospatial relationships… Download the <a href="data/ne_110m_admin_0_countries.zip">ne_110m_populated_places</a> from the <code>data/</code> folder and unzip it.</p>
-<div id="cell-96" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="31">
+<p>Let’s explore joins and merges between GeoDataFrames based on geospatial relationships… Download the <a href="data/ne_110m_populated_places.zip">ne_110m_populated_places</a> from the <code>data/</code> folder and unzip it.</p>
+<div id="cell-96" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="20">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some cities data from the data/ folder</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>cities <span class="op">=</span> gpd.read_file(<span class="st">"./data/ne_110m_populated_places"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-97" class="cell" data-execution_count="32">
+<div id="cell-97" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>cities</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 
 
@@ -1258,7 +1258,7 @@ Note
 <h3 data-number="3.1" class="anchored" data-anchor-id="a-quick-example"><span class="header-section-number">3.1</span> A quick example</h3>
 <p>What country is New York in?</p>
 <p><strong>Spoiler</strong>: the USA</p>
-<div id="cell-101" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="33">
+<div id="cell-101" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="22">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the Point representing New York City</span></span>
@@ -1266,7 +1266,7 @@ Note
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>new_york</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 <figure class="figure">
 <p><img src="week3-geospatial-data-concepts_files/figure-html/cell-44-output-1.svg" class="img-fluid figure-img"></p>
@@ -1274,21 +1274,21 @@ Note
 </div>
 </div>
 </div>
-<div id="cell-102" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="34">
+<div id="cell-102" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="23">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(new_york)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>shapely.geometry.point.Point</code></pre>
 </div>
 </div>
-<div id="cell-103" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="35">
+<div id="cell-103" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="24">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>countries.contains(new_york)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>0      False
 1      False
 2      False
@@ -1341,14 +1341,14 @@ Length: 177, dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-105" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="37">
+<div id="cell-105" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="25">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the geometry column of the country containing NYC</span></span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>USA <span class="op">=</span> countries.loc[countries.contains(new_york)].squeeze().geometry</span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>USA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 <figure class="figure">
 <p><img src="week3-geospatial-data-concepts_files/figure-html/cell-48-output-1.svg" class="img-fluid figure-img"></p>
@@ -1378,13 +1378,13 @@ Note
 <pre><code>shapely.geometry.multipolygon.MultiPolygon</code></pre>
 </div>
 </div>
-<div id="cell-108" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="39">
+<div id="cell-108" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="26">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Is New York within the USA?</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>new_york.within(USA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>True</code></pre>
 </div>
 </div>
@@ -1431,7 +1431,7 @@ Note
 <p>In this case, we want to join the <code>cities</code> dataframe, containing <code>Point</code> geometries, with the information of the <code>countries</code> dataframe, containing <code>Polygon</code> geometries.</p>
 <p>To match cities with countries, we’ll use the <code>within</code> spatial relationship.</p>
 <p>The <a href="https://geopandas.org/reference/geopandas.sjoin.html"><code>geopandas.sjoin()</code></a> function performs this operation:</p>
-<div id="cell-113" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="41">
+<div id="cell-113" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="27">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> gpd.sjoin(</span>
@@ -1444,12 +1444,12 @@ Note
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-114" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="42">
+<div id="cell-114" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="28">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>joined.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <div>
 
 
@@ -1531,13 +1531,13 @@ Note
 </div>
 <p>As we can see above, the attributes of the cities (left) and countries (right) have been merged based on whether the city is inside the country.</p>
 <p>Let’s select cities in Italy only:</p>
-<div id="cell-117" class="cell" data-execution_count="43">
+<div id="cell-117" class="cell" data-execution_count="29">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>cities_in_italy <span class="op">=</span> joined.loc[joined[<span class="st">"name_country"</span>] <span class="op">==</span> <span class="st">"Italy"</span>]</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>cities_in_italy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="29">
 <div>
 
 
