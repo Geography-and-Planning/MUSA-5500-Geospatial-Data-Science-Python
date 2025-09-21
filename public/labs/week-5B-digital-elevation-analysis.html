@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Week 5B: Flood Modeling based on Raster data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="week-5B-digital-elevation-analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="week-5B-digital-elevation-analysis_files/libs/quarto-html/quarto.js"></script>
+<script src="week-5B-digital-elevation-analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="week-5B-digital-elevation-analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="week-5B-digital-elevation-analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="week-5B-digital-elevation-analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="week-5B-digital-elevation-analysis_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="week-5B-digital-elevation-analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="week-5B-digital-elevation-analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="week-5B-digital-elevation-analysis_files/libs/bootstrap/bootstrap-81e35ebdb4125010edbabe6010586085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#major-topics" id="toc-major-topics" class="nav-link active" data-scroll-target="#major-topics"><span class="header-section-number">1</span> Major topics</a>
+  <ul class="collapse">
+  <li><a href="#download-the-dem-automatically-from-usgs" id="toc-download-the-dem-automatically-from-usgs" class="nav-link" data-scroll-target="#download-the-dem-automatically-from-usgs"><span class="header-section-number">1.1</span> Download the DEM automatically from USGS</a></li>
+  <li><a href="#download-a-sample-dem-for-one-tile" id="toc-download-a-sample-dem-for-one-tile" class="nav-link" data-scroll-target="#download-a-sample-dem-for-one-tile"><span class="header-section-number">1.2</span> Download a sample DEM for one tile</a></li>
+  <li><a href="#let-organize-the-script-using-function" id="toc-let-organize-the-script-using-function" class="nav-link" data-scroll-target="#let-organize-the-script-using-function"><span class="header-section-number">1.3</span> Let organize the script using function</a></li>
+  <li><a href="#list-all-dem-tiles-for-a-region" id="toc-list-all-dem-tiles-for-a-region" class="nav-link" data-scroll-target="#list-all-dem-tiles-for-a-region"><span class="header-section-number">1.4</span> List all DEM tiles for a region</a></li>
+  <li><a href="#now-we-can-start-to-download-in-batch" id="toc-now-we-can-start-to-download-in-batch" class="nav-link" data-scroll-target="#now-we-can-start-to-download-in-batch"><span class="header-section-number">1.5</span> Now we can start to download in batch</a></li>
+  </ul></li>
+  <li><a href="#visualize-the-dem" id="toc-visualize-the-dem" class="nav-link" data-scroll-target="#visualize-the-dem"><span class="header-section-number">2</span> Visualize the DEM</a></li>
+  <li><a href="#flood-modeling-analysis" id="toc-flood-modeling-analysis" class="nav-link" data-scroll-target="#flood-modeling-analysis"><span class="header-section-number">3</span> Flood modeling analysis</a>
+  <ul class="collapse">
+  <li><a href="#install-the-module-of-pysheds" id="toc-install-the-module-of-pysheds" class="nav-link" data-scroll-target="#install-the-module-of-pysheds"><span class="header-section-number">3.1</span> Install the module of <code>pysheds</code></a></li>
+  <li><a href="#computing-the-flow-directions-and-accumulation-for-a-given-dem" id="toc-computing-the-flow-directions-and-accumulation-for-a-given-dem" class="nav-link" data-scroll-target="#computing-the-flow-directions-and-accumulation-for-a-given-dem"><span class="header-section-number">3.2</span> computing the flow directions and accumulation for a given DEM</a></li>
+  <li><a href="#compute-accumulation-from-flow-direction" id="toc-compute-accumulation-from-flow-direction" class="nav-link" data-scroll-target="#compute-accumulation-from-flow-direction"><span class="header-section-number">3.3</span> Compute accumulation from flow direction</a></li>
+  <li><a href="#compute-the-height-above-nearest-drainage" id="toc-compute-the-height-above-nearest-drainage" class="nav-link" data-scroll-target="#compute-the-height-above-nearest-drainage"><span class="header-section-number">3.4</span> Compute the height above nearest drainage</a></li>
+  <li><a href="#estimating-inundation-extent-constant-channel-depth" id="toc-estimating-inundation-extent-constant-channel-depth" class="nav-link" data-scroll-target="#estimating-inundation-extent-constant-channel-depth"><span class="header-section-number">3.5</span> Estimating inundation extent (constant channel depth)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week 5B: Flood Modeling based on Raster data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Sep 25, 2025</p>
+<p>Major topic: - Download the DEM data - Visualize the DEM data - Conduct the flood modeling analysis based on DEM</p>
+<section id="major-topics" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="major-topics"><span class="header-section-number">1</span> Major topics</h2>
+<p>Urban flooding is one of the major hazard. Here we can use the digital elevation model (DEM) to evaluate the potential flooded area.</p>
+<ul>
+<li>Download the DEM data</li>
+<li>Visualize the DEM data</li>
+<li>Conduct the hydrological analysis based on DEM</li>
+</ul>
+<section id="download-the-dem-automatically-from-usgs" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="download-the-dem-automatically-from-usgs"><span class="header-section-number">1.1</span> Download the DEM automatically from USGS</h3>
+<p>All the Digital Elevation Model <em>(DEM)</em> data can be downloaded from the USGS website: (<a href="https://apps.nationalmap.gov/downloader/">Link</a>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="week-5B-digital-elevation-analysis_files/figure-html/ea7b0225-b3d6-4e54-871c-64f28cc63ebc-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>On USGS website, there are DEM data with different resolution. The higher resolution DEM data can provide more accurate elevation information, but the file size is larger.</p>
+<p>An arc second is equivalent to 1/3600th of 1 degree or equal to 1/1,296,000 of a full circle.</p>
+<ul>
+<li><p>1-arc-second (~30m) <code>Elevation/1/TIFF/current/</code></p></li>
+<li><p>1/3-arc-second (~10m) <code>Elevation/13/TIFF/current/</code></p></li>
+<li><p>1/9-arc-second (~3m) <code>Elevation/19/TIFF/current/</code></p></li>
+<li><p>1m resolution DEM <code>https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1m/TIFF/current/{tile_name}/USGS_1m_{tile_name}.tif</code></p></li>
+</ul>
+<p><strong>For example</strong>, <code>n40w076</code> → Represents the latitude (40°N) and longitude (76°W) of the bottom-left corner. <code>USGS_1_n40w076.tif</code> → USGS 1-arcsecond DEM for that region. To get a different tile, change <code>n40w076</code> in the URL to the coordinates of your area of interest.</p>
+</section>
+<section id="download-a-sample-dem-for-one-tile" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="download-a-sample-dem-for-one-tile"><span class="header-section-number">1.2</span> Download a sample DEM for one tile</h3>
+<p>Let get started to download one DEM tile,</p>
+<div id="ba573ad5-3bc1-4dc5-861a-6c8b1ddcb491" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># you can try different tiles</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tile_name <span class="op">=</span> <span class="st">'n38w105'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tile_name <span class="op">=</span> <span class="st">'n39w076'</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>tile_name <span class="op">=</span> <span class="st">'n40w076'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Example download URL for a tile, here the 1 mean 1-arc second DEM, resolution around 30m</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>tile_url <span class="op">=</span> <span class="st">"https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/current/</span><span class="sc">%s</span><span class="st">/USGS_1_</span><span class="sc">%s</span><span class="st">.tif"</span><span class="op">%</span>(tile_name, tile_name)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the tile</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(tile_url)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"</span><span class="sc">%s</span><span class="st">.tif"</span><span class="op">%</span>(tile_name), <span class="st">"wb"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.write(response.content)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"DEM tile downloaded: </span><span class="sc">%s</span><span class="st">.tif"</span><span class="op">%</span>(tile_name))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>DEM tile downloaded: n40w076.tif</code></pre>
+</div>
+</div>
+<div id="fb536004" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tile_url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>'https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/current/n40w076/USGS_1_n40w076.tif'</code></pre>
+</div>
+</div>
+<p>You can also open the url address in your web browser to download the data. What we are doing here actually is to use Pyton to automate the downloading process.</p>
+</section>
+<section id="let-organize-the-script-using-function" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="let-organize-the-script-using-function"><span class="header-section-number">1.3</span> Let organize the script using function</h3>
+<p>Create a function <code>download_dem</code> to download the DEM data based on the tile name and resolution. The input parameters are are the lat and lon of any potential location.</p>
+<div id="ce3302ec" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_tile_name(lat, lon):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns the USGS tile name formatted correctly (e.g., 'n39w076').</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    lat_tile <span class="op">=</span> <span class="ss">f"n</span><span class="sc">{</span><span class="bu">int</span>(<span class="bu">abs</span>(lat))<span class="sc">:02d}</span><span class="ss">"</span> <span class="cf">if</span> lat <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="ss">f"s</span><span class="sc">{</span><span class="bu">int</span>(<span class="bu">abs</span>(lat))<span class="sc">:02d}</span><span class="ss">"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    lon_tile <span class="op">=</span> <span class="ss">f"w</span><span class="sc">{</span><span class="bu">int</span>(<span class="bu">abs</span>(lon))<span class="sc">:03d}</span><span class="ss">"</span> <span class="cf">if</span> lon <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="ss">f"e</span><span class="sc">{</span><span class="bu">int</span>(<span class="bu">abs</span>(lon))<span class="sc">:03d}</span><span class="ss">"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>lat_tile<span class="sc">}{</span>lon_tile<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Get tile for Philadelphia (39.95°N, 75.16°W)</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>lat, lon <span class="op">=</span> <span class="fl">39.95</span>, <span class="op">-</span><span class="fl">75.16</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>tile_name <span class="op">=</span> get_tile_name(lat, lon)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"DEM Tile Name:"</span>, tile_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>DEM Tile Name: n39w075</code></pre>
+</div>
+</div>
+<p>Through this function, you can typein any coordinate and find the tile name of the DEM tiles in the USGS server.</p>
+</section>
+<section id="list-all-dem-tiles-for-a-region" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="list-all-dem-tiles-for-a-region"><span class="header-section-number">1.4</span> List all DEM tiles for a region</h3>
+<p>You probably want to download multiple tiles for a region. Here are can specify the boundary of the region and download all the tiles in that region.Here we create a function to return all the tile names in a region.</p>
+<div id="b9693023-f44d-433e-b6c2-bb4bef8e703c" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_tiles_in_bbox(min_lat, max_lat, min_lon, max_lon):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a list of tile names covering a bounding box.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    tile_list <span class="op">=</span> []</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> lat <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">int</span>(min_lat), <span class="bu">int</span>(max_lat) <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> lon <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">int</span>(min_lon), <span class="bu">int</span>(max_lon) <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            tile_list.append(get_tile_name(lat, lon))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tile_list</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Get tiles for an area (Philadelphia to NYC region)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>tiles <span class="op">=</span> get_tiles_in_bbox(<span class="dv">38</span>, <span class="dv">41</span>, <span class="op">-</span><span class="dv">76</span>, <span class="op">-</span><span class="dv">74</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tiles to Download:"</span>, tiles)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tiles to Download: ['n38w076', 'n38w075', 'n38w074', 'n39w076', 'n39w075', 'n39w074', 'n40w076', 'n40w075', 'n40w074', 'n41w076', 'n41w075', 'n41w074']</code></pre>
+</div>
+</div>
+<p>Through this function, you can typein any boundary and find all the tile names of the DEM tiles in the USGS server.</p>
+</section>
+<section id="now-we-can-start-to-download-in-batch" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="now-we-can-start-to-download-in-batch"><span class="header-section-number">1.5</span> Now we can start to download in batch</h3>
+<div id="a7c3543d-15ef-4ddc-83f2-7fe2750383b6" class="cell" data-execution_count="51">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_dem_1arc(tile_name, save_path<span class="op">=</span><span class="st">"."</span>):</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Downloads a 1-arc-second (~30m) DEM tile from USGS TNM.</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">        tile_name (str): Tile name (e.g., "n39w076").</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">        save_path (str): Directory to save the DEM file.</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    base_url <span class="op">=</span> <span class="st">"https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/current"</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>tile_name<span class="sc">}</span><span class="ss">/USGS_1_</span><span class="sc">{</span>tile_name<span class="sc">}</span><span class="ss">.tif"</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    output_file <span class="op">=</span> os.path.join(save_path, <span class="ss">f"</span><span class="sc">{</span>tile_name<span class="sc">}</span><span class="ss">.tif"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, stream<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># with open(output_file, "wb") as file:</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">#     for chunk in response.iter_content(1024):</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">#         file.write(chunk)</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"✅ DEM Tile </span><span class="sc">{</span>tile_name<span class="sc">}</span><span class="ss"> downloaded successfully!"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"❌ Error: Tile </span><span class="sc">{</span>tile_name<span class="sc">}</span><span class="ss"> not found. Check availability."</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(url)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Download multiple tiles</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>save_directory <span class="op">=</span> <span class="st">"DEM_Tiles"</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>os.makedirs(save_directory, exist_ok<span class="op">=</span><span class="va">True</span>)  <span class="co"># Create folder if it doesn't exist</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> tile <span class="kw">in</span> tiles:</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    download_dem_1arc(tile, save_directory)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ DEM Tile n38w076 downloaded successfully!
+❌ Error: Tile n38w075 not found. Check availability.
+https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/current/n38w075/USGS_1_n38w075.tif
+❌ Error: Tile n38w074 not found. Check availability.
+https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/current/n38w074/USGS_1_n38w074.tif
+✅ DEM Tile n39w076 downloaded successfully!
+✅ DEM Tile n39w075 downloaded successfully!
+❌ Error: Tile n39w074 not found. Check availability.
+https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/current/n39w074/USGS_1_n39w074.tif
+✅ DEM Tile n40w076 downloaded successfully!
+✅ DEM Tile n40w075 downloaded successfully!
+❌ Error: Tile n40w074 not found. Check availability.
+https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/1/TIFF/current/n40w074/USGS_1_n40w074.tif
+✅ DEM Tile n41w076 downloaded successfully!
+✅ DEM Tile n41w075 downloaded successfully!
+✅ DEM Tile n41w074 downloaded successfully!</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="visualize-the-dem" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="visualize-the-dem"><span class="header-section-number">2</span> Visualize the DEM</h2>
+<p>We have not check our downloaded DEM data yet. Let use Python to visualize the DEM data.</p>
+<div id="91a9ceea" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.plot <span class="im">import</span> show</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> visualize_dem(file_path):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Visualizes the downloaded DEM tile using rasterio and matplotlib.</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">        file_path (str): Path to the DEM file to be visualized.</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> rasterio.<span class="bu">open</span>(file_path) <span class="im">as</span> src:</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        show(src, ax<span class="op">=</span>ax, title<span class="op">=</span><span class="ss">f"DEM Visualization: </span><span class="sc">{</span>file_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize a downloaded DEM tile</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>dem_file <span class="op">=</span> <span class="st">'n40w076.tif'</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>visualize_dem(dem_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-5B-digital-elevation-analysis_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="flood-modeling-analysis" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="flood-modeling-analysis"><span class="header-section-number">3</span> Flood modeling analysis</h2>
+<p>Inundation Risk Modelling With HAND Model using PySheds This notebook demonstrates flood risk assessment using the Height Above Nearest Drainage (HAND) model. By using Digital Elevation Models (DEMs) and calculating the vertical distance of terrain points from the drainage network, the HAND model helps classify areas based on their flood risk potential. The workflow is implemented with Python libraries such as rasterio, numpy, Pysheds, and matplotlib. The notebook covers data preparation, HAND calculation, and flood risk classification with clear, reproducible steps.</p>
+<p>With consideration of rainfall and terrain involves leveraging the library’s capabilities for flow direction, flow accumulation, and watershed delineation from a Digital Elevation Model (DEM). Here’s a step-by-step guide:</p>
+<p>Reference: <a href="https://mattbartos.com/pysheds/hand.html">https://mattbartos.com/pysheds/hand.html</a></p>
+<p>Pysheds, <a href="https://mattbartos.com/pysheds/">https://mattbartos.com/pysheds/</a></p>
+<section id="install-the-module-of-pysheds" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="install-the-module-of-pysheds"><span class="header-section-number">3.1</span> Install the module of <code>pysheds</code></h3>
+<p>We need to install the <code>pysheds</code> module first. You can use the following command to install it.</p>
+<div id="91adff05" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pysheds</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install seaborn</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="43471339" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pysheds</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysheds.grid <span class="im">import</span> Grid</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"You have imported pysheds successfully!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>You have imported pysheds successfully!</code></pre>
+</div>
+</div>
+<p>Open the DEM tile file using <code>pysheds</code></p>
+<div id="3d14cad5" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate grid from raster</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dem_file <span class="op">=</span> <span class="st">'n40w076.tif'</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> Grid.from_raster(dem_file)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>dem <span class="op">=</span> grid.read_raster(dem_file)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>dem.shape, <span class="bu">type</span>(dem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>((3612, 3612), pysheds.sview.Raster)</code></pre>
+</div>
+</div>
+</section>
+<section id="computing-the-flow-directions-and-accumulation-for-a-given-dem" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="computing-the-flow-directions-and-accumulation-for-a-given-dem"><span class="header-section-number">3.2</span> computing the flow directions and accumulation for a given DEM</h3>
+<p>You can download the DEM file from here</p>
+<div id="1d894572" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Condition DEM</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill pits in DEM</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>pit_filled_dem <span class="op">=</span> grid.fill_pits(dem)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill depressions in DEM</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>flooded_dem <span class="op">=</span> grid.fill_depressions(pit_filled_dem)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Resolve flats in DEM</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>inflated_dem <span class="op">=</span> grid.resolve_flats(flooded_dem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="1425359a" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine D8 flow directions from DEM</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify directional mapping</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>dirmap <span class="op">=</span> (<span class="dv">64</span>, <span class="dv">128</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute flow directions</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>fdir <span class="op">=</span> grid.flowdir(inflated_dem, dirmap<span class="op">=</span>dirmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="f6d6730b" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_alpha(<span class="dv">0</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.imshow(fdir, extent<span class="op">=</span>grid.extent, cmap<span class="op">=</span><span class="st">'viridis'</span>, zorder<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>boundaries <span class="op">=</span> ([<span class="dv">0</span>] <span class="op">+</span> <span class="bu">sorted</span>(<span class="bu">list</span>(dirmap)))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>plt.colorbar(boundaries<span class="op">=</span> boundaries,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>             values<span class="op">=</span><span class="bu">sorted</span>(dirmap))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Longitude'</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Latitude'</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Flow direction grid'</span>, size<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>plt.grid(zorder<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-5B-digital-elevation-analysis_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="compute-accumulation-from-flow-direction" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="compute-accumulation-from-flow-direction"><span class="header-section-number">3.3</span> Compute accumulation from flow direction</h3>
+<div id="a52a8057" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate flow accumulation</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># --------------------------</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>acc <span class="op">=</span> grid.accumulation(fdir, dirmap<span class="op">=</span>dirmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="ce1a4ed0" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> colors</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>fig.patch.set_alpha(<span class="dv">0</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="st">'on'</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> ax.imshow(acc, extent<span class="op">=</span>grid.extent, zorder<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>               cmap<span class="op">=</span><span class="st">'cubehelix'</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>               norm<span class="op">=</span>colors.PowerNorm(gamma<span class="op">=</span><span class="fl">0.1</span>, vmin<span class="op">=</span>acc.<span class="bu">min</span>(), vmax<span class="op">=</span>acc.<span class="bu">max</span>()),</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>               interpolation<span class="op">=</span><span class="st">'bilinear'</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">'Upstream Cells'</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Flow Accumulation'</span>, size<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Longitude'</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Latitude'</span>)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-5B-digital-elevation-analysis_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="compute-the-height-above-nearest-drainage" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="compute-the-height-above-nearest-drainage"><span class="header-section-number">3.4</span> Compute the height above nearest drainage</h3>
+<div id="5f64c4b9" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute height above nearest drainage</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>hand <span class="op">=</span> grid.compute_hand(fdir, dem, acc <span class="op">&gt;</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="estimating-inundation-extent-constant-channel-depth" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="estimating-inundation-extent-constant-channel-depth"><span class="header-section-number">3.5</span> Estimating inundation extent (constant channel depth)</h3>
+<div id="2682c0e0" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>inundation_extent <span class="op">=</span> np.where(hand <span class="op">&lt;</span> threshold, threshold <span class="op">-</span> hand, np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="c27b5476" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>fig.patch.set_alpha(<span class="dv">0</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>dem_view <span class="op">=</span> grid.view(dem, nodata<span class="op">=</span>np.nan)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>plt.imshow(dem_view, extent<span class="op">=</span>grid.extent, cmap<span class="op">=</span><span class="st">'Greys'</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>plt.imshow(inundation_extent, extent<span class="op">=</span>grid.extent,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>           cmap<span class="op">=</span><span class="st">'Blues'</span>, vmin<span class="op">=-</span><span class="dv">5</span>, vmax<span class="op">=</span><span class="dv">10</span>, zorder<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.grid(zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Inundation depths (constant channel depth)'</span>, size<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Longitude'</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Latitude'</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-5B-digital-elevation-analysis_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
