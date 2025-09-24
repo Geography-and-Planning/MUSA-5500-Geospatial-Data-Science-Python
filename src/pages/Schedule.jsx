@@ -37,12 +37,16 @@ const schedule = [
   },
   { w: 5, date: "9/25/25", topic: "Raster data operations in Python", 
     lab: [
-      {label: "5.1 Raster data operations", href: `${base}labs/week-5-raster-data/week-5A-rasterio.html`},
-      {label: "5.2 Overlay of shapefile and raster data", href: `${base}labs/week-5-raster-data/week-5B-numpy.html`}
+      {label: "5.1 Raster data operations", href: `${base}labs/week-5-raster-analysis/week-5A-raster-data.html`},
+      {label: "5.2 Overlay of shapefile and raster data", href: `${base}labs/week-5-raster-analysis/week-5B-raster-analysis.html`}
     ]
   },
   { w: 6, date: "10/2/25", topic: "Advanced geospatial analysis", 
-    lab: "NetworkX, OSMnx; Fiona+Shapely+Rasterio; Zonal statistics; road network analysis" },
+    lab: [
+      {label: "6.1 Advanced geospatial analysis", href: `${base}labs/week-6-advanced-geospatial-analysis/week-6-advanced-geospatial-analysis.html`},
+      {label: "6.2 Zonal statistics", href: `${base}labs/week-6-advanced-geospatial-analysis/week-6-advanced-geospatial-analysis.html`}
+    ]
+  },
   { w: 7, date: "10/9/25", topic: "Fall break — No class", 
     lab: "—" },
   { w: 8, date: "10/16/25", topic: "Web Scraping (I)", 
