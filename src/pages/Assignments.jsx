@@ -123,7 +123,7 @@ In Part 2, we’ll dive into the NDVI in Philadelphia more. Using Landsat data, 
 
 ### Assignment details
 
-All the data can be download from [here](). Please download it on your working directory. 
+All the data can be download from [**HERE**](https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/raw/refs/heads/main/public/assignments/assignment3/data.zip). Please download it on your working directory. 
 A [skeleton Jupyter notebook](https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/blob/main/public/assignments/assignment3/assignment-3.ipynb) is available in this repository that will walk you through the steps of the assignment. 
 Please unzip the data.zip and put it in the same folder as the notebook. The completed notebook should be submitted as your assignment.
 
