@@ -4,7 +4,7 @@ import "./Assignments.css";
 
 
 const assignments = [
-  {
+{
     id: "a1",
     title: "HW #1 — Python Basics & Setup",
     assigned: "Thu, Sep 4",
@@ -39,9 +39,7 @@ const assignments = [
 ### Submission Notes
 - Submit via **Canvas**. Please submit your notebook to Canvas directly, not as a GitHub link.
     `
-  },
-
-
+},
 {
     id: "a2",
     title: "HW #2 — Exploratory Data Visualization",
@@ -97,7 +95,41 @@ Note: You may include geospatial charts to satisfy the above requirements, but y
 ### Submission Notes
 - Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
     `
-  }
+} ,
+{
+  id: "a3",
+  title: "HW #3 — Explore spatial patterns",
+  assigned: "Thu, Sep 25",
+  due: "Tue, Oct 7 @ 11:59 PM",
+  detailsMd: `
+**Assigned on:** Thu, September 25 
+**Due:** Tue, Oct 7 at 11:59 PM  
+### Description
+---
+This assignment will include two parts:
+
+In Part 1, we’ll explore spatial trends evictions in Philadelphia using data from the [Eviction Lab](https://evictionlab.org/) and building code violations using data from [OpenDataPhilly](https://www.opendataphilly.org/).
+
+We’ll be exploring the idea that evictions can occur as retaliation against renters for reporting code violations. Spatial correlations between evictions and code violations from the City’s Licenses and Inspections department can offer some insight into this question.
+
+In Part 2, we’ll dive into the NDVI in Philadelphia more. Using Landsat data, we’ll calculate the NDVI within the city limits and compare it to the NDVI in the immediate suburbs. We’ll also calculate the NDVI at the locations of trees in Philadelphia, using a dataset of street trees from OpenDataPhilly.
+
+### Background readings
+- [**HuffPost article**](https://www.huffpost.com/entry/cities-are-starting-to-pay-attention-to-the-eviction-crisis-thats-devastated-poor-tenants_n_5b1a7b21e4b0bbb7a0dbd59e)
+- [**PlanPhilly article**](https://whyy.org/segments/philly-landlords-evict-more-people-than-owners-in-other-large-cities/)
+- [**The Eviction Lab**](https://evictionlab.org/)
+- [**Data Dictionary for Eviction Lab**]() data available for download in this repository
+
+
+### Assignment details
+A skeleton Jupyter notebook is available in this repository that will walk you through the steps of the assignment. The completed notebook should be submitted as your assignment.
+
+
+### Submission Notes
+- Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
+  `
+}
+
 ];
 
 
