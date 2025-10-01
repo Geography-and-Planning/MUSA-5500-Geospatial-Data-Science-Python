@@ -43,8 +43,8 @@ const schedule = [
   },
   { w: 6, date: "10/2/25", topic: "Advanced geospatial analysis", 
     lab: [
-      {label: "6.1 Advanced geospatial analysis", href: `${base}labs/week-6-advanced-geospatial-analysis/week-6-advanced-geospatial-analysis.html`},
-      {label: "6.2 Zonal statistics", href: `${base}labs/week-6-advanced-geospatial-analysis/week-6-advanced-geospatial-analysis.html`}
+      {label: "6.1 Advanced geospatial analysis", href: `${base}labs/week-6-advanced-geospatial-analysis/week-6A-advanced-raster-analysis.html`},
+      {label: "6.2 Zonal statistics", href: `${base}labs/week-6-advanced-geospatial-analysis/week-6B-spatial_fiona_shapely.html`}
     ]
   },
   { w: 7, date: "10/9/25", topic: "Fall break — No class", 
