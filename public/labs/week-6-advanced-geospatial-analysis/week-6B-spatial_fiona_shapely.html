@@ -82,16 +82,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#python-spaital-ecosystem" id="toc-python-spaital-ecosystem" class="nav-link active" data-scroll-target="#python-spaital-ecosystem"><span class="header-section-number">1</span> Python spaital ecosystem</a>
   <ul class="collapse">
   <li><a href="#popular-python-modules" id="toc-popular-python-modules" class="nav-link" data-scroll-target="#popular-python-modules"><span class="header-section-number">1.1</span> Popular Python modules</a></li>
-  <li><a href="#read-the-metadata-of-shapefiles-using-fiona" id="toc-read-the-metadata-of-shapefiles-using-fiona" class="nav-link" data-scroll-target="#read-the-metadata-of-shapefiles-using-fiona"><span class="header-section-number">1.2</span> Read the metadata of shapefiles using fiona</a></li>
+  <li><a href="#this-session-will-include-some-major-sections" id="toc-this-session-will-include-some-major-sections" class="nav-link" data-scroll-target="#this-session-will-include-some-major-sections"><span class="header-section-number">1.2</span> This session will include some major sections,</a></li>
+  <li><a href="#read-the-geojson-file-using-fiona" id="toc-read-the-geojson-file-using-fiona" class="nav-link" data-scroll-target="#read-the-geojson-file-using-fiona"><span class="header-section-number">1.3</span> Read the geojson file using fiona</a></li>
+  <li><a href="#create-a-buffer-of-the-shape" id="toc-create-a-buffer-of-the-shape" class="nav-link" data-scroll-target="#create-a-buffer-of-the-shape"><span class="header-section-number">1.4</span> create a buffer of the shape</a></li>
+  <li><a href="#overlap-analysis-using-fionashapely" id="toc-overlap-analysis-using-fionashapely" class="nav-link" data-scroll-target="#overlap-analysis-using-fionashapely"><span class="header-section-number">1.5</span> Overlap analysis using fiona+shapely</a></li>
+  <li><a href="#rtree" id="toc-rtree" class="nav-link" data-scroll-target="#rtree"><span class="header-section-number">1.6</span> RTree</a></li>
   </ul></li>
-  <li><a href="#topic-of-today" id="toc-topic-of-today" class="nav-link" data-scroll-target="#topic-of-today"><span class="header-section-number">2</span> Topic of today</a>
-  <ul class="collapse">
-  <li><a href="#this-session-will-include-some-major-sections" id="toc-this-session-will-include-some-major-sections" class="nav-link" data-scroll-target="#this-session-will-include-some-major-sections"><span class="header-section-number">2.1</span> This session will include some major sections,</a></li>
-  <li><a href="#create-a-buffer-of-the-shape" id="toc-create-a-buffer-of-the-shape" class="nav-link" data-scroll-target="#create-a-buffer-of-the-shape"><span class="header-section-number">2.2</span> create a buffer of the shape</a></li>
-  <li><a href="#overlap-analysis-using-fionashapely" id="toc-overlap-analysis-using-fionashapely" class="nav-link" data-scroll-target="#overlap-analysis-using-fionashapely"><span class="header-section-number">2.3</span> Overlap analysis using fiona+shapely</a></li>
-  <li><a href="#rtree" id="toc-rtree" class="nav-link" data-scroll-target="#rtree"><span class="header-section-number">2.4</span> RTree</a></li>
-  <li><a href="#zonal-statistics-using-geopandasrasterio" id="toc-zonal-statistics-using-geopandasrasterio" class="nav-link" data-scroll-target="#zonal-statistics-using-geopandasrasterio"><span class="header-section-number">2.5</span> Zonal statistics using geopandas+rasterio</a></li>
-  </ul></li>
+  <li><a href="#zonal-statistics-using-geopandasrasterio" id="toc-zonal-statistics-using-geopandasrasterio" class="nav-link" data-scroll-target="#zonal-statistics-using-geopandasrasterio"><span class="header-section-number">2</span> Zonal statistics using geopandas+rasterio</a></li>
   </ul>
 </nav>
 </div>
@@ -138,9 +135,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-2-2-image.png" class="img-fluid"></p>
 <p><code>Fiona</code> is used for reading and writing vector files (here we’re using Shapefiles), while <code>Shapely</code> is used for doing the manipulation and analysis of the geometric objects.</p>
 </section>
-<section id="read-the-metadata-of-shapefiles-using-fiona" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="read-the-metadata-of-shapefiles-using-fiona"><span class="header-section-number">1.2</span> Read the metadata of shapefiles using fiona</h3>
-<div id="cell-4" class="cell" data-execution_count="43">
+<section id="this-session-will-include-some-major-sections" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="this-session-will-include-some-major-sections"><span class="header-section-number">1.2</span> This session will include some major sections,</h3>
+<ol type="1">
+<li><p>Read metadata, attributes, geometry of features in shapfile using fiona</p></li>
+<li><p>Create shapefile based on the longitude and latitude</p></li>
+<li><p>Do buffer analysis using fiona+shapely</p></li>
+<li><p>Do intersection of point feature class and polygon feature class</p></li>
+<li><p>Do zonal statistics using fiona+shapely+rasterio</p></li>
+</ol>
+<p><strong>References</strong>:</p>
+<ul>
+<li><p>Fiona Manual, <a href="http://toblerity.org/fiona/manual.html">http://toblerity.org/fiona/manual.html</a></p></li>
+<li><p>Shapely Manual, <a href="http://toblerity.org/shapely/manual.html">http://toblerity.org/shapely/manual.html</a></p></li>
+<li><p>AZAVEA Research Blog, Using Shapely and Fiona to Locate High-Risk Traffic Areas, <a href="https://www.azavea.com/blog/2016/10/05/philippines-road-safety-using-shapely-fiona-locate-high-risk-traffic-areas/">https://www.azavea.com/blog/2016/10/05/philippines-road-safety-using-shapely-fiona-locate-high-risk-traffic-areas/</a></p></li>
+</ul>
+</section>
+<section id="read-the-geojson-file-using-fiona" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="read-the-geojson-file-using-fiona"><span class="header-section-number">1.3</span> Read the geojson file using fiona</h3>
+<div id="cell-7" class="cell">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the meta data of shapefile, such as spatial reference, field names, etc</span></span>
@@ -155,31 +168,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    driver <span class="op">=</span> nb_lyr.driver <span class="co"># the driver of the shapefile</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> nb_lyr.schema  <span class="co">#schema of shapefile</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    crs <span class="op">=</span> nb_lyr.crs   <span class="co"># coordinate reference system of the shapefile</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    meta <span class="op">=</span> nb_lyr.meta <span class="co"># more details about the metadata of the shapefile</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    meta <span class="op">=</span> nb_lyr.meta <span class="co"># more details about the metadata of the shapefile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-</section>
-<section id="topic-of-today" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="topic-of-today"><span class="header-section-number">2</span> Topic of today</h2>
-<section id="this-session-will-include-some-major-sections" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="this-session-will-include-some-major-sections"><span class="header-section-number">2.1</span> This session will include some major sections,</h3>
-<ol type="1">
-<li><p>Read metadata, attributes, geometry of features in shapfile using fiona</p></li>
-<li><p>Create shapefile based on the longitude and latitude</p></li>
-<li><p>Do buffer analysis using fiona+shapely</p></li>
-<li><p>Do intersection of point feature class and polygon feature class</p></li>
-<li><p>Do zonal statistics using fiona+shapely+rasterio</p></li>
-</ol>
-<p><strong>References</strong>:</p>
-<ul>
-<li><p>Fiona Manual, <a href="http://toblerity.org/fiona/manual.html">http://toblerity.org/fiona/manual.html</a></p></li>
-<li><p>Shapely Manual, <a href="http://toblerity.org/shapely/manual.html">http://toblerity.org/shapely/manual.html</a></p></li>
-<li><p>AZAVEA Research Blog, Using Shapely and Fiona to Locate High-Risk Traffic Areas, <a href="https://www.azavea.com/blog/2016/10/05/philippines-road-safety-using-shapely-fiona-locate-high-risk-traffic-areas/">https://www.azavea.com/blog/2016/10/05/philippines-road-safety-using-shapely-fiona-locate-high-risk-traffic-areas/</a></p></li>
-</ul>
 <p>Let’s take a look at what those metadata look like</p>
-<div id="cell-7" class="cell" data-execution_count="3">
+<div id="cell-9" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'The driver is:'</span>, driver)</span>
@@ -195,7 +188,7 @@ the metadata is: {'driver': 'GeoJSON', 'schema': {'properties': {'ZillowName': '
 </div>
 </div>
 <p>We can check the geometry and attribute of all features (polygons in this case) in shapefile.</p>
-<div id="cell-9" class="cell" data-execution_count="44">
+<div id="cell-11" class="cell" data-execution_count="44">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(census_shp, <span class="st">'r'</span>) <span class="im">as</span> nb_lyr:</span>
@@ -371,7 +364,7 @@ The neighborhod is: Yorktown</code></pre>
 </div>
 </div>
 <p>If you don’t like the <code>with</code> statement, you can also use the following code to read the shapefile:</p>
-<div id="cell-11" class="cell" data-execution_count="45">
+<div id="cell-13" class="cell" data-execution_count="45">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nb_lyr <span class="op">=</span> fiona.<span class="bu">open</span>(census_shp, <span class="st">'r'</span>)</span>
@@ -386,7 +379,7 @@ The neighborhod is: Yorktown</code></pre>
 </details>
 </div>
 <p>We can convert the dictionary <code>geom</code> variable into a shapely Polygon object using shapely. Here is one example of using shapely to deal with the geometry of features in shapefile.</p>
-<div id="cell-13" class="cell" data-scrolled="true" data-execution_count="5">
+<div id="cell-15" class="cell" data-scrolled="true" data-execution_count="5">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the shape is a function in shapely, we import "from shapely.geometry import shape"</span></span>
@@ -395,16 +388,16 @@ The neighborhod is: Yorktown</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <figure class="figure">
-<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-7-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-8-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="create-a-buffer-of-the-shape" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="create-a-buffer-of-the-shape"><span class="header-section-number">2.2</span> create a buffer of the shape</h3>
+<section id="create-a-buffer-of-the-shape" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="create-a-buffer-of-the-shape"><span class="header-section-number">1.4</span> create a buffer of the shape</h3>
 <p>The projection is wgs84, and the unit is degree, so be careful for the buffer analysis. If you want to do buffer analysis, you need to convert the projection to a projected coordinate system, such as UTM, which uses meters as the unit. Here is a demostration of using a small number for buffer analysis.</p>
-<div id="cell-16" class="cell" data-scrolled="true" data-execution_count="6">
+<div id="cell-18" class="cell" data-scrolled="true" data-execution_count="6">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>buff_geom <span class="op">=</span> shape(geom).<span class="bu">buffer</span>(<span class="fl">0.001</span>) <span class="co">#1 degree is a long distance</span></span>
@@ -414,55 +407,55 @@ The neighborhod is: Yorktown</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <figure class="figure">
-<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-8-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Note</strong> Make sure your shapefile is in a projected coordinate system before you do buffer analysis. Like using the local projection with unit of feet or meters if you want to do buffer analysis.</p>
 </section>
-<section id="overlap-analysis-using-fionashapely" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="overlap-analysis-using-fionashapely"><span class="header-section-number">2.3</span> Overlap analysis using fiona+shapely</h3>
+<section id="overlap-analysis-using-fionashapely" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="overlap-analysis-using-fionashapely"><span class="header-section-number">1.5</span> Overlap analysis using fiona+shapely</h3>
 <p>We may want to find out which points fall within which polygons. This is a common spatial analysis task known as a point-in-polygon query. It can also apply to other geometry types, such as lines and polygons, points and lines, etc.</p>
 <p>However, because of the huge amount of combination for seaching, it may take a long time to finish the analysis. We need to think about how to optimize the code to speed up the analysis.</p>
 <p>For example, you want to find a book with name of “Python for Geospatial Data Science” in a library with 1 million books. If you search the book one by one, it will take a long time to finish the search. But if you search the index of the book first, it will be much faster. Similarly, for spatial analysis, we can use spatial indexing to speed up the search process.</p>
 </section>
-<section id="rtree" class="level3" data-number="2.4">
-<h3 data-number="2.4" class="anchored" data-anchor-id="rtree"><span class="header-section-number">2.4</span> RTree</h3>
+<section id="rtree" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="rtree"><span class="header-section-number">1.6</span> RTree</h3>
 <p>RTree is a spatial indexing library that can be used to speed up spatial queries. It works by creating a hierarchical structure of bounding boxes that can be used to quickly eliminate large portions of the search space.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-21-1-4f125daf-413b-4364-90e2-fa222ed6d670.png" class="img-fluid figure-img" width="200"></p>
+<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-23-1-4f125daf-413b-4364-90e2-fa222ed6d670.png" class="img-fluid figure-img" width="200"></p>
 <figcaption>image.png</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-21-2-image.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-23-2-image.png" class="img-fluid figure-img" width="400"></p>
 <figcaption>{image.png}</figcaption>
 </figure>
 </div>
 <p>Here is a simple example of find the amount of tree points within each census tract polygon.</p>
-<div id="cell-23" class="cell" data-execution_count="9">
+<div id="cell-25" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install rtree</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="create-spatial-index-for-point-features" class="level4" data-number="2.4.1">
-<h4 data-number="2.4.1" class="anchored" data-anchor-id="create-spatial-index-for-point-features"><span class="header-section-number">2.4.1</span> Create spatial index for point features</h4>
+<section id="create-spatial-index-for-point-features" class="level4" data-number="1.6.1">
+<h4 data-number="1.6.1" class="anchored" data-anchor-id="create-spatial-index-for-point-features"><span class="header-section-number">1.6.1</span> Create spatial index for point features</h4>
 <p>The two shapefiles are in projection of WGS84, which uses degree as the unit. You can overlay them in Desktop GIS software. But, when do the spatial analysis, you need to convert them into a projected coordinate system, such as UTM, which uses meters as the unit. Here you can reproject both of then to a local projection (epsgcode: 2272) with unit of feet or meters if you want to do buffer analysis.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-24-1-image.png" class="img-fluid figure-img"></p>
+<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-26-1-image.png" class="img-fluid figure-img"></p>
 <figcaption>image.png</figcaption>
 </figure>
 </div>
 <p>The <a href="data/zillow_nb.geojson">neighborhood polygon</a> and the <a href="data/tree_site.geojson">tree points</a> are in the same projection, so we can do the spatial analysis directly.</p>
 </section>
-<section id="prepare-the-polygon-features-and-build-empty-rtree-index" class="level4" data-number="2.4.2">
-<h4 data-number="2.4.2" class="anchored" data-anchor-id="prepare-the-polygon-features-and-build-empty-rtree-index"><span class="header-section-number">2.4.2</span> prepare the polygon features and build empty RTree index</h4>
-<div id="cell-27" class="cell" data-execution_count="6">
+<section id="prepare-the-polygon-features-and-build-empty-rtree-index" class="level4" data-number="1.6.2">
+<h4 data-number="1.6.2" class="anchored" data-anchor-id="prepare-the-polygon-features-and-build-empty-rtree-index"><span class="header-section-number">1.6.2</span> prepare the polygon features and build empty RTree index</h4>
+<div id="cell-29" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rtree</span>
@@ -480,9 +473,9 @@ The neighborhod is: Yorktown</code></pre>
 </details>
 </div>
 </section>
-<section id="populate-the-spatial-index-with-point-features" class="level4" data-number="2.4.3">
-<h4 data-number="2.4.3" class="anchored" data-anchor-id="populate-the-spatial-index-with-point-features"><span class="header-section-number">2.4.3</span> Populate the spatial index with point features</h4>
-<div id="cell-29" class="cell" data-execution_count="4">
+<section id="populate-the-spatial-index-with-point-features" class="level4" data-number="1.6.3">
+<h4 data-number="1.6.3" class="anchored" data-anchor-id="populate-the-spatial-index-with-point-features"><span class="header-section-number">1.6.3</span> Populate the spatial index with point features</h4>
+<div id="cell-31" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># populate the spatial index, the polygon features</span></span>
@@ -509,10 +502,10 @@ The neighborhod is: Yorktown</code></pre>
 </div>
 </div>
 </section>
-<section id="start-the-overlay-based-on-the-built-rtree" class="level4" data-number="2.4.4">
-<h4 data-number="2.4.4" class="anchored" data-anchor-id="start-the-overlay-based-on-the-built-rtree"><span class="header-section-number">2.4.4</span> Start the overlay based on the built rtree</h4>
+<section id="start-the-overlay-based-on-the-built-rtree" class="level4" data-number="1.6.4">
+<h4 data-number="1.6.4" class="anchored" data-anchor-id="start-the-overlay-based-on-the-built-rtree"><span class="header-section-number">1.6.4</span> Start the overlay based on the built rtree</h4>
 <p>There are two steps to do the overlay analysis, step 1. using the rtree index to find the candidate points that may fall within the polygon; step 2. using shapely to check if the candidate points really fall within the polygon.</p>
-<div id="cell-31" class="cell" data-execution_count="8">
+<div id="cell-33" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loop all polygons and assign GVI values</span></span>
@@ -562,13 +555,14 @@ Polygon: 100</code></pre>
 </div>
 </section>
 </section>
-<section id="zonal-statistics-using-geopandasrasterio" class="level3" data-number="2.5">
-<h3 data-number="2.5" class="anchored" data-anchor-id="zonal-statistics-using-geopandasrasterio"><span class="header-section-number">2.5</span> Zonal statistics using geopandas+rasterio</h3>
+</section>
+<section id="zonal-statistics-using-geopandasrasterio" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="zonal-statistics-using-geopandasrasterio"><span class="header-section-number">2</span> Zonal statistics using geopandas+rasterio</h2>
 <p>We have discussed about using the <code>zonalstats</code> to do the zonal statistics in Week-5B. Here we will demonstrate how to do the zonal statistics using <code>geopandas</code> and <code>rasterio</code>. You will have more control of the process using this method.</p>
-<section id="prepare-the-input-data" class="level4" data-number="2.5.1">
-<h4 data-number="2.5.1" class="anchored" data-anchor-id="prepare-the-input-data"><span class="header-section-number">2.5.1</span> Prepare the input data</h4>
+<section id="prepare-the-input-data" class="level4" data-number="2.0.1">
+<h4 data-number="2.0.1" class="anchored" data-anchor-id="prepare-the-input-data"><span class="header-section-number">2.0.1</span> Prepare the input data</h4>
 <p>You will need to prepare the raster data and the shapefile. Also, make sure they are in the same projection. It is easier to reproject the shapefile match with the raster data, because the raster data is usually large and it is time consuming to reproject the raster data.</p>
-<div id="cell-35" class="cell" data-execution_count="46">
+<div id="cell-37" class="cell" data-execution_count="46">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -589,10 +583,10 @@ Polygon: 100</code></pre>
 </div>
 </div>
 </section>
-<section id="conduct-the-zonal-statistics" class="level4" data-number="2.5.2">
-<h4 data-number="2.5.2" class="anchored" data-anchor-id="conduct-the-zonal-statistics"><span class="header-section-number">2.5.2</span> Conduct the zonal statistics</h4>
+<section id="conduct-the-zonal-statistics" class="level4" data-number="2.0.2">
+<h4 data-number="2.0.2" class="anchored" data-anchor-id="conduct-the-zonal-statistics"><span class="header-section-number">2.0.2</span> Conduct the zonal statistics</h4>
 <p>Here we will loop through each polygon in the shapefile, and for each polygon, we will mask the raster data using the polygon, and then calculate the statistics of the masked raster data. Different from the <code>zonalstats</code> module, you will be able to control the statistics you want to calculate, such as mean, median, min, max, std, etc.</p>
-<div id="cell-37" class="cell" data-execution_count="72">
+<div id="cell-39" class="cell" data-execution_count="72">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
@@ -702,9 +696,9 @@ Polygon: 100</code></pre>
 </div>
 </div>
 </section>
-<section id="lets-check-our-result-quickly" class="level4" data-number="2.5.3">
-<h4 data-number="2.5.3" class="anchored" data-anchor-id="lets-check-our-result-quickly"><span class="header-section-number">2.5.3</span> Let’s check our result quickly</h4>
-<div id="cell-39" class="cell" data-execution_count="74">
+<section id="lets-check-our-result-quickly" class="level4" data-number="2.0.3">
+<h4 data-number="2.0.3" class="anchored" data-anchor-id="lets-check-our-result-quickly"><span class="header-section-number">2.0.3</span> Let’s check our result quickly</h4>
+<div id="cell-41" class="cell" data-execution_count="74">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
@@ -732,12 +726,11 @@ Polygon: 100</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="week-6B-spatial_fiona_shapely_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
 </section>
 </section>
 
