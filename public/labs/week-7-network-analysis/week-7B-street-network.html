@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Traffic Network Analysis using NetworkX</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="week-7B-street-network_files/libs/clipboard/clipboard.min.js"></script>
+<script src="week-7B-street-network_files/libs/quarto-html/quarto.js"></script>
+<script src="week-7B-street-network_files/libs/quarto-html/popper.min.js"></script>
+<script src="week-7B-street-network_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="week-7B-street-network_files/libs/quarto-html/anchor.min.js"></script>
+<link href="week-7B-street-network_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="week-7B-street-network_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="week-7B-street-network_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="week-7B-street-network_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="week-7B-street-network_files/libs/bootstrap/bootstrap-81e35ebdb4125010edbabe6010586085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#edges" id="toc-edges" class="nav-link active" data-scroll-target="#edges"><span class="header-section-number">0.1</span> Edges</a></li>
+  <li><a href="#examining-elements-of-a-graph" id="toc-examining-elements-of-a-graph" class="nav-link" data-scroll-target="#examining-elements-of-a-graph"><span class="header-section-number">0.2</span> Examining elements of a graph</a></li>
+  <li><a href="#edge-attributes" id="toc-edge-attributes" class="nav-link" data-scroll-target="#edge-attributes"><span class="header-section-number">0.3</span> Edge Attributes</a></li>
+  <li><a href="#conduct-the-network-analysis-on-the-road-network" id="toc-conduct-the-network-analysis-on-the-road-network" class="nav-link" data-scroll-target="#conduct-the-network-analysis-on-the-road-network"><span class="header-section-number">0.4</span> Conduct the network analysis on the road network</a></li>
+  <li><a href="#create-the-shapefile-based-on-the-path" id="toc-create-the-shapefile-based-on-the-path" class="nav-link" data-scroll-target="#create-the-shapefile-based-on-the-path"><span class="header-section-number">0.5</span> create the shapefile based on the path</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Traffic Network Analysis using NetworkX</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>There are two major section. First one is the static road network data processing. Second section is about analyzing the realtime traffic data</p>
+<p>Reference - <a href="https://networkx.org/documentation/stable/tutorial.html">Reference of NetworkX</a> - <a href="https://networkx.org/documentation/networkx-2.4/_modules/networkx/readwrite/nx_shp.html">Source code of NetworkX on GitHub</a></p>
+<p>You may find the networkx versions are different in the terminal and the jupyter notebook.</p>
+<div id="2bfe18b6-1439-4084-bfc0-dbaaa51bf47b" class="cell" data-execution_count="45">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nx.__version__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.4.2</code></pre>
+</div>
+</div>
+<p>It is tricky for the different version of networkx, we are going to use the most recent one.</p>
+<div id="2b25bbf6-1efa-4cd8-a7ec-8da15df8607c" class="cell" data-execution_count="46">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install networkx==3.2.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>This tutorial focuses on spatial networks and learn how to construct a routable directed graph for Networkx and find shortest paths along the given street network based on travel times or distance by car. In addition, we will learn how to calculate travel times from a single source into all nodes in the graph.</p>
+<div id="74aa3229-52c0-454c-aebc-f03a497d95ff" class="cell" data-execution_count="47">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fiona</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, os.path</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shapely</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Polygon, Point, shape</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="create-an-empty-graph" class="level4" data-number="0.0.1">
+<h4 data-number="0.0.1" class="anchored" data-anchor-id="create-an-empty-graph"><span class="header-section-number">0.0.1</span> Create an empty graph</h4>
+<div id="119af891-8285-4a75-a7ac-c5ca653fbd1c" class="cell" data-execution_count="48">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Nodes</strong></p>
+<p>The graph <code>G</code> can be grown in several ways. NetworkX includes many graph generator functions and facilities to read and write graphs in many formats. To get started though we’ll look at simple manipulations. You can add one node at a time,</p>
+<div id="66f8d124-d5fe-4431-acef-a68b47925d34" class="cell" data-execution_count="49">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>G.add_node(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>or add nodes from any iterable container, such as a list</p>
+<div id="e62b0acf-b3f5-49a4-bcdc-0f4759306dec" class="cell" data-execution_count="50">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>G.add_nodes_from([<span class="dv">2</span>, <span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>add node with attribute</p>
+<div id="f25f3e42-121a-418d-bfba-f6199ff4109e" class="cell" data-execution_count="51">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>G.add_nodes_from([</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, {<span class="st">"color"</span>: <span class="st">"red"</span>}),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, {<span class="st">"color"</span>: <span class="st">"green"</span>}),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can draw the graph,</p>
+<div id="76b28348-436c-4816-98ba-38c1a0fa0fe8" class="cell" data-execution_count="52">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nx.draw(G, with_labels <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-7B-street-network_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Print all the nodes of a graph</p>
+<div id="2a368d5b-9da2-4817-865f-d52ce2e28268" class="cell" data-execution_count="53">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>G.nodes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="53">
+<pre><code>NodeView((1, 2, 3, 4, 5))</code></pre>
+</div>
+</div>
+<p>To get the node data along with the nodes:</p>
+<div id="19366bee-c328-4573-9cf5-d649505b7e90" class="cell" data-execution_count="54">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>G.nodes[<span class="dv">1</span>], G.nodes[<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="54">
+<pre><code>({}, {'color': 'red'})</code></pre>
+</div>
+</div>
+<div id="c02de661-a1c3-4146-adbb-b8cc47c2f403" class="cell" data-execution_count="55">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>G.has_node(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="55">
+<pre><code>True</code></pre>
+</div>
+</div>
+</section>
+<section id="edges" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="edges"><span class="header-section-number">0.1</span> Edges</h3>
+<p>We can add edge to the graph</p>
+<div id="7779dd96-d79a-477b-b1f3-472cad5c91c1" class="cell" data-execution_count="56">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>G.add_edge(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> (<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>G.add_edge(<span class="op">*</span>e)  <span class="co"># unpack edge tuple*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="2a8bf5fb-4365-4890-abc3-eb4236771469" class="cell" data-execution_count="57">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>G.add_edges_from([(<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">1</span>, <span class="dv">3</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="82feecc2-e2f3-4ed4-9aef-da9774673657" class="cell" data-execution_count="58">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>G.edges</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="58">
+<pre><code>EdgeView([(1, 2), (1, 3), (2, 3)])</code></pre>
+</div>
+</div>
+<p>Check if the graph has the edge</p>
+<div id="e72f20a1-3e20-4d3b-95f5-7992b10ac0d4" class="cell" data-execution_count="59">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>G.has_edge(<span class="op">*</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="59">
+<pre><code>True</code></pre>
+</div>
+</div>
+<div id="44245467-4ed5-4ba5-b006-8dc44f58d867" class="cell" data-execution_count="60">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>G.has_edge(<span class="dv">1</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="60">
+<pre><code>True</code></pre>
+</div>
+</div>
+<div id="0a45b485-b9a6-4e41-b41e-4047fb5bc6f5" class="cell" data-execution_count="61">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>G.number_of_nodes()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<pre><code>5</code></pre>
+</div>
+</div>
+<div id="70a2b308-1add-4dbd-ab9b-dcee2790b4b4" class="cell" data-execution_count="62">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>G.number_of_edges()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="62">
+<pre><code>3</code></pre>
+</div>
+</div>
+</section>
+<section id="examining-elements-of-a-graph" class="level3" data-number="0.2">
+<h3 data-number="0.2" class="anchored" data-anchor-id="examining-elements-of-a-graph"><span class="header-section-number">0.2</span> Examining elements of a graph</h3>
+<p>We can examine the nodes and edges. Four basic graph properties facilitate reporting: <code>G.nodes</code>, <code>G.edges</code>, <code>G.adj</code> and <code>G.degree</code>. These are set-like views of the nodes, edges, neighbors (adjacencies), and degrees of nodes in a graph. They offer a continually updated read-only view into the graph structure. They are also dict-like in that you can look up node and edge data attributes via the views and iterate with data attributes using methods .items(), .data(). If you want a specific container type instead of a view, you can specify one. Here we use lists, though sets, dicts, tuples and other containers may be better in other contexts.</p>
+<div id="4f2e2ea7-28e7-468d-b73f-ce07914cfc5e" class="cell" data-execution_count="63">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(G.nodes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="63">
+<pre><code>[1, 2, 3, 4, 5]</code></pre>
+</div>
+</div>
+<div id="7034541f-6eb5-4bc2-bbef-3e1fccbfb37c" class="cell" data-execution_count="64">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(G.edges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="64">
+<pre><code>[(1, 2), (1, 3), (2, 3)]</code></pre>
+</div>
+</div>
+<p>find the adjancent nodes of node 1</p>
+<div id="72f49c2b-57fc-47f5-8f51-36f84c14e7b9" class="cell" data-execution_count="65">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(G.adj[<span class="dv">1</span>])  <span class="co"># or list(G.neighbors(1))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="65">
+<pre><code>[2, 3]</code></pre>
+</div>
+</div>
+<div id="256f23b9-12f1-42b6-94aa-c025a5e7cf99" class="cell" data-execution_count="66">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>G.degree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="66">
+<pre><code>DegreeView({1: 2, 2: 2, 3: 2, 4: 0, 5: 0})</code></pre>
+</div>
+</div>
+<div id="7e754a71-9339-4c83-8616-c66102625128" class="cell" data-execution_count="67">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of edges incident to 1</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>G.degree[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="67">
+<pre><code>2</code></pre>
+</div>
+</div>
+</section>
+<section id="edge-attributes" class="level3" data-number="0.3">
+<h3 data-number="0.3" class="anchored" data-anchor-id="edge-attributes"><span class="header-section-number">0.3</span> Edge Attributes</h3>
+<p>The edge can have different attributes. For example, the road network the edge attribute can be the physical distance. For the social network, the edge attribute can be the relationships.</p>
+<div id="d5a2300f-66c3-42f9-8096-dd7234b136d4" class="cell" data-execution_count="68">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>G.add_edge(<span class="dv">1</span>, <span class="dv">2</span>, weight<span class="op">=</span><span class="fl">4.7</span> )</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>G.add_edges_from([(<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">4</span>, <span class="dv">5</span>)], color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>G.add_edges_from([(<span class="dv">1</span>, <span class="dv">2</span>, {<span class="st">'color'</span>: <span class="st">'blue'</span>}), (<span class="dv">2</span>, <span class="dv">3</span>, {<span class="st">'weight'</span>: <span class="dv">8</span>})])</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>G[<span class="dv">1</span>][<span class="dv">2</span>][<span class="st">'weight'</span>] <span class="op">=</span> <span class="fl">4.7</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>G.edges[<span class="dv">3</span>, <span class="dv">4</span>][<span class="st">'weight'</span>] <span class="op">=</span> <span class="fl">4.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="8e379000-b1d6-44c7-8eea-fa0a9a7fca8f" class="cell" data-execution_count="69">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(G.edges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="69">
+<pre><code>[(1, 2), (1, 3), (2, 3), (3, 4), (4, 5)]</code></pre>
+</div>
+</div>
+<div id="f3b6e0e7-abcc-42eb-998a-91115e4cf441" class="cell" data-execution_count="70">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>G.edges[<span class="dv">3</span>, <span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="70">
+<pre><code>{'color': 'red', 'weight': 4.2}</code></pre>
+</div>
+</div>
+<p>Let’s just create some simple graphs and the draw the edges</p>
+<div id="8f3aa588-e589-4db7-8213-094b35536fcb" class="cell" data-execution_count="71">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.petersen_graph()</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>subax1 <span class="op">=</span> plt.subplot(<span class="dv">121</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>nx.draw(G, with_labels<span class="op">=</span><span class="va">True</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>subax2 <span class="op">=</span> plt.subplot(<span class="dv">122</span>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>nx.draw_shell(G, nlist<span class="op">=</span>[<span class="bu">range</span>(<span class="dv">5</span>, <span class="dv">10</span>), <span class="bu">range</span>(<span class="dv">5</span>)], with_labels<span class="op">=</span><span class="va">True</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-7B-street-network_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="79dddeb4-2f57-47eb-9deb-80f97feda7ca" class="cell" data-execution_count="72">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.dodecahedral_graph()</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> nx.draw_networkx_edges(G, pos<span class="op">=</span>nx.spring_layout(G))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-7B-street-network_files/figure-html/cell-37-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="3fb0eb4b-4316-4759-8200-98937d969b0e" class="cell" data-execution_count="73">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>G.add_edge(<span class="dv">1</span>, <span class="dv">2</span>)  <span class="co"># default edge data=1</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>G.add_edge(<span class="dv">2</span>, <span class="dv">3</span>)  <span class="co"># specify edge data</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>nx.draw(G, with_labels <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-7B-street-network_files/figure-html/cell-39-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="56b3914f-6d5e-4151-9e94-f978cc7d2c72" class="cell" data-execution_count="75">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>G.add_edge(<span class="st">'y'</span>, <span class="st">'x'</span>, function<span class="op">=</span>math.cos)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>G.add_node(math.cos)  <span class="co"># any hashable can be a node</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="eec2776d-2b35-4175-9bf8-aead6c48af2b" class="cell" data-execution_count="76">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>elist <span class="op">=</span> [(<span class="dv">1</span>, <span class="dv">2</span>), (<span class="dv">2</span>, <span class="dv">3</span>), (<span class="dv">1</span>, <span class="dv">4</span>), (<span class="dv">4</span>, <span class="dv">2</span>)]</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>G.add_edges_from(elist)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>elist <span class="op">=</span> [(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="fl">5.0</span>), (<span class="st">'b'</span>, <span class="st">'c'</span>, <span class="fl">3.0</span>), (<span class="st">'a'</span>, <span class="st">'c'</span>, <span class="fl">1.0</span>), (<span class="st">'c'</span>, <span class="st">'d'</span>, <span class="fl">7.3</span>)]</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>G.add_weighted_edges_from(elist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="2e4fa847-d6db-4ae3-85e6-d5f1acd0a8a0" class="cell" data-execution_count="77">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>nx.draw(G, with_labels <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-7B-street-network_files/figure-html/cell-44-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="66ebae65-789a-45f6-914e-f0e7a5969d01" class="cell" data-execution_count="78">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> [(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="fl">0.3</span>), (<span class="st">'b'</span>, <span class="st">'c'</span>, <span class="fl">0.9</span>), (<span class="st">'a'</span>, <span class="st">'c'</span>, <span class="fl">0.5</span>), (<span class="st">'c'</span>, <span class="st">'d'</span>, <span class="fl">1.2</span>)]</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>G.add_weighted_edges_from(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="75086ec0-408c-415b-8c2f-66c8d93cf027" class="cell" data-execution_count="79">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>nx.draw(G, with_labels <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week-7B-street-network_files/figure-html/cell-47-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="65fe6941-8b57-4d12-8fa7-589137caade6" class="cell" data-execution_count="81">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nx.dijkstra_path(G, <span class="st">'a'</span>, <span class="st">'d'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['a', 'c', 'd']</code></pre>
+</div>
+</div>
+</section>
+<section id="conduct-the-network-analysis-on-the-road-network" class="level3" data-number="0.4">
+<h3 data-number="0.4" class="anchored" data-anchor-id="conduct-the-network-analysis-on-the-road-network"><span class="header-section-number">0.4</span> Conduct the network analysis on the road network</h3>
+<section id="the-following-functions-are-inspired-from-the-sourced-code-of-networkx-link" class="level4" data-number="0.4.1">
+<h4 data-number="0.4.1" class="anchored" data-anchor-id="the-following-functions-are-inspired-from-the-sourced-code-of-networkx-link"><span class="header-section-number">0.4.1</span> The following functions are inspired from the sourced code of NetworkX <a href="https://networkx.org/documentation/networkx-2.4/_modules/networkx/readwrite/nx_shp.html">link</a></h4>
+<div id="ac7f25c6-c012-4fd1-88fa-a155c5075298" class="cell" data-execution_count="82">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> edges_from_line(geom, attrs, simplify<span class="op">=</span><span class="va">True</span>, geom_attrs<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Generate edges for each line in geom</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Written as a helper for read_shp</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="co">    geom:  ogr line geometry</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="co">        To be converted into an edge or edges</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="co">    attrs:  dict</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Attributes to be associated with all geoms</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="co">    simplify:  bool</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co">        If True, simplify the line as in read_shp</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a><span class="co">    geom_attrs:  bool</span></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="co">        If True, add geom attributes to edge as in read_shp</span></span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="co">     edges:  generator of edges</span></span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a><span class="co">        each edge is a tuple of form</span></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="co">        (node1_coord, node2_coord, attribute_dict)</span></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a><span class="co">        suitable for expanding into a networkx Graph add_edge call</span></span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> osgeo <span class="im">import</span> ogr</span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ImportError</span>:</span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ImportError</span>(<span class="st">"edges_from_line requires OGR: http://www.gdal.org/"</span>)</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> geom.GetGeometryType() <span class="op">==</span> ogr.wkbLineString:</span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> simplify:</span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>            edge_attrs <span class="op">=</span> attrs.copy()</span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a>            last <span class="op">=</span> geom.GetPointCount() <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> geom_attrs:</span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>                edge_attrs[<span class="st">"Wkb"</span>] <span class="op">=</span> geom.ExportToWkb()</span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a>                edge_attrs[<span class="st">"Wkt"</span>] <span class="op">=</span> geom.ExportToWkt()</span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>                edge_attrs[<span class="st">"Json"</span>] <span class="op">=</span> geom.ExportToJson()</span>
+<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> (geom.GetPoint_2D(<span class="dv">0</span>), geom.GetPoint_2D(last), edge_attrs)</span>
+<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, geom.GetPointCount() <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a>                pt1 <span class="op">=</span> geom.GetPoint_2D(i)</span>
+<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a>                pt2 <span class="op">=</span> geom.GetPoint_2D(i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>                edge_attrs <span class="op">=</span> attrs.copy()</span>
+<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> geom_attrs:</span>
+<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a>                    segment <span class="op">=</span> ogr.Geometry(ogr.wkbLineString)</span>
+<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a>                    segment.AddPoint_2D(pt1[<span class="dv">0</span>], pt1[<span class="dv">1</span>])</span>
+<span id="cb53-51"><a href="#cb53-51" aria-hidden="true" tabindex="-1"></a>                    segment.AddPoint_2D(pt2[<span class="dv">0</span>], pt2[<span class="dv">1</span>])</span>
+<span id="cb53-52"><a href="#cb53-52" aria-hidden="true" tabindex="-1"></a>                    edge_attrs[<span class="st">"Wkb"</span>] <span class="op">=</span> segment.ExportToWkb()</span>
+<span id="cb53-53"><a href="#cb53-53" aria-hidden="true" tabindex="-1"></a>                    edge_attrs[<span class="st">"Wkt"</span>] <span class="op">=</span> segment.ExportToWkt()</span>
+<span id="cb53-54"><a href="#cb53-54" aria-hidden="true" tabindex="-1"></a>                    edge_attrs[<span class="st">"Json"</span>] <span class="op">=</span> segment.ExportToJson()</span>
+<span id="cb53-55"><a href="#cb53-55" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">del</span> segment</span>
+<span id="cb53-56"><a href="#cb53-56" aria-hidden="true" tabindex="-1"></a>                <span class="cf">yield</span> (pt1, pt2, edge_attrs)</span>
+<span id="cb53-57"><a href="#cb53-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-58"><a href="#cb53-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> geom.GetGeometryType() <span class="op">==</span> ogr.wkbMultiLineString:</span>
+<span id="cb53-59"><a href="#cb53-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(geom.GetGeometryCount()):</span>
+<span id="cb53-60"><a href="#cb53-60" aria-hidden="true" tabindex="-1"></a>            geom_i <span class="op">=</span> geom.GetGeometryRef(i)</span>
+<span id="cb53-61"><a href="#cb53-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> edge <span class="kw">in</span> edges_from_line(geom_i, attrs, simplify, geom_attrs):</span>
+<span id="cb53-62"><a href="#cb53-62" aria-hidden="true" tabindex="-1"></a>                <span class="cf">yield</span> edge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="dadf5e31-8557-4ce4-9045-18744003f0f8" class="cell" data-execution_count="83">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_shp(path, simplify<span class="op">=</span><span class="va">True</span>, geom_attrs<span class="op">=</span><span class="va">True</span>, strict<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generates a networkx.DiGraph from shapefiles. Point geometries are</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co">    translated into nodes, lines into edges. Coordinate tuples are used as</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co">    keys. Attributes are preserved, line geometries are simplified into start</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co">    and end coordinates. Accepts a single shapefile or directory of many</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co">    shapefiles.</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="co">    "The Esri Shapefile or simply a shapefile is a popular geospatial vector</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co">    data format for geographic information systems software [1]_."</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="co">    path : file or string</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co">       File, directory, or filename to read.</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="co">    simplify:  bool</span></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="co">        If True, simplify line geometries to start and end coordinates.</span></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a><span class="co">        If False, and line feature geometry has multiple segments, the</span></span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a><span class="co">        non-geometric attributes for that feature will be repeated for each</span></span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a><span class="co">        edge comprising that feature.</span></span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a><span class="co">    geom_attrs: bool</span></span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a><span class="co">        If True, include the Wkb, Wkt and Json geometry attributes with</span></span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a><span class="co">        each edge.</span></span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a><span class="co">        </span><span class="al">NOTE</span><span class="co">:  if these attributes are available, write_shp will use them</span></span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a><span class="co">        to write the geometry.  If nodes store the underlying coordinates for</span></span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a><span class="co">        the edge geometry as well (as they do when they are read via</span></span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a><span class="co">        this method) and they change, your geomety will be out of sync.</span></span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a><span class="co">    strict: bool</span></span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a><span class="co">        If True, raise NetworkXError when feature geometry is missing or</span></span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a><span class="co">        GeometryType is not supported.</span></span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a><span class="co">        If False, silently ignore missing or unsupported geometry in features.</span></span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a><span class="co">    G : NetworkX graph</span></span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a><span class="co">    Raises</span></span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a><span class="co">    ------</span></span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a><span class="co">    ImportError</span></span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a><span class="co">       If ogr module is not available.</span></span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a><span class="co">    RuntimeError</span></span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a><span class="co">       If file cannot be open or read.</span></span>
+<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a><span class="co">    NetworkXError</span></span>
+<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a><span class="co">       If strict=True and feature is missing geometry or GeometryType is</span></span>
+<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a><span class="co">       not supported.</span></span>
+<span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a><span class="co">    Examples</span></span>
+<span id="cb54-54"><a href="#cb54-54" aria-hidden="true" tabindex="-1"></a><span class="co">    --------</span></span>
+<span id="cb54-55"><a href="#cb54-55" aria-hidden="true" tabindex="-1"></a><span class="co">    &gt;&gt;&gt; G=nx.read_shp('test.shp') # doctest: +SKIP</span></span>
+<span id="cb54-56"><a href="#cb54-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-57"><a href="#cb54-57" aria-hidden="true" tabindex="-1"></a><span class="co">    References</span></span>
+<span id="cb54-58"><a href="#cb54-58" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb54-59"><a href="#cb54-59" aria-hidden="true" tabindex="-1"></a><span class="co">    .. [1] https://en.wikipedia.org/wiki/Shapefile</span></span>
+<span id="cb54-60"><a href="#cb54-60" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb54-61"><a href="#cb54-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb54-62"><a href="#cb54-62" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> osgeo <span class="im">import</span> ogr</span>
+<span id="cb54-63"><a href="#cb54-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ImportError</span>:</span>
+<span id="cb54-64"><a href="#cb54-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ImportError</span>(<span class="st">"read_shp requires OGR: http://www.gdal.org/"</span>)</span>
+<span id="cb54-65"><a href="#cb54-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-66"><a href="#cb54-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(path, <span class="bu">str</span>):</span>
+<span id="cb54-67"><a href="#cb54-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb54-68"><a href="#cb54-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-69"><a href="#cb54-69" aria-hidden="true" tabindex="-1"></a>    net <span class="op">=</span> nx.DiGraph()</span>
+<span id="cb54-70"><a href="#cb54-70" aria-hidden="true" tabindex="-1"></a>    shp <span class="op">=</span> ogr.Open(path)</span>
+<span id="cb54-71"><a href="#cb54-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> shp <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb54-72"><a href="#cb54-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Unable to open </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(path))</span>
+<span id="cb54-73"><a href="#cb54-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> lyr <span class="kw">in</span> shp:</span>
+<span id="cb54-74"><a href="#cb54-74" aria-hidden="true" tabindex="-1"></a>        fields <span class="op">=</span> [x.GetName() <span class="cf">for</span> x <span class="kw">in</span> lyr.schema]</span>
+<span id="cb54-75"><a href="#cb54-75" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> f <span class="kw">in</span> lyr:</span>
+<span id="cb54-76"><a href="#cb54-76" aria-hidden="true" tabindex="-1"></a>            g <span class="op">=</span> f.geometry()</span>
+<span id="cb54-77"><a href="#cb54-77" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> g <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb54-78"><a href="#cb54-78" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> strict:</span>
+<span id="cb54-79"><a href="#cb54-79" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">raise</span> nx.NetworkXError(<span class="st">"Bad data: feature missing geometry"</span>)</span>
+<span id="cb54-80"><a href="#cb54-80" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb54-81"><a href="#cb54-81" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">continue</span></span>
+<span id="cb54-82"><a href="#cb54-82" aria-hidden="true" tabindex="-1"></a>            flddata <span class="op">=</span> [f.GetField(f.GetFieldIndex(x)) <span class="cf">for</span> x <span class="kw">in</span> fields]</span>
+<span id="cb54-83"><a href="#cb54-83" aria-hidden="true" tabindex="-1"></a>            attributes <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(fields, flddata))</span>
+<span id="cb54-84"><a href="#cb54-84" aria-hidden="true" tabindex="-1"></a>            attributes[<span class="st">"ShpName"</span>] <span class="op">=</span> lyr.GetName()</span>
+<span id="cb54-85"><a href="#cb54-85" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Note:  Using layer level geometry type</span></span>
+<span id="cb54-86"><a href="#cb54-86" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> g.GetGeometryType() <span class="op">==</span> ogr.wkbPoint:</span>
+<span id="cb54-87"><a href="#cb54-87" aria-hidden="true" tabindex="-1"></a>                net.add_node((g.GetPoint_2D(<span class="dv">0</span>)), <span class="op">**</span>attributes)</span>
+<span id="cb54-88"><a href="#cb54-88" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> g.GetGeometryType() <span class="kw">in</span> (ogr.wkbLineString,</span>
+<span id="cb54-89"><a href="#cb54-89" aria-hidden="true" tabindex="-1"></a>                                         ogr.wkbMultiLineString):</span>
+<span id="cb54-90"><a href="#cb54-90" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> edge <span class="kw">in</span> edges_from_line(g, attributes, simplify,</span>
+<span id="cb54-91"><a href="#cb54-91" aria-hidden="true" tabindex="-1"></a>                                            geom_attrs):</span>
+<span id="cb54-92"><a href="#cb54-92" aria-hidden="true" tabindex="-1"></a>                    e1, e2, attr <span class="op">=</span> edge</span>
+<span id="cb54-93"><a href="#cb54-93" aria-hidden="true" tabindex="-1"></a>                    net.add_edge(e1, e2)</span>
+<span id="cb54-94"><a href="#cb54-94" aria-hidden="true" tabindex="-1"></a>                    net[e1][e2].update(attr)</span>
+<span id="cb54-95"><a href="#cb54-95" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb54-96"><a href="#cb54-96" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> strict:</span>
+<span id="cb54-97"><a href="#cb54-97" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">raise</span> nx.NetworkXError(<span class="st">"GeometryType </span><span class="sc">{}</span><span class="st"> not supported"</span>.</span>
+<span id="cb54-98"><a href="#cb54-98" aria-hidden="true" tabindex="-1"></a>                                           <span class="bu">format</span>(g.GetGeometryType()))</span>
+<span id="cb54-99"><a href="#cb54-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-100"><a href="#cb54-100" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> net</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="a6c4643d-0859-401d-9286-1e8c60d56d84" class="cell" data-execution_count="84">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, os.path</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fiona</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> connected_component_subgraphs(G):</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> nx.connected_components(G):</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> G.subgraph(c)</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Using Networkx2.3 or earlier version</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getNetworkGraph(segments,segmentlengths):</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Builds a networkx graph from the network file, inluding segment length taken from arcpy.</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a><span class="co">    It selects the largest connected component of the network (to prevent errors from routing between unconnected parts)</span></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#generate the full network path for GDAL to be able to read the file</span></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> segments <span class="co"># use absolute root</span></span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (path)</span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> os.path.exists(path):</span>
+<span id="cb55-25"><a href="#cb55-25" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> read_shp(path)</span>
+<span id="cb55-26"><a href="#cb55-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb55-27"><a href="#cb55-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">#This selects the largest connected component of the graph</span></span>
+<span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a>        <span class="co">#sg = list(nx.connected_component_subgraphs(g.to_undirected()))[0] #before version 2.3</span></span>
+<span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a>        sg <span class="op">=</span> <span class="bu">list</span>(connected_component_subgraphs(g.to_undirected()))[<span class="dv">0</span>] <span class="co">## new version</span></span>
+<span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span> (<span class="st">"graph size (excluding unconnected parts): "</span><span class="op">+</span><span class="bu">str</span>(<span class="bu">len</span>(g)))</span>
+<span id="cb55-32"><a href="#cb55-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb55-33"><a href="#cb55-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the length for each road segment and append it as an attribute to the edges in the graph.</span></span>
+<span id="cb55-34"><a href="#cb55-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> n0, n1 <span class="kw">in</span> sg.edges():</span>
+<span id="cb55-35"><a href="#cb55-35" aria-hidden="true" tabindex="-1"></a>            oid <span class="op">=</span> sg[n0][n1][<span class="st">"objectid"</span>] <span class="co">#osm_id</span></span>
+<span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a>            sg[n0][n1][<span class="st">'length'</span>] <span class="op">=</span> segmentlengths[oid]</span>
+<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a>            sg[n0][n1][<span class="st">'fid'</span>] <span class="op">=</span> oid</span>
+<span id="cb55-38"><a href="#cb55-38" aria-hidden="true" tabindex="-1"></a><span class="co">#             print(sg)</span></span>
+<span id="cb55-39"><a href="#cb55-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sg</span>
+<span id="cb55-40"><a href="#cb55-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb55-41"><a href="#cb55-41" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span> (<span class="st">"network file not found on path: "</span><span class="op">+</span>path)</span>
+<span id="cb55-42"><a href="#cb55-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-43"><a href="#cb55-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-44"><a href="#cb55-44" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getSegmentInfo(segments):</span>
+<span id="cb55-45"><a href="#cb55-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb55-46"><a href="#cb55-46" aria-hidden="true" tabindex="-1"></a><span class="co">    Builds a dictionary for looking up endpoints of network segments (needed only</span></span>
+<span id="cb55-47"><a href="#cb55-47" aria-hidden="true" tabindex="-1"></a><span class="co">    because networkx graph identifies edges by nodes)</span></span>
+<span id="cb55-48"><a href="#cb55-48" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb55-49"><a href="#cb55-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb55-50"><a href="#cb55-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># import os, os.path</span></span>
+<span id="cb55-51"><a href="#cb55-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># import fiona</span></span>
+<span id="cb55-52"><a href="#cb55-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># from shapely.geometry import shape, mapping</span></span>
+<span id="cb55-53"><a href="#cb55-53" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb55-54"><a href="#cb55-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> os.path.exists(segments):</span>
+<span id="cb55-55"><a href="#cb55-55" aria-hidden="true" tabindex="-1"></a>        endpoints <span class="op">=</span> {}</span>
+<span id="cb55-56"><a href="#cb55-56" aria-hidden="true" tabindex="-1"></a>        segmentlengths <span class="op">=</span> {}</span>
+<span id="cb55-57"><a href="#cb55-57" aria-hidden="true" tabindex="-1"></a>        street_lyr <span class="op">=</span> fiona.<span class="bu">open</span>(streetMap, <span class="st">'r'</span>)</span>
+<span id="cb55-58"><a href="#cb55-58" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb55-59"><a href="#cb55-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> idx, feat <span class="kw">in</span> <span class="bu">enumerate</span>(street_lyr):</span>
+<span id="cb55-60"><a href="#cb55-60" aria-hidden="true" tabindex="-1"></a>            geom <span class="op">=</span> feat[<span class="st">'geometry'</span>]</span>
+<span id="cb55-61"><a href="#cb55-61" aria-hidden="true" tabindex="-1"></a>            coord <span class="op">=</span> geom[<span class="st">'coordinates'</span>]</span>
+<span id="cb55-62"><a href="#cb55-62" aria-hidden="true" tabindex="-1"></a>            feat_id <span class="op">=</span> feat[<span class="st">'properties'</span>][<span class="st">'objectid'</span>] <span class="co">#osm_id</span></span>
+<span id="cb55-63"><a href="#cb55-63" aria-hidden="true" tabindex="-1"></a>            length <span class="op">=</span> shape(geom).length</span>
+<span id="cb55-64"><a href="#cb55-64" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb55-65"><a href="#cb55-65" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> idx <span class="op">%</span> <span class="dv">10000</span> <span class="op">==</span> <span class="dv">0</span>: <span class="bu">print</span>(<span class="st">'The osmid and length are:'</span>, idx, feat_id, length)</span>
+<span id="cb55-66"><a href="#cb55-66" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb55-67"><a href="#cb55-67" aria-hidden="true" tabindex="-1"></a>            <span class="co"># first point and the last point</span></span>
+<span id="cb55-68"><a href="#cb55-68" aria-hidden="true" tabindex="-1"></a>            endpoints[feat_id] <span class="op">=</span> ((coord[<span class="dv">0</span>][<span class="dv">0</span>], coord[<span class="dv">0</span>][<span class="dv">1</span>]), (coord[<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>], coord[<span class="op">-</span><span class="dv">1</span>][<span class="dv">1</span>]))</span>
+<span id="cb55-69"><a href="#cb55-69" aria-hidden="true" tabindex="-1"></a>            segmentlengths[feat_id] <span class="op">=</span> length</span>
+<span id="cb55-70"><a href="#cb55-70" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb55-71"><a href="#cb55-71" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span> (<span class="st">"Number of segments: "</span><span class="op">+</span> <span class="bu">str</span>(<span class="bu">len</span>(endpoints)))</span>
+<span id="cb55-72"><a href="#cb55-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (endpoints, segmentlengths)</span>
+<span id="cb55-73"><a href="#cb55-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb55-74"><a href="#cb55-74" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span> (<span class="st">"segment file does not exist!"</span>)</span>
+<span id="cb55-75"><a href="#cb55-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-76"><a href="#cb55-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-77"><a href="#cb55-77" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> buildNetwork(segments):</span>
+<span id="cb55-78"><a href="#cb55-78" aria-hidden="true" tabindex="-1"></a>    <span class="co">#build network graph (graph, endpoints, lengths) and get segment info</span></span>
+<span id="cb55-79"><a href="#cb55-79" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> getSegmentInfo(segments)</span>
+<span id="cb55-80"><a href="#cb55-80" aria-hidden="true" tabindex="-1"></a>    endpoints <span class="op">=</span> r[<span class="dv">0</span>]</span>
+<span id="cb55-81"><a href="#cb55-81" aria-hidden="true" tabindex="-1"></a>    lengths <span class="op">=</span> r[<span class="dv">1</span>]</span>
+<span id="cb55-82"><a href="#cb55-82" aria-hidden="true" tabindex="-1"></a>    graph <span class="op">=</span> getNetworkGraph(segments,lengths)</span>
+<span id="cb55-83"><a href="#cb55-83" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb55-84"><a href="#cb55-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [endpoints, lengths, graph]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can create the graph from the shapefile. You can download the sidewalk shapefile from <a href="data/sidewalk.zip">here</a>.</p>
+<div id="1435fbbd-de11-488a-8bbc-ec4224bef698" class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>streetMap <span class="op">=</span> <span class="st">'data/sidewalk.shp'</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>[endpoints, lengths, graph] <span class="op">=</span> buildNetwork(streetMap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Here we use two endpoints of the sidewalk graph as the origin and destination.</p>
+<div id="3a53997b-3c33-49f2-b7a6-b062f4766370" class="cell" data-execution_count="40">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>s1_point <span class="op">=</span> (<span class="fl">2674629.019778946</span>, <span class="fl">233887.42317315526</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>s2_point <span class="op">=</span> (<span class="fl">2676819.994840707</span>, <span class="fl">233998.8937345071</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Compute a shortest path (using segment length) on graph where segment endpoints are nodes and segments are (undirected) edges</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> graph.has_node(s1_point) <span class="kw">and</span> graph.has_node(s2_point):</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    dist <span class="op">=</span> nx.shortest_path_length(graph, s1_point, s2_point, weight<span class="op">=</span><span class="st">'length'</span>)</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> nx.shortest_path(graph, s1_point, s2_point, weight<span class="op">=</span><span class="st">'length'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="d998ffc3-2896-4eee-97c5-12b22c7de66c" class="cell" data-execution_count="85">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>dist, path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="85">
+<pre><code>(2239.187257781493,
+ [(2674629.019778946, 233887.42317315526),
+  (2675063.484593347, 233895.2384052628),
+  (2675115.2077349196, 233892.43677666123),
+  (2675131.3505460056, 233892.1815988601),
+  (2675157.64553571, 233891.76624855347),
+  (2675194.6822983907, 233894.80562187612),
+  (2675558.573598633, 233899.59502712416),
+  (2675613.0183556173, 233905.90717337467),
+  (2675630.2018974577, 233911.72542009607),
+  (2675651.2510666423, 233903.49926487225),
+  (2675728.5513929822, 233904.42103680802),
+  (2675735.165564337, 233913.50363536438),
+  (2675973.666402716, 233913.2098672439),
+  (2676051.848300272, 233914.85865282876),
+  (2676233.1438519773, 233925.74859682945),
+  (2676240.7664461, 233911.12548257585),
+  (2676257.4528208617, 233898.6908843843),
+  (2676265.9243400875, 233894.33221573415),
+  (2676308.2581279846, 233915.78094614836),
+  (2676310.4227480562, 233924.97806112084),
+  (2676809.520503303, 234003.31260332352),
+  (2676819.994840707, 233998.8937345071)])</code></pre>
+</div>
+</div>
+</section>
+<section id="get-the-shortest-distance-and-also-the-path-of-the-shortest-distance" class="level4" data-number="0.4.2">
+<h4 data-number="0.4.2" class="anchored" data-anchor-id="get-the-shortest-distance-and-also-the-path-of-the-shortest-distance"><span class="header-section-number">0.4.2</span> Get the shortest distance and also the path of the shortest distance</h4>
+<div id="fc44181c-ea6d-4b34-946b-daaf0edf294a" class="cell" data-execution_count="86">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Compute a shortest path (using segment length) on graph where segment endpoints are nodes and segments are (undirected) edges</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> graph.has_node(s1_point) <span class="kw">and</span> graph.has_node(s2_point):</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    dist <span class="op">=</span> nx.shortest_path_length(graph, s1_point, s2_point, weight<span class="op">=</span><span class="st">'length'</span>)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> nx.shortest_path(graph, s1_point, s2_point, weight<span class="op">=</span><span class="st">'length'</span>)</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get path edges</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    path_edges <span class="op">=</span> <span class="bu">zip</span>(path,path[<span class="dv">1</span>:])</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print "edges: "+str(path_edges)</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    subpath <span class="op">=</span> []</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get object ids for path edges</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> e <span class="kw">in</span> path_edges:</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>        oid <span class="op">=</span> graph[e[<span class="dv">0</span>]][e[<span class="dv">1</span>]][<span class="st">"objectid"</span>]</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>        subpath.append(oid)</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (<span class="st">"oid path:"</span><span class="op">+</span><span class="bu">str</span>(subpath))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>oid path:[67, 101354, 153614, 136348, 99194, 119948, 83281, 112093, 158108, 91137, 180777, 175219, 80366, 179855, 155287, 99997, 115588, 75881, 177392, 125590, 163167]</code></pre>
+</div>
+</div>
+<div id="7ab836eb-d33f-46c3-80f2-597e46a60e83" class="cell" data-execution_count="87">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, node <span class="kw">in</span> <span class="bu">enumerate</span>(graph.nodes):</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> idx <span class="op">&gt;</span><span class="dv">10</span>: <span class="cf">continue</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(node)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(2674629.019778946, 233887.42317315526)
+(2675063.484593347, 233895.2384052628)
+(2677370.9139951007, 234099.03786372015)
+(2677331.098267104, 234139.85190359864)
+(2676819.994840707, 233998.8937345071)
+(2676874.8400247567, 234004.04994090827)
+(2677398.8984584543, 234090.96045311925)
+(2677452.6642256537, 234098.92121608992)
+(2677418.0230016173, 234179.81781638178)
+(2677382.3291674173, 234191.45753613432)
+(2676893.9161705, 233916.11122627818)</code></pre>
+</div>
+</div>
+<div id="589406ba-c8fc-4a8f-852c-92bc170e1c6a" class="cell" data-execution_count="89">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>s1_point <span class="op">=</span> (<span class="fl">2675063.484593347</span>, <span class="fl">233895.2384052628</span>)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>s2_point <span class="op">=</span> (<span class="fl">2688743.6504137763</span>, <span class="fl">232314.04444539145</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="f3519c2f-4c00-4b9b-9cae-2c65233ba569" class="cell" data-execution_count="88">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>graph.has_node(s1_point)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="88">
+<pre><code>True</code></pre>
+</div>
+</div>
+<div id="7a493eb9-7b0f-4b5c-a996-4726ef338c10" class="cell" data-execution_count="90">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>graph.has_node(s2_point)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="90">
+<pre><code>True</code></pre>
+</div>
+</div>
+<div id="8f01ed6d-460a-4439-9509-eb113dbda526" class="cell" data-execution_count="91">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>dist <span class="op">=</span> nx.shortest_path_length(graph, s1_point, s2_point, weight<span class="op">=</span><span class="st">'length'</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> nx.shortest_path(graph, s1_point, s2_point, weight<span class="op">=</span><span class="st">'length'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="674cf89b-1364-4d4a-a07c-e087151b39cb" class="cell" data-execution_count="92">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>dist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="92">
+<pre><code>16415.891881111354</code></pre>
+</div>
+</div>
+<div id="b991b480-5902-4590-a215-fd71b767780d" class="cell" data-execution_count="55">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="55">
+<pre><code>[(2675063.484593347, 233895.2384052628),
+ (2675115.2077349196, 233892.43677666123),
+ (2675131.3505460056, 233892.1815988601),
+ (2675157.64553571, 233891.76624855347),
+ (2675194.6822983907, 233894.80562187612),
+ (2675558.573598633, 233899.59502712416),
+ (2675613.0183556173, 233905.90717337467),
+ (2675630.2018974577, 233911.72542009607),
+ (2675651.2510666423, 233903.49926487225),
+ (2675728.5513929822, 233904.42103680802),
+ (2675735.165564337, 233913.50363536438),
+ (2675973.666402716, 233913.2098672439),
+ (2676051.848300272, 233914.85865282876),
+ (2676233.1438519773, 233925.74859682945),
+ (2676240.7664461, 233911.12548257585),
+ (2676257.4528208617, 233898.6908843843),
+ (2676265.9243400875, 233894.33221573415),
+ (2676308.2581279846, 233915.78094614836),
+ (2676310.4227480562, 233924.97806112084),
+ (2676809.520503303, 234003.31260332352),
+ (2676819.994840707, 233998.8937345071),
+ (2676874.8400247567, 234004.04994090827),
+ (2676874.064745394, 234014.15348545252),
+ (2676957.813333418, 234023.46448996506),
+ (2677007.2955817403, 234029.95908470638),
+ (2677370.9139951007, 234099.03786372015),
+ (2677398.8984584543, 234090.96045311925),
+ (2677452.6642256537, 234098.92121608992),
+ (2677454.941419613, 234111.02728595326),
+ (2677907.0137035456, 234185.17733252712),
+ (2677932.2420339272, 234242.0282067263),
+ (2677941.3842299017, 234255.36684626815),
+ (2677990.141920403, 234261.8616053579),
+ (2678005.2040250394, 234254.34261407817),
+ (2678527.927399018, 234343.59434335225),
+ (2678534.8443517126, 234353.0832785276),
+ (2678575.5627107075, 234361.6010977371),
+ (2678585.3282965315, 234353.83500047328),
+ (2678846.310453198, 234397.02691518224),
+ (2678887.2252412294, 234403.8263951464),
+ (2679088.0142569984, 234445.11230064248),
+ (2679084.916992422, 234463.0033843295),
+ (2679110.9364222256, 234503.63877807587),
+ (2679119.031203387, 234508.44703937852),
+ (2679161.630812761, 234506.2541478733),
+ (2679167.725321452, 234500.00931735014),
+ (2679411.514545877, 234502.76658634288),
+ (2679444.6865912573, 234505.75490665063),
+ (2679457.7385895746, 234501.22096371316),
+ (2679670.8238325035, 234537.05839798946),
+ (2679691.223058482, 234549.1421311993),
+ (2679735.7623356427, 234554.34492353565),
+ (2679753.333471439, 234550.81966564266),
+ (2679877.025557437, 234576.12110668348),
+ (2680168.239846406, 234628.83797003972),
+ (2680208.733640359, 234636.4052490283),
+ (2680216.8301490014, 234630.23136584464),
+ (2680723.5722291935, 234748.62329798038),
+ (2680727.7798782215, 234752.85957966626),
+ (2680769.5750580714, 234766.45033323587),
+ (2680774.52217293, 234763.60728424237),
+ (2681152.802792656, 234847.33014804224),
+ (2681302.687449447, 234856.50998220246),
+ (2681306.6252149055, 234863.98715456706),
+ (2681357.123331068, 234865.32915489745),
+ (2681362.210264231, 234861.15897282277),
+ (2681692.1215955643, 234886.4181370486),
+ (2681699.355624311, 234894.39671735794),
+ (2681736.5442193267, 234895.59133949786),
+ (2681745.715213006, 234890.37457753514),
+ (2682066.7968359203, 234915.0260280753),
+ (2682333.112356359, 234935.90829843114),
+ (2682348.7610627725, 234942.76536287944),
+ (2682387.0749724396, 234943.90924178105),
+ (2682392.96649399, 234940.45891116298),
+ (2682967.788370863, 234978.88946004419),
+ (2682995.7552366946, 234973.75627360333),
+ (2683002.1594804395, 234959.65170422112),
+ (2683371.526776604, 234850.29003378446),
+ (2683448.666176682, 235097.16829136465),
+ (2683497.606516197, 235395.38814054022),
+ (2683530.8800540864, 235392.1465222744),
+ (2683574.2342847297, 235388.95462271638),
+ (2683589.7387387, 235402.76356023492),
+ (2684083.5089586717, 235346.60231169572),
+ (2684635.3308200566, 235277.55478697235),
+ (2685373.557770412, 235172.01081611312),
+ (2685383.0665468746, 235164.64807134375),
+ (2685418.501619694, 235156.4882973923),
+ (2685425.213920341, 235161.03703511806),
+ (2685593.112400591, 235134.0114814397),
+ (2685597.1667276775, 235127.75097808542),
+ (2685647.637742642, 235112.5096627914),
+ (2685663.546551098, 235114.8701428145),
+ (2686191.5867158985, 234645.771882989),
+ (2686195.8975672983, 234628.9907206273),
+ (2686228.4587320555, 234597.17336507412),
+ (2686248.6786997677, 234595.83923046888),
+ (2686742.151375865, 234166.48874183433),
+ (2686761.5286288843, 234131.61591230836),
+ (2686805.809617109, 234090.8638000553),
+ (2686852.0284037506, 234073.57574945263),
+ (2687182.643957702, 233780.50315164228),
+ (2687354.7748588067, 233669.4651945763),
+ (2687379.7572525633, 233661.7946223563),
+ (2687400.235589389, 233662.99080785774),
+ (2687742.9475660105, 233614.50791171848),
+ (2687751.196016693, 233597.2696205356),
+ (2687802.298103555, 233589.14866995855),
+ (2687810.2430023956, 233610.0165433152),
+ (2687935.76011087, 233591.8050653929),
+ (2687898.219488951, 233311.907332479),
+ (2687916.218319036, 233309.81716483322),
+ (2688047.540972163, 233291.80922577917),
+ (2688065.902964053, 233289.07701865683),
+ (2688204.129894759, 233270.86976774325),
+ (2688225.311872064, 233268.41684603435),
+ (2688710.8177772593, 233200.5747280974),
+ (2688709.904579304, 233167.68030699),
+ (2688713.21728898, 233165.75554342783),
+ (2688744.986548535, 233161.97593939138),
+ (2688749.0910898466, 233163.85052149036),
+ (2688768.992373024, 233161.15889029673),
+ (2688773.1297168243, 233155.87251426547),
+ (2688824.3337859195, 233146.27006329867),
+ (2688861.746836447, 233144.54630401186),
+ (2688838.4949222845, 232998.77472394655),
+ (2688835.4173997133, 232978.89330074197),
+ (2688819.8523215735, 232835.94391950782),
+ (2688806.3193665748, 232828.05758166913),
+ (2688803.239877881, 232797.72623907388),
+ (2688812.8167634537, 232786.2595300599),
+ (2688797.5320008136, 232723.42268666055),
+ (2688796.2936263853, 232714.0122307466),
+ (2688772.4540506476, 232539.2425137284),
+ (2688770.3982452843, 232529.83159415305),
+ (2688768.163860336, 232464.2878029931),
+ (2688760.476848694, 232457.2906648712),
+ (2688757.6035582, 232426.01925449946),
+ (2688761.358278947, 232419.1750672862),
+ (2688751.714564611, 232370.7019925957),
+ (2688750.164769101, 232360.17349556973),
+ (2688748.699462584, 232348.2935739961),
+ (2688743.6504137763, 232314.04444539145)]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="create-the-shapefile-based-on-the-path" class="level3" data-number="0.5">
+<h3 data-number="0.5" class="anchored" data-anchor-id="create-the-shapefile-based-on-the-path"><span class="header-section-number">0.5</span> create the shapefile based on the path</h3>
+<p>We have the path, we can create the shapefile based on the path.</p>
+<div id="4c1143b6-95aa-4e86-9642-ef3d13964d75" class="cell" data-execution_count="95">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> fiona.<span class="bu">open</span>(streetMap)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>crs <span class="op">=</span> layer.crs</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co"># schema = layer.schema</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="28da249f-daa2-44f5-9d00-68395667dfbb" class="cell" data-execution_count="96">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> {<span class="st">'properties'</span>: {</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'fid'</span>: <span class="st">'str'</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>                        },</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">'geometry'</span>: <span class="st">'LineString'</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>         }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="058c26f9-82bf-47b5-9235-66ff0788b78e" class="cell" data-execution_count="59">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape, mapping</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> LineString, Point</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> fiona.<span class="bu">open</span>(<span class="st">'outname.shp'</span>, <span class="st">'w'</span>, crs <span class="op">=</span> crs, driver<span class="op">=</span><span class="st">'ESRI Shapefile'</span>, schema <span class="op">=</span> schema) <span class="im">as</span> out:</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(path) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>        node1 <span class="op">=</span> path[i]</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>        node2 <span class="op">=</span> path[i<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>        line <span class="op">=</span> LineString((Point(node1), Point(node2)))</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>        feat <span class="op">=</span> {</span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">'geometry'</span>: mapping(line), </span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">'properties'</span>: </span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a>                        {<span class="st">'fid'</span>: i}</span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a>               }</span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>        out.write(feat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="find-the-nearest-node-of-any-input-point" class="level4" data-number="0.5.1">
+<h4 data-number="0.5.1" class="anchored" data-anchor-id="find-the-nearest-node-of-any-input-point"><span class="header-section-number">0.5.1</span> Find the nearest node of any input point</h4>
+<p>You may wonder, what if the origin and destination node are not in the graph. How do we calculate the shortest distance and find the shortest path? We can snap those points to the nearest nodes in the graph. The following scripts can help you find the nearest node of any input point.</p>
+<p>we can loop and see all the ndoes</p>
+<div id="ecdee129-5719-4f15-8c8a-47d038d26675" class="cell" data-execution_count="60">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, node <span class="kw">in</span> <span class="bu">enumerate</span>(graph.nodes):</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> idx <span class="op">&gt;</span><span class="dv">10</span>: <span class="cf">continue</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(node)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(2674629.019778946, 233887.42317315526)
+(2675063.484593347, 233895.2384052628)
+(2677370.9139951007, 234099.03786372015)
+(2677331.098267104, 234139.85190359864)
+(2676819.994840707, 233998.8937345071)
+(2676874.8400247567, 234004.04994090827)
+(2677398.8984584543, 234090.96045311925)
+(2677452.6642256537, 234098.92121608992)
+(2677418.0230016173, 234179.81781638178)
+(2677382.3291674173, 234191.45753613432)
+(2676893.9161705, 233916.11122627818)</code></pre>
+</div>
+</div>
+<p>Numpy is very efficient for indexing and computing, we going to turn the coordinates of nodes into numpy arrays.</p>
+<div id="86f10778-565d-4ca3-bd6a-53895fbbc962" class="cell" data-execution_count="97">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>nodelist <span class="op">=</span> <span class="bu">list</span>(graph.nodes)</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>node_array <span class="op">=</span> np.array(nodelist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="4683b37c-49ed-44c6-a575-98935825751a" class="cell" data-execution_count="98">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>node_array.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="98">
+<pre><code>(88516, 2)</code></pre>
+</div>
+</div>
+<div id="f379d992-fe38-4bda-897a-069f915c973f" class="cell" data-execution_count="99">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>node_array[<span class="dv">0</span>,:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="99">
+<pre><code>array([2674629.01977895,  233887.42317316])</code></pre>
+</div>
+</div>
+<p>Specify any point with x, and y in the study area</p>
+<div id="d4dd8054-9966-48e8-99a5-5366bee048ad" class="cell" data-execution_count="100">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>anypnt <span class="op">=</span> (<span class="fl">2675067.484593347</span>, <span class="fl">233893.2384052628</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>calculate the absolute difference of the anypoint to all the nodes in the graph</p>
+<div id="2ec682d5-7a51-4184-b631-4070ccd31907" class="cell" data-execution_count="101">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>abs_diff <span class="op">=</span> np.<span class="bu">abs</span>(anypnt <span class="op">-</span> node_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="04e54e9e-de36-4c3c-a9ea-dd277cda823f" class="cell" data-execution_count="102">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>abs_diff.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="102">
+<pre><code>(88516, 2)</code></pre>
+</div>
+</div>
+<p>we will sum the x, and y for each node.</p>
+<div id="9099dec6-85d1-492c-a675-c2bab73d3680" class="cell" data-execution_count="103">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>abs_diff_sum <span class="op">=</span> np.<span class="bu">sum</span>(abs_diff, <span class="dv">1</span>)</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>abs_diff_sum.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="103">
+<pre><code>(88516,)</code></pre>
+</div>
+</div>
+<p>we can easily find the index of the minimum value</p>
+<div id="7ba4782e-4282-4248-9522-9bd2d08d2f97" class="cell" data-execution_count="104">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> abs_diff_sum.argmin()</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="104">
+<pre><code>1</code></pre>
+</div>
+</div>
+<p>we can find the coordinate of the nearest node</p>
+<div id="88024d21-c9f0-49ce-8b03-99690e8ae338" class="cell" data-execution_count="105">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>nodelist[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="105">
+<pre><code>(2675063.484593347, 233895.2384052628)</code></pre>
+</div>
+</div>
+<div id="4696d393-aeb0-49b0-82c2-e00188212adc" class="cell" data-execution_count="106">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>anypnt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="106">
+<pre><code>(2675067.484593347, 233893.2384052628)</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
