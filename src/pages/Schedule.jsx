@@ -49,8 +49,13 @@ const schedule = [
   },
   { w: 7, date: "10/9/25", topic: "Fall break — No class", 
     lab: "—" },
-  { w: 8, date: "10/16/25", topic: "Web Scraping (I)", 
-    lab: "API, parse HTML, store data in database" },
+  { w: 8, date: "10/16/25", topic: "Network analysis", 
+    lab: [
+      {label: "8.1 Network analysis with OSMnx", href: `${base}labs/week-7-network-analysis/week-7A-street-network.html`},
+      {label: "8.2 Basics of Graph and NetworkX", href: `${base}labs/week-7-network-analysis/week-7B-street-network.html`}
+    ]
+  },
+
   { w: 9, date: "10/23/25", topic: "Web Scraping (II)", 
     lab: "Scrape and analyze real data (e.g., GSV)" },
   { w: 10, date: "10/30/25", topic: "Analyzing & Visualizing Large Datasets; CensusAPI", 
