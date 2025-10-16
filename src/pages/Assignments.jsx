@@ -147,15 +147,14 @@ This assignment will include two parts:
 **Part 1: Visualizing crash data in Philadelphia**
 
 In this section, you will use osmnx to analyze the crash incidence in Center City.
-We’ll be exploring the idea that evictions can occur as retaliation against renters for reporting code violations. Spatial correlations between evictions and code violations from the City’s Licenses and Inspections department can offer some insight into this question.
 
 **Part 2: Scraping Craigslist**
 In this section, you will use Selenium and BeautifulSoup to scrape data for hundreds of apartments from Philadelphia’s Craigslist portal.
 
 
 ### Assignment details
-A [skeleton Jupyter notebook](https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/blob/main/public/assignments/assignment-4.ipynb) is available in this repository that will walk you through the steps of the assignment. 
-Please unzip the data.zip and put it in the same folder as the notebook. The completed notebook should be submitted as your assignment.
+A [skeleton Jupyter notebook](https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/blob/main/public/assignments/assignment-4.ipynb) 
+is available in this repository that will walk you through the steps of the assignment. The completed notebook should be submitted as your assignment.
 
 
 ### Submission Notes
@@ -163,11 +162,7 @@ Please unzip the data.zip and put it in the same folder as the notebook. The com
   `
 }
 
-
-
-
 ];
-
 
 
 
