@@ -100,10 +100,10 @@ Note: You may include geospatial charts to satisfy the above requirements, but y
   id: "a3",
   title: "HW #3 — Explore spatial patterns",
   assigned: "Thu, Sep 25",
-  due: "Tue, Oct 7 @ 11:59 PM",
+  due: "Tue, Oct 12 @ 11:59 PM",
   detailsMd: `
 **Assigned on:** Thu, September 25 
-**Due:** Tue, Oct 7 at 11:59 PM  
+**Due:** Tue, Oct 12 at 11:59 PM  
 ### Description
 ---
 This assignment will include two parts:
@@ -131,7 +131,40 @@ Please unzip the data.zip and put it in the same folder as the notebook. The com
 ### Submission Notes
 - Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
   `
+} ,
+{
+  id: "a4",
+  title: "HW #4 — Network Analysis & Web Scraping",
+  assigned: "Thu, Oct 16",
+  due: "Tue, Nov 7 @ 11:59 PM",
+  detailsMd: `
+**Assigned on:** Thu, Oct 16 
+**Due:** Tue, Nov 7 at 11:59 PM  
+### Description
+---
+This assignment will include two parts:
+
+**Part 1: Visualizing crash data in Philadelphia**
+
+In this section, you will use osmnx to analyze the crash incidence in Center City.
+We’ll be exploring the idea that evictions can occur as retaliation against renters for reporting code violations. Spatial correlations between evictions and code violations from the City’s Licenses and Inspections department can offer some insight into this question.
+
+**Part 2: Scraping Craigslist**
+In this section, you will use Selenium and BeautifulSoup to scrape data for hundreds of apartments from Philadelphia’s Craigslist portal.
+
+
+### Assignment details
+A [skeleton Jupyter notebook](https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/blob/main/public/assignments/assignment-4.ipynb) is available in this repository that will walk you through the steps of the assignment. 
+Please unzip the data.zip and put it in the same folder as the notebook. The completed notebook should be submitted as your assignment.
+
+
+### Submission Notes
+- Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
+  `
 }
+
+
+
 
 ];
 

@@ -51,8 +51,8 @@ const schedule = [
     lab: "—" },
   { w: 8, date: "10/16/25", topic: "Network analysis", 
     lab: [
-      {label: "8.1 Network analysis with OSMnx", href: `${base}labs/week-7-network-analysis/week-7A-street-network.html`},
-      {label: "8.2 Basics of Graph and NetworkX", href: `${base}labs/week-7-network-analysis/week-7B-street-network.html`}
+      {label: "8.1 Network analysis with OSMnx", href: `${base}labs/week-8-network-analysis/week-8A-street-network.html`},
+      {label: "8.2 Basics of Graph and NetworkX", href: `${base}labs/week-8-network-analysis/week-8B-street-network.html`}
     ]
   },
 
