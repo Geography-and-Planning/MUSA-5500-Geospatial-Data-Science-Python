@@ -55,21 +55,30 @@ const schedule = [
       {label: "8.2 Basics of Graph and NetworkX", href: `${base}labs/week-8-network-analysis/week-8B-street-network.html`}
     ]
   },
-
-  { w: 9, date: "10/23/25", topic: "Web Scraping (II)", 
-    lab: "Scrape and analyze real data (e.g., GSV)" },
+  { w: 9, date: "10/23/25", topic: "Web Scraping", 
+    lab: [
+      {label: "9.1 Web Scraping (I)", href: `${base}labs/week-9-web-scraping/lecture-9A.html`},
+      {label: "9.2 Web Scraping (II)", href: `${base}labs/week-9-web-scraping/lecture-9B.html`}
+    ]
+  },
   { w: 10, date: "10/30/25", topic: "Analyzing & Visualizing Large Datasets; CensusAPI", 
-    lab: "Visualize large raster and vector data" },
+    lab: "Visualize large raster and vector data" 
+  },
   { w: 11, date: "11/6/25", topic: "Web hosting: GitHub, Quarto, create web pages", 
-    lab: "Publish notebooks & sites" },
+    lab: "Publish notebooks & sites" 
+  },
   { w: 12, date: "11/13/25", topic: "Machine Learning (I)", 
-    lab: "Predictive Modeling with scikit-learn" },
+    lab: "Predictive Modeling with scikit-learn" 
+  },
   { w: 13, date: "11/20/25", topic: "Machine Learning (II)", 
-    lab: "Predictive Modeling with scikit-learn" },
+    lab: "Predictive Modeling with scikit-learn" 
+  },
   { w: 14, date: "11/27/25", topic: "Thanksgiving break — No class", 
-    lab: "—" },
+    lab: "—" 
+  },
   { w: 15, date: "12/4/25", topic: "Final Project Presentations (last day of class)", 
-    lab: "—" },
+    lab: "—" 
+  },
 ];
 
 function LabCell({ item }) {
