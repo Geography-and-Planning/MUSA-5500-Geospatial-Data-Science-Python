@@ -151,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cell-1" class="cell" data-tags="[]" data-execution_count="3">
+<div id="cell-1" class="cell" data-tags="[]" data-execution_count="1">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -294,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="jupyter-notebooks-can-render-html" class="level3" data-number="13.2">
 <h3 data-number="13.2" class="anchored" data-anchor-id="jupyter-notebooks-can-render-html"><span class="header-section-number">13.2</span> Jupyter notebooks can render HTML</h3>
 <p>Use the <code>%%html</code> magic cell command</p>
-<div id="cell-20" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="4">
+<div id="cell-20" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="2">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>html</span>
@@ -328,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="elements-tags-and-attributes" class="level3" data-number="13.3">
 <h3 data-number="13.3" class="anchored" data-anchor-id="elements-tags-and-attributes"><span class="header-section-number">13.3</span> Elements, tags, and attributes</h3>
 <p>Learning the notation:</p>
-<div id="cell-22" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="5">
+<div id="cell-22" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="3">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>html</span>
@@ -495,35 +495,35 @@ Tip
 <section id="getting-the-html-content" class="level3" data-number="16.1">
 <h3 data-number="16.1" class="anchored" data-anchor-id="getting-the-html-content"><span class="header-section-number">16.1</span> Getting the HTML content</h3>
 <p>We’ll use the built-in “requests” module to request the content of the website and load it into Python.</p>
-<div id="cell-44" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="6">
+<div id="cell-44" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="4">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Use a “get” request to get the content:</p>
-<div id="cell-46" class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="7">
+<div id="cell-46" class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="5">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://data.inquirer.com/inspections/"</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> requests.get(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-47" class="cell" data-tags="[]" data-execution_count="8">
+<div id="cell-47" class="cell" data-tags="[]" data-execution_count="6">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>requests.models.Response</code></pre>
 </div>
 </div>
-<div id="cell-48" class="cell" data-execution_count="9">
+<div id="cell-48" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>r.status_code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>200</code></pre>
 </div>
 </div>
@@ -531,14 +531,14 @@ Tip
 <section id="beautifulsoup-makes-this-much-more-manageable" class="level3" data-number="16.2">
 <h3 data-number="16.2" class="anchored" data-anchor-id="beautifulsoup-makes-this-much-more-manageable"><span class="header-section-number">16.2</span> BeautifulSoup makes this much more manageable</h3>
 <p><a href="https://beautiful-soup-4.readthedocs.io/en/latest/">BeautifulSoup</a> makes it much easier to extract out different parts of a website.</p>
-<div id="cell-50" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="10">
+<div id="cell-50" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="8">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Initialize the “soup” object, using the content of our get request:</p>
-<div id="cell-52" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="11">
+<div id="cell-52" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="9">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(r.content, <span class="st">'html.parser'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -547,7 +547,7 @@ Tip
 </section>
 <section id="making-the-html-pretty" class="level3" data-number="16.3">
 <h3 data-number="16.3" class="anchored" data-anchor-id="making-the-html-pretty"><span class="header-section-number">16.3</span> Making the HTML “pretty”</h3>
-<div id="cell-54" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-tags="[]" data-execution_count="13">
+<div id="cell-54" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-tags="[]" data-execution_count="10">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -4452,7 +4452,7 @@ adCount++;
 <li><code>soup.select_one(selector)</code>: finds the first element matching the selector query and returns <strong>one</strong> element</li>
 <li><code>soup.select(selector)</code>: finds <strong>all</strong> elements matching the selector</li>
 </ol>
-<p><strong>Recommended reading:</strong> Note on beautiful soup and css selectors in <a href="./public/labs/week-9-web-scraping/css-selectors.md">this week’s repository</a></p>
+<p><strong>Recommended reading:</strong> Note on beautiful soup and css selectors in <a href="https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/blob/main/public/labs/week-9-web-scraping/css-selectors.md">this week’s repository</a></p>
 </section>
 <section id="to-the-web-inspector" class="level3" data-number="16.5">
 <h3 data-number="16.5" class="anchored" data-anchor-id="to-the-web-inspector"><span class="header-section-number">16.5</span> To the Web Inspector!</h3>
@@ -4462,13 +4462,13 @@ adCount++;
 <h3 data-number="16.6" class="anchored" data-anchor-id="lets-select-the-first-row"><span class="header-section-number">16.6</span> Let’s select the first row</h3>
 <p>Web browsers will let us copy the CSS selector for individual elements.</p>
 <p>Use: <strong>Right Click &gt; Copy &gt; Copy Selector</strong></p>
-<div id="cell-60" class="cell" data-execution_count="15">
+<div id="cell-60" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> <span class="st">"#inspection_unit_0"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-61" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="26">
+<div id="cell-61" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="12">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the first row</span></span>
@@ -4476,12 +4476,12 @@ adCount++;
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>first_row <span class="op">=</span> soup.select_one(selector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="27">
+<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="13">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>first_row</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>&lt;div class="inspectionUnit inspectionUnitEven transitionBackground" id="inspection_unit_0"&gt;&lt;a href="https://data.inquirer.com/inspections/philly/?detail=Bamba%20and%20Saduty%20Produce%20Market|4603%20FRANKFORD%20AVE%2019124"&gt;&lt;div class="inspectionUnitInner"&gt;&lt;div class="inspectionNameWrapper"&gt;&lt;div class="inspectionUnitName transitionAll"&gt;Bamba and Saduty Produce Market&lt;/div&gt;&lt;div class="inspectionUnitDate"&gt;&lt;span class="inspectionUnitDateTitle"&gt;Inspection date:&lt;/span&gt; Apr 18, 2024&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="inspectionUnitInfoWrapper"&gt;&lt;div class="inspectionUnitAddress"&gt;4603 FRANKFORD AVE 19124&lt;/div&gt;&lt;div class="inspectionUnitNeigborhood"&gt;&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="inspectionUnitCountWrapper"&gt;&lt;span class="inspectionCountLabel"&gt;Violations&lt;/span&gt;&lt;li class="inspectionUnitCount inspectionUnitCountFoodborne inspectionUnitCountFirst"&gt;&lt;span class="inspectionCountNumber"&gt;5&lt;/span&gt;&lt;span class="inspectionUnitInfoItemTitle"&gt;&lt;span class="inspectionUnitInfoItemTitleLabel"&gt;Foodborne Illness Risk Factors&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;li class="inspectionUnitCount inspectionUnitCountRetail"&gt;&lt;span class="inspectionCountNumber"&gt;10&lt;/span&gt;&lt;span class="inspectionUnitInfoItemTitle"&gt;&lt;span class="inspectionUnitInfoItemTitleLabel"&gt;Lack of Good Retail Practices&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;&lt;/div&gt;</code></pre>
 </div>
 </div>
@@ -4519,7 +4519,7 @@ Tip
 </div>
 <p>In our case, it looks like the “inspectionUnit” class is shared across all of the row div elements</p>
 <p><img src="imgs/clean-plates-2.png" class="img-fluid"></p>
-<div id="cell-66" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="39">
+<div id="cell-66" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="14">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all tags with the inspectionUnit class name</span></span>
@@ -4527,16 +4527,16 @@ Tip
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> soup.select(<span class="st">'.inspectionUnit'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-67" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="40">
+<div id="cell-67" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="15">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(rows)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>50</code></pre>
 </div>
 </div>
-<div id="cell-68" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="41">
+<div id="cell-68" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="16">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the first row</span></span>
@@ -4619,44 +4619,44 @@ Tip
 <section id="the-report-link" class="level4" data-number="16.8.1">
 <h4 data-number="16.8.1" class="anchored" data-anchor-id="the-report-link"><span class="header-section-number">16.8.1</span> 1. The report link</h4>
 <p>The link is stored as the “href” attribute of the first “a” element:</p>
-<div id="cell-71" class="cell" data-execution_count="42">
+<div id="cell-71" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>row</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>&lt;div class="inspectionUnit inspectionUnitEven transitionBackground" id="inspection_unit_0"&gt;&lt;a href="https://data.inquirer.com/inspections/philly/?detail=Bamba%20and%20Saduty%20Produce%20Market|4603%20FRANKFORD%20AVE%2019124"&gt;&lt;div class="inspectionUnitInner"&gt;&lt;div class="inspectionNameWrapper"&gt;&lt;div class="inspectionUnitName transitionAll"&gt;Bamba and Saduty Produce Market&lt;/div&gt;&lt;div class="inspectionUnitDate"&gt;&lt;span class="inspectionUnitDateTitle"&gt;Inspection date:&lt;/span&gt; Apr 18, 2024&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="inspectionUnitInfoWrapper"&gt;&lt;div class="inspectionUnitAddress"&gt;4603 FRANKFORD AVE 19124&lt;/div&gt;&lt;div class="inspectionUnitNeigborhood"&gt;&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="inspectionUnitCountWrapper"&gt;&lt;span class="inspectionCountLabel"&gt;Violations&lt;/span&gt;&lt;li class="inspectionUnitCount inspectionUnitCountFoodborne inspectionUnitCountFirst"&gt;&lt;span class="inspectionCountNumber"&gt;5&lt;/span&gt;&lt;span class="inspectionUnitInfoItemTitle"&gt;&lt;span class="inspectionUnitInfoItemTitleLabel"&gt;Foodborne Illness Risk Factors&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;li class="inspectionUnitCount inspectionUnitCountRetail"&gt;&lt;span class="inspectionCountNumber"&gt;10&lt;/span&gt;&lt;span class="inspectionUnitInfoItemTitle"&gt;&lt;span class="inspectionUnitInfoItemTitleLabel"&gt;Lack of Good Retail Practices&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;&lt;/div&gt;</code></pre>
 </div>
 </div>
-<div id="cell-72" class="cell" data-tags="[]" data-execution_count="44">
+<div id="cell-72" class="cell" data-tags="[]" data-execution_count="18">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> row.select_one(<span class="st">"a"</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>&lt;a href="https://data.inquirer.com/inspections/philly/?detail=Bamba%20and%20Saduty%20Produce%20Market|4603%20FRANKFORD%20AVE%2019124"&gt;&lt;div class="inspectionUnitInner"&gt;&lt;div class="inspectionNameWrapper"&gt;&lt;div class="inspectionUnitName transitionAll"&gt;Bamba and Saduty Produce Market&lt;/div&gt;&lt;div class="inspectionUnitDate"&gt;&lt;span class="inspectionUnitDateTitle"&gt;Inspection date:&lt;/span&gt; Apr 18, 2024&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="inspectionUnitInfoWrapper"&gt;&lt;div class="inspectionUnitAddress"&gt;4603 FRANKFORD AVE 19124&lt;/div&gt;&lt;div class="inspectionUnitNeigborhood"&gt;&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="inspectionUnitCountWrapper"&gt;&lt;span class="inspectionCountLabel"&gt;Violations&lt;/span&gt;&lt;li class="inspectionUnitCount inspectionUnitCountFoodborne inspectionUnitCountFirst"&gt;&lt;span class="inspectionCountNumber"&gt;5&lt;/span&gt;&lt;span class="inspectionUnitInfoItemTitle"&gt;&lt;span class="inspectionUnitInfoItemTitleLabel"&gt;Foodborne Illness Risk Factors&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;li class="inspectionUnitCount inspectionUnitCountRetail"&gt;&lt;span class="inspectionCountNumber"&gt;10&lt;/span&gt;&lt;span class="inspectionUnitInfoItemTitle"&gt;&lt;span class="inspectionUnitInfoItemTitleLabel"&gt;Lack of Good Retail Practices&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="clearAll"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;</code></pre>
 </div>
 </div>
 <p>Attributes can be extracted from the “attrs” attribute</p>
-<div id="cell-74" class="cell" data-tags="[]" data-execution_count="45">
+<div id="cell-74" class="cell" data-tags="[]" data-execution_count="19">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a.attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>{'href': 'https://data.inquirer.com/inspections/philly/?detail=Bamba%20and%20Saduty%20Produce%20Market|4603%20FRANKFORD%20AVE%2019124'}</code></pre>
 </div>
 </div>
-<div id="cell-75" class="cell" data-tags="[]" data-execution_count="46">
+<div id="cell-75" class="cell" data-tags="[]" data-execution_count="20">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>link <span class="op">=</span> a.attrs[<span class="st">'href'</span>]</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>link</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>'https://data.inquirer.com/inspections/philly/?detail=Bamba%20and%20Saduty%20Produce%20Market|4603%20FRANKFORD%20AVE%2019124'</code></pre>
 </div>
 </div>
@@ -4665,7 +4665,7 @@ Tip
 <h4 data-number="16.8.2" class="anchored" data-anchor-id="the-restaurant-name"><span class="header-section-number">16.8.2</span> 2. The restaurant name</h4>
 <p>Use the “inspectionUnitName” class name to identify the right element.</p>
 <p><img src="imgs/clean-plates-name.png" class="img-fluid"></p>
-<div id="cell-77" class="cell" data-tags="[]" data-execution_count="47">
+<div id="cell-77" class="cell" data-tags="[]" data-execution_count="22">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the . to specify class name</span></span>
@@ -4673,18 +4673,18 @@ Tip
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>name_tag</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="47">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>&lt;div class="inspectionUnitName transitionAll"&gt;Bamba and Saduty Produce Market&lt;/div&gt;</code></pre>
 </div>
 </div>
-<div id="cell-78" class="cell" data-tags="[]" data-execution_count="48">
+<div id="cell-78" class="cell" data-tags="[]" data-execution_count="23">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> name_tag.text</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="48">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>'Bamba and Saduty Produce Market'</code></pre>
 </div>
 </div>
@@ -4693,7 +4693,7 @@ Tip
 <h4 data-number="16.8.3" class="anchored" data-anchor-id="the-restaurant-address"><span class="header-section-number">16.8.3</span> 3. The restaurant address</h4>
 <p>Use the “inspectionUnitAddress” class name to identify the right element.</p>
 <p><img src="imgs/clean-plates-address.png" class="img-fluid"></p>
-<div id="cell-80" class="cell" data-tags="[]" data-execution_count="49">
+<div id="cell-80" class="cell" data-tags="[]" data-execution_count="24">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the . to specify class name</span></span>
@@ -4701,18 +4701,18 @@ Tip
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>addr_tag</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="49">
+<div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>&lt;div class="inspectionUnitAddress"&gt;4603 FRANKFORD AVE 19124&lt;/div&gt;</code></pre>
 </div>
 </div>
-<div id="cell-81" class="cell" data-tags="[]" data-execution_count="50">
+<div id="cell-81" class="cell" data-tags="[]" data-execution_count="25">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>address <span class="op">=</span> addr_tag.text</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>address</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="50">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>'4603 FRANKFORD AVE 19124'</code></pre>
 </div>
 </div>
