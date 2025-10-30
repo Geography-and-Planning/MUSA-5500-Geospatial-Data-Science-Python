@@ -61,8 +61,11 @@ const schedule = [
       {label: "9.2 Web Scraping (II)", href: `${base}labs/week-9-web-scraping/lecture-9B.html`}
     ]
   },
-  { w: 10, date: "10/30/25", topic: "Analyzing & Visualizing Large Datasets; CensusAPI", 
-    lab: "Visualize large raster and vector data" 
+  { w: 10, date: "10/30/25", topic: "Web APIs", 
+    lab: [
+      {label: "10.1 Web APIs (I)", href: `${base}labs/week-10-web-api/lecture-10A.html`},
+      {label: "10.2 Web APIs (II)", href: `${base}labs/week-10-web-api/lecture-10B.html`}
+    ]
   },
   { w: 11, date: "11/6/25", topic: "Web hosting: GitHub, Quarto, create web pages", 
     lab: "Publish notebooks & sites" 
