@@ -160,6 +160,35 @@ is available in this repository that will walk you through the steps of the assi
 ### Submission Notes
 - Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
   `
+} ,
+{
+  id: "a5",
+  title: "HW #5 — Restaurant reviews and census data",
+  assigned: "Thu, Nov 6",
+  due: "Tue, Nov 13 @ 11:59 PM",
+  detailsMd: `
+**Assigned on:** Thu, Nov 6 
+**Due:** Thu, Nov 13 at 11:59 PM  
+### Description
+---
+In this assignment, we’ll explore restaurant review data available through the [Yelp Dataset Challenge](https://business.yelp.com/data/resources/open-dataset/).
+ The dataset includes Yelp data for user reviews and business information for many metropolitan areas.
+  I’ve already downloaded this dataset (8 GB total!) and extracted out the data files for reviews 
+  and restaurants in Philadelphia. I’ve placed these data files into the data directory in this repository.
+
+**Analyzing correlations between restaurant reviews and census data**
+
+We’ll explore the relationship between restaurant reviews and the income levels of the restaurant’s surrounding area.
+
+
+### Assignment details
+A [skeleton Jupyter notebook](https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/blob/main/public/assignments/assignment-5.ipynb) 
+is available in this repository that will walk you through the steps of the assignment. The completed notebook should be submitted as your assignment.
+
+
+### Submission Notes
+- Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
+  `
 }
 
 ];
