@@ -4,7 +4,6 @@ import "./FinalProject.css";
 
 const requirements = [
   "Data is collected through a means more sophisticated than downloading (e.g., scraping, API).",
-  "At least one of the datasets contains more than 1,000,000 rows.",
   "It combines data collected from 3 or more different sources.",
   "The analysis of the data is reasonably complex (geospatial joins/operations, data shaping, etc.).",
   "Use OSMnx or pandana to analyze street networks.",
@@ -94,12 +93,12 @@ export default function FinalProject() {
         <h2>Deliverables</h2>
         <ol className="list-tight">
           <li>
-            <strong>Quarto website</strong> hosted on GitHub Pages, generated from the Quarto website template.
+            <strong>A website</strong> hosted on GitHub Pages.
             Use text, images, and interactive visualizations to explain your process and results.
           </li>
           <li>
             <strong>All project materials</strong> (code, notebooks, spreadsheets, datasets) in your own GitHub repo submited to Canvas.
-            Include a <code>README</code> with the URL of your Quarto website.
+            Include a <code>README</code> with the URL of your website.
           </li>
         </ol>
         <div className="callout">
