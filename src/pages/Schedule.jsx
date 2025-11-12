@@ -71,7 +71,10 @@ const schedule = [
     lab: "Publish notebooks & sites" 
   },
   { w: 12, date: "11/13/25", topic: "Machine Learning (I)", 
-    lab: "Predictive Modeling with scikit-learn" 
+    lab: [
+      {label: "12.1 Clustering Analysis (I)", href: `${base}labs/week-12-cluser-analysis/lecture-12A.html`},
+      {label: "12.2 Clustering Analysis (II)", href: `${base}labs/week-12-cluster-analysis/lecture-12B.html`}
+    ]
   },
   { w: 13, date: "11/20/25", topic: "Machine Learning (II)", 
     lab: "Predictive Modeling with scikit-learn" 
