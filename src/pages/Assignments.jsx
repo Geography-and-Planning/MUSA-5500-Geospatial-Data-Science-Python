@@ -189,8 +189,34 @@ is available in this repository that will walk you through the steps of the assi
 ### Submission Notes
 - Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
   `
-}
+}, 
+{id: "a6",
+title: "HW #6 — Restaurant reviews and census data",
+assigned: "Thu, Nov 13",
+due: "Sun, Nov 23 @ 11:59 PM",
+detailsMd: `
+**Assigned on:** Thu, Nov 13 
+**Due:** Sun, Nov 23 at 11:59 PM
+### Description
+---
+Lectures 12B and 13A will cover predictive modeling of housing prices in Philadelphia. In this assignment,
+we'll extend that analysis in this section by:
 
+- Optimizing our hyperparameters during the modeling process using cross-validation and a grid search
+- Testing the fairness of our model by calculating the intersection of the model error rate and poverty rate across neighborhoods
+
+**Predictive Modeling of Housing Prices in Philadelphia**
+
+
+### Assignment details
+A [skeleton Jupyter notebook](https://github.com/xiaojianggis/MUSA-5500-Geospatial-Data-Science-Python/blob/main/public/assignments/assignment-6.ipynb) 
+is available in this repository that will walk you through the steps of the assignment. The completed notebook should be submitted as your assignment.
+
+
+### Submission Notes
+- Submit via **Canvas**. Please submit your notebook and you data to Canvas directly using relative path.
+`
+}
 ];
 
 
