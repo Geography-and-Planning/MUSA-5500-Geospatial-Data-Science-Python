@@ -191,7 +191,7 @@ is available in this repository that will walk you through the steps of the assi
   `
 }, 
 {id: "a6",
-title: "HW #6 — redictive Modeling of Housing Prices",
+title: "HW #6 — Predicting Housing Prices in Phily",
 assigned: "Thu, Nov 13",
 due: "Sun, Nov 23 @ 11:59 PM",
 detailsMd: `
