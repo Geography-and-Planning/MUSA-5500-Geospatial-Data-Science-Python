@@ -25,28 +25,33 @@ This course will provide students with the knowledge and tools to turn data into
 
 - #### Week 5. Raster data operations in Python
 - 5.1 Raster data operations ([link](public/labs/week-5-raster-data-operations/week-5A-raster-data.ipynb))
-- 5.2 Raster data analysis ([lin]())
+- 5.2 Raster data analysis ([lin](public/labs/week-5-raster-analysis/week-5B-raster-analysis.ipynb))
 
 - #### Week 6. Advanced geospatial analysis
-
+  - 6.1 Spatial joins and overlays ([Link](public/labs/week-6-advanced-geospatial-analysis/week-6A-advanced-raster-analysis.ipynb))
+  - 6.2. Spatial data analysis using `fiona` and `shapely` ([Link](public/labs/week-6-advanced-geospatial-analysis/week-6B-spatial_fiona_shapely.ipynb))
 
 - #### Week 7. Fall break — No class
 
 
-- #### Week 8. Web Scraping (I)
+- #### Week 8. Network Analysis
+  - 8.1 Network analysis using OSMnx ([link](public/labs/week-8-network-analysis/week-8A-street-network.ipynb))
+  - 8.2 Web scraping ([link](public/labs/week-8-network-analysis/week-8B-street-network.ipynb))
 
+- #### Week 9. Web Scraping
+  - 9.1 Web scraping basics ([link](public/labs/week-9-web-scraping/lecture-9A.ipynb))
+  - 9.2 Web scraping through APIs ([link](public/labs/week-9-web-scraping/lecture-9B.ipynb))
 
-- #### Week 9. Web Scraping (II)
+- #### Week 10. Downloading data through APIs
+    - 10.1 APIs basics ([link](public/labs/week-10-web-api/lecture-10A.ipynb))
+    - 10.2 More about APIs ([link](public/labs/week-10-web-api/lecture-10B.ipynb))
 
-
-- #### Week 10. Analyzing & Visualizing Large Datasets; CensusAPI
-
-
-- #### Week 11. Web hosting: GitHub, Quarto, create web pages
+- #### Week 11. Web hosting: GitHub, Quarto, create web pages (Vibe coding using ChatGPT)
 
 
 - #### Week 12. Machine Learning (I)
-
+  - Custer analysis using Kmeans([link](public/labs/week-12-cluster-analysis/lecture-12A.ipynb))
+  - Spatially cluster anlaysis using DBSCAN ([link](public/labs/week-12-cluster-analysis/lecture-12B.ipynb))
 
 - #### Week 13. Machine Learning (II)
 
