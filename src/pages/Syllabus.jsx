@@ -90,7 +90,7 @@ export default function Syllabus() {
           <ul>
             <li>Homework: 50% (lowest assignment dropped)</li>
             <li>Final Project: 45%</li>
-            <li>Participation: 5% (presence in class)</li>
+            <li>Participation: 5% (presence in the class)</li>
           </ul>
           <p className="muted">
             No late penalty. You’ll miss faster feedback, but your score isn’t reduced.
