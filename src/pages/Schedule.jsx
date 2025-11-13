@@ -74,11 +74,14 @@ const schedule = [
     lab: [
       {label: "12.1 Clustering Analysis (I)", href: `${base}labs/week-12-cluster-analysis/lecture-12A.html`},
       {label: "12.2 Clustering Analysis (II)", href: `${base}labs/week-12-cluster-analysis/lecture-12B.html`},
-      {label: "12.3 Predictive modeling", href: `${base}labs/week-13-machine-learning-scikit/lecture-13A.html`}
+      {label: "12.3 Predictive modeling (I)", href: `${base}labs/week-13-machine-learning-scikit/lecture-13A.html`}
     ]
   },
   { w: 13, date: "11/20/25", topic: "Machine Learning (II)", 
-    lab: "Predictive Modeling with scikit-learn" 
+    lab: [
+      {label: "13.1 Predictive modeling (II)", href: `${base}labs/week-12-cluster-analysis/`},
+      {label: "13.2 Deep learning", href: `${base}labs/`}
+    ]
   },
   { w: 14, date: "11/27/25", topic: "Thanksgiving break — No class", 
     lab: "—" 
