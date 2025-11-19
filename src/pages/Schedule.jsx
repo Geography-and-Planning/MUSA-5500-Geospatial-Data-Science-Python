@@ -79,8 +79,9 @@ const schedule = [
   },
   { w: 13, date: "11/20/25", topic: "Machine Learning (II)", 
     lab: [
-      {label: "13.1 Predictive modeling (II)", href: `${base}labs/week-12-cluster-analysis/`},
-      {label: "13.2 Deep learning", href: `${base}labs/`}
+      {label: "13.1 Predictive modeling (II)", href: `${base}labs/week-13-machine-learning-scikit/lecture-13B.html`},
+      {label: "13.2 Predictive modeling (III)", href: `${base}labs/week-14-predictive-modeling/lecture-14A.html`},
+      {label: "13.2 Predictive modeling (IV)", href: `${base}labs/week-14-predictive-modeling/lecture-14B.html`}
     ]
   },
   { w: 14, date: "11/27/25", topic: "Thanksgiving break — No class", 
