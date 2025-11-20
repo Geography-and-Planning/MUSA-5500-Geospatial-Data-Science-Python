@@ -1,6 +1,6 @@
 ## MUSA-5500-Geospatial Data Science in Python
 
-This course will provide students with the knowledge and tools to turn data into meaningful insights, with a focus on real-world case studies in the urban planning and public policy realm.ts and transform results into understandable and compelling narratives.
+This course will provide students with the knowledge and tools to turn data into meaningful insights, with a focus on real-world case studies in the urban planning and public policy realms and transform results into understandable and compelling narratives.
 
 
 ### Outline

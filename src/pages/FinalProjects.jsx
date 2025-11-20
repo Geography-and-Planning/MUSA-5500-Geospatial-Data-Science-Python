@@ -103,11 +103,10 @@ export default function FinalProject() {
             Include a <code>README</code> with the URL of your website.
           </li>
           <li>
-            <strong>Final project presentation</strong>, all groups/people will present their work in the last week of class. 
+            <strong>Final project presentation</strong>, all groups/people will present their work on <strong>Dec 4th</strong>, 2025. 
             Prepare a ~10 minutes presentation summarizing your project. Eeach group/person will have about 1~2 minutes for Q&A 
             after the presentation.
           </li>
-
 
         </ol>
         <div className="callout">
