@@ -193,10 +193,10 @@ is available in this repository that will walk you through the steps of the assi
 {id: "a6",
 title: "HW #6 — Predicting Housing Prices in Phily",
 assigned: "Thu, Nov 13",
-due: "Sun, Nov 23 @ 11:59 PM",
+due: "Monday, Nov 24 @ 11:59 PM",
 detailsMd: `
 **Assigned on:** Thu, Nov 13 
-**Due:** Sun, Nov 23 at 11:59 PM
+**Due:** Monday, Nov 24 at 11:59 PM
 ### Description
 ---
 Lectures 12B and 13A will cover predictive modeling of housing prices in Philadelphia. In this assignment,
