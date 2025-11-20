@@ -24,8 +24,8 @@ This course will provide students with the knowledge and tools to turn data into
 
 
 - #### Week 5. Raster data operations in Python
-- 5.1 Raster data operations ([link](public/labs/week-5-raster-data-operations/week-5A-raster-data.ipynb))
-- 5.2 Raster data analysis ([lin](public/labs/week-5-raster-analysis/week-5B-raster-analysis.ipynb))
+  - 5.1 Raster data operations ([link](public/labs/week-5-raster-data-operations/week-5A-raster-data.ipynb))
+  - 5.2 Raster data analysis ([lin](public/labs/week-5-raster-analysis/week-5B-raster-analysis.ipynb))
 
 - #### Week 6. Advanced geospatial analysis
   - 6.1 Spatial joins and overlays ([Link](public/labs/week-6-advanced-geospatial-analysis/week-6A-advanced-raster-analysis.ipynb))
