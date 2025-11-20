@@ -441,7 +441,7 @@ Tip
   }
 
   const force = true;
-  const py_version = '3.7.3'.replace('rc', '-rc.').replace('.dev', '-dev.');
+  const py_version = '3.8.0'.replace('rc', '-rc.').replace('.dev', '-dev.');
   const reloading = false;
   const Bokeh = root.Bokeh;
 
@@ -601,7 +601,7 @@ Tip
     document.body.appendChild(element);
   }
 
-  const js_urls = ["https://cdn.holoviz.org/panel/1.7.5/dist/bundled/reactiveesm/es-module-shims@^1.10.0/dist/es-module-shims.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-3.7.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.7.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.7.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.7.3.min.js", "https://cdn.holoviz.org/panel/1.7.5/dist/panel.min.js"];
+  const js_urls = ["https://cdn.holoviz.org/panel/1.8.1/dist/bundled/reactiveesm/es-module-shims@^1.10.0/dist/es-module-shims.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-3.8.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.8.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.8.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.8.0.min.js", "https://cdn.holoviz.org/panel/1.8.1/dist/panel.min.js"];
   const js_modules = [];
   const js_exports = {};
   const css_urls = [];
@@ -942,12 +942,12 @@ if (window.Jupyter !== undefined) {
 </script>
 </div>
 <div class="cell-output cell-output-display">
-<div id="767986b4-7eb7-4d9d-87b4-4269b0396482">
-  <div id="cca44a04-3502-4f0e-ab92-d7ad6bfc475f" data-root-id="767986b4-7eb7-4d9d-87b4-4269b0396482" style="display: contents;"></div>
+<div id="2a968480-5b4c-45ea-905c-b4849fff8a82">
+  <div id="b923ad62-0e44-4271-8e84-6116eecdfa41" data-root-id="2a968480-5b4c-45ea-905c-b4849fff8a82" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"2e24b687-1de3-4f41-a7fc-a68de203aa1a":{"version":"3.7.3","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"767986b4-7eb7-4d9d-87b4-4269b0396482"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"87df082e-0c11-40f6-a46d-f2be08f46ea6","attributes":{"plot_id":"767986b4-7eb7-4d9d-87b4-4269b0396482","comm_id":"da2ab2458a2549068dd303189cdc40df","client_comm_id":"dafdb9cd4b044a3b983d620db65a146e"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"JSComponent1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"ReactComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"AnyWidgetComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"max_notifications","kind":"Any","default":5},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_rendered","kind":"Any","default":false},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]},{"type":"model","name":"holoviews.plotting.bokeh.raster.HoverModel","properties":[{"name":"xy","kind":"Any","default":null},{"name":"data","kind":"Any","default":null}]}]}};
-  var render_items = [{"docid":"2e24b687-1de3-4f41-a7fc-a68de203aa1a","roots":{"767986b4-7eb7-4d9d-87b4-4269b0396482":"cca44a04-3502-4f0e-ab92-d7ad6bfc475f"},"root_ids":["767986b4-7eb7-4d9d-87b4-4269b0396482"]}];
+  var docs_json = {"9015ace0-13fc-4291-972e-085bdde86e81":{"version":"3.8.0","title":"Bokeh Application","config":{"type":"object","name":"DocumentConfig","id":"d98e9af1-cf55-4129-9bc3-0c96f33f87d8","attributes":{"notifications":{"type":"object","name":"Notifications","id":"ff05a82b-12ba-48b5-b2c2-41b079399409"}}},"roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"2a968480-5b4c-45ea-905c-b4849fff8a82"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"31d328d5-f1f4-43e2-a01b-8f7fd8bf6b48","attributes":{"plot_id":"2a968480-5b4c-45ea-905c-b4849fff8a82","comm_id":"98b3b76db5704175b76da1110f1a246a","client_comm_id":"fae83eac2d8b4eb293d0781025575cdb"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"start","kind":"Any","default":0},{"name":"end","kind":"Any","default":100},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"JSComponent1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"ReactComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"AnyWidgetComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"max_notifications","kind":"Any","default":5},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_rendered","kind":"Any","default":false},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]},{"type":"model","name":"holoviews.plotting.bokeh.raster.HoverModel","properties":[{"name":"xy","kind":"Any","default":null},{"name":"data","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"9015ace0-13fc-4291-972e-085bdde86e81","roots":{"2a968480-5b4c-45ea-905c-b4849fff8a82":"b923ad62-0e44-4271-8e84-6116eecdfa41"},"root_ids":["2a968480-5b4c-45ea-905c-b4849fff8a82"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
@@ -1029,12 +1029,12 @@ if (window.Jupyter !== undefined) {
 
 </div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<div id="9d7c6bab-df6b-4412-a4c9-66fc1a6edad5">
-  <div id="bb0ea01d-c671-4580-8561-f596b6a11c89" data-root-id="9d7c6bab-df6b-4412-a4c9-66fc1a6edad5" style="display: contents;"></div>
+<div id="4292a98f-9629-4b84-ad12-9d3f580aafa1">
+  <div id="a7f141b2-26ad-4418-9436-5374cb21f19e" data-root-id="4292a98f-9629-4b84-ad12-9d3f580aafa1" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"0fb99273-e126-41b6-8b83-7240233e9469":{"version":"3.7.3","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"9d7c6bab-df6b-4412-a4c9-66fc1a6edad5","attributes":{"name":"Row00280","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"0dd60b9c-d170-46cc-8d78-4816b55e547b","attributes":{"url":"https://cdn.holoviz.org/panel/1.7.5/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"d1a7e011-491b-4c64-abee-874582db1c9d","attributes":{"url":"https://cdn.holoviz.org/panel/1.7.5/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"fa3b2f66-d25b-48ad-bcc9-4ae998757f4a","attributes":{"url":"https://cdn.holoviz.org/panel/1.7.5/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"057ae340-54db-485b-8945-3fdcbf0464a1","attributes":{"url":"https://cdn.holoviz.org/panel/1.7.5/dist/bundled/theme/native.css"}}],"min_width":700,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"b53df193-93f4-48f3-afed-d0008b6db1ce","attributes":{"name":"HSpacer00284","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"0dd60b9c-d170-46cc-8d78-4816b55e547b"},{"id":"fa3b2f66-d25b-48ad-bcc9-4ae998757f4a"},{"id":"057ae340-54db-485b-8945-3fdcbf0464a1"}],"min_width":0,"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"4eac3bf4-0f2b-46db-91eb-7967806133bd","attributes":{"width":700,"height":300,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"Range1d","id":"41c81f67-c488-4425-adfe-00a73277053e","attributes":{"name":"gdp_per_capita","tags":[[["gdp_per_capita",null]],[]],"start":1000.0,"end":110000.0,"reset_start":1000.0,"reset_end":110000.0}},"y_range":{"type":"object","name":"Range1d","id":"f4f495c5-0e32-4136-8fea-2c0d557049de","attributes":{"name":"life_satisfaction","tags":[[["life_satisfaction",null]],{"type":"map","entries":[["invert_yaxis",false],["autorange",false]]}],"start":4,"end":9,"reset_start":4,"reset_end":9}},"x_scale":{"type":"object","name":"LinearScale","id":"d949b8a0-b5c4-4a30-8c04-2ca473c851d2"},"y_scale":{"type":"object","name":"LinearScale","id":"f2f411f0-d420-432e-a58c-bab0178fee4f"},"title":{"type":"object","name":"Title","id":"715aa602-e1db-4871-ba0a-839ed42b1e71","attributes":{"text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"c878d2a4-1d95-4210-91bb-04de12326cd7","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"563fcfd4-4532-4c07-93f6-af4e4e43927c","attributes":{"selected":{"type":"object","name":"Selection","id":"6dd20075-9344-463a-a421-df1d9d9f3266","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"4eb1dc7a-5d21-490a-91d2-af6215e6bbe6"},"data":{"type":"map","entries":[["gdp_per_capita",{"type":"ndarray","array":{"type":"bytes","data":"cT0K1zvi6EBcj8L1gFnlQI/C9ShUleNAAAAAAADvwECF61G4fijlQK5H4Xp0DspA9ihcj4LDt0AUrkfhOtrQQArXo3BFculA7FG4HgXi0EDhehSuv37kQB+F61FgZeJAH4XrUZAE5ED2KFyPEqTRQLgehevx58dA9ihcj9LU6EDhehSu1xLpQBSuR+HqQeFA7FG4HqUq3UAzMzMzY7nfQM3MzMzMjtpAXI/C9UiZykBxPQrXI8HLQArXo3Ch5vhAcT0K16OYwUBxPQrXY0rlQK5H4XqcFuJAKVyPwmFE8kDXo3A9qmfIQClcj8JlrNJArkfhenSvwUCF61G43jvPQIXrUbgeP9RAuB6F65E+tkBI4XoULkLZQD0K16NIWehAXI/C9TSy80DD9Shcr27CQEjhehRWX+VAZmZmZqY/60A="},"shape":[40],"dtype":"float64","order":"little"}],["life_satisfaction",{"type":"ndarray","array":{"type":"bytes","data":"MzMzMzMzHUBmZmZmZmYcQJqZmZmZmRtAmpmZmZmZGUCamZmZmZkdQAAAAAAAABpAMzMzMzMzGUDNzMzMzMwaQGZmZmZmZh5AzczMzMzMFkBmZmZmZmYeQAAAAAAAABpAAAAAAAAAHECamZmZmZkVQGZmZmZmZhZAAAAAAAAAHkAAAAAAAAAcQM3MzMzMzBxAAAAAAAAAGECamZmZmZkXQJqZmZmZmRdAmpmZmZmZF0CamZmZmZkXQJqZmZmZmRtAAAAAAAAAGkCamZmZmZkdQDMzMzMzMx1AZmZmZmZmHkBmZmZmZmYYQJqZmZmZmRVAMzMzMzMzF0DNzMzMzMwYQJqZmZmZmRdAzczMzMzMEkAzMzMzMzMZQDMzMzMzMx1AAAAAAAAAHkAAAAAAAAAWQDMzMzMzMxtAmpmZmZmZG0A="},"shape":[40],"dtype":"float64","order":"little"}],["Country",["Australia","Austria","Belgium","Brazil","Canada","Chile","Colombia","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Israel","Italy","Japan","Korea","Latvia","Lithuania","Luxembourg","Mexico","Netherlands","New Zealand","Norway","Poland","Portugal","Russia","Slovak Republic","Slovenia","South Africa","Spain","Sweden","Switzerland","Turkey","United Kingdom","United States"]]]}}},"view":{"type":"object","name":"CDSView","id":"083dac39-4838-496f-9403-a3d2abfd1615","attributes":{"filter":{"type":"object","name":"AllIndices","id":"ef9d8c3d-a98d-490f-95b6-ad1518189d16"}}},"glyph":{"type":"object","name":"Scatter","id":"b839f758-6cf4-4d44-8804-dde2c871f157","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"line_color":{"type":"value","value":"#30a2da"},"fill_color":{"type":"value","value":"#30a2da"},"hatch_color":{"type":"value","value":"#30a2da"}}},"selection_glyph":{"type":"object","name":"Scatter","id":"050d3bd8-832d-49c7-a99f-9b654ca25148","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"angle":{"type":"value","value":0.0},"line_color":{"type":"value","value":"#30a2da"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0},"marker":{"type":"value","value":"circle"}}},"nonselection_glyph":{"type":"object","name":"Scatter","id":"0ef5f523-1558-4f3e-aa7a-2ad933939381","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"line_color":{"type":"value","value":"#30a2da"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Scatter","id":"98f654d5-9ab4-407e-9e51-1a62dd8ba8e1","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"line_color":{"type":"value","value":"#30a2da"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"d33e847e-952b-454b-8625-ea936472a372","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"c226e0e4-e9e5-4627-a302-0a76fd25c910","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"1a075c88-9aa0-436d-a0d9-423c3d836cda","attributes":{"tags":["hv_created"],"renderers":[{"id":"c878d2a4-1d95-4210-91bb-04de12326cd7"}],"tooltips":[["gdp_per_capita","@{gdp_per_capita}"],["life_satisfaction","@{life_satisfaction}"],["Country","@{Country}"]]}},{"type":"object","name":"SaveTool","id":"c106bb5c-bc3e-4485-872f-5e6eb0d2831c"},{"type":"object","name":"PanTool","id":"0d22feb3-cb75-4fde-82d9-29048877fb1a"},{"type":"object","name":"BoxZoomTool","id":"766ec4be-ee2f-40c2-a501-c345b011a82d","attributes":{"dimensions":"both","overlay":{"type":"object","name":"BoxAnnotation","id":"c1862cdf-9c80-45a0-8947-3ee1f946ae8a","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"3f5d550e-4dab-4326-a85a-30282c506446","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"43f46b00-e2d2-430a-99f1-7216dd074161","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"c4af2586-2928-4c00-a777-98656676fa4d"}],"active_drag":{"id":"0d22feb3-cb75-4fde-82d9-29048877fb1a"},"active_scroll":{"id":"c226e0e4-e9e5-4627-a302-0a76fd25c910"}}},"left":[{"type":"object","name":"LinearAxis","id":"c8544699-a6a3-4363-94a7-9be4b6d084d3","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"488b3691-61af-4d5d-a44e-5ca6437d93a8","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"ceb048a4-7937-4618-8236-c57b1ec4ee97"},"axis_label":"life_satisfaction","major_label_policy":{"type":"object","name":"AllLabels","id":"0a972607-bb5d-4c2d-bd0e-c68c3ca25221"}}}],"below":[{"type":"object","name":"LinearAxis","id":"7a3c3bd6-031a-4236-8c66-c384fa780723","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"1c2f6f00-8fcf-420e-b190-44164a4fb24f","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"182185d8-70b3-44a6-a7a4-c05bf72c59d5"},"axis_label":"gdp_per_capita","major_label_policy":{"type":"object","name":"AllLabels","id":"55011e14-7000-4177-b6a7-96b08a1e7319"}}}],"center":[{"type":"object","name":"Grid","id":"209b6c22-712c-46ab-8305-368cd297a397","attributes":{"axis":{"id":"7a3c3bd6-031a-4236-8c66-c384fa780723"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"b2937e90-7ac1-40a2-9f2e-c7f248d93927","attributes":{"dimension":1,"axis":{"id":"c8544699-a6a3-4363-94a7-9be4b6d084d3"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"b91394d3-c79e-4f31-b781-7de634d8478b","attributes":{"name":"HSpacer00285","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"0dd60b9c-d170-46cc-8d78-4816b55e547b"},{"id":"fa3b2f66-d25b-48ad-bcc9-4ae998757f4a"},{"id":"057ae340-54db-485b-8945-3fdcbf0464a1"}],"min_width":0,"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"JSComponent1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"ReactComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"AnyWidgetComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"max_notifications","kind":"Any","default":5},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_rendered","kind":"Any","default":false},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]},{"type":"model","name":"holoviews.plotting.bokeh.raster.HoverModel","properties":[{"name":"xy","kind":"Any","default":null},{"name":"data","kind":"Any","default":null}]}]}};
-  var render_items = [{"docid":"0fb99273-e126-41b6-8b83-7240233e9469","roots":{"9d7c6bab-df6b-4412-a4c9-66fc1a6edad5":"bb0ea01d-c671-4580-8561-f596b6a11c89"},"root_ids":["9d7c6bab-df6b-4412-a4c9-66fc1a6edad5"]}];
+  var docs_json = {"678eb215-7f72-499c-854a-3834141162e4":{"version":"3.8.0","title":"Bokeh Application","config":{"type":"object","name":"DocumentConfig","id":"4e2cbadb-4bb5-4a12-b8e9-ecda9668e2c6","attributes":{"notifications":{"type":"object","name":"Notifications","id":"2fa654fc-4d49-4ad1-838a-b7af406794da"}}},"roots":[{"type":"object","name":"Row","id":"4292a98f-9629-4b84-ad12-9d3f580aafa1","attributes":{"name":"Row00280","tags":["embedded"],"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 300px));\n  -webkit-mask-size: auto calc(min(50%, 300px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"21eb50b6-769b-4025-9753-ce45376fbae4","attributes":{"url":"https://cdn.holoviz.org/panel/1.8.1/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"2ffdc22e-dc89-4c17-8155-df7fee56ba02","attributes":{"url":"https://cdn.holoviz.org/panel/1.8.1/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"f9ce17a2-d654-4d15-98e1-ab424e6dcd2d","attributes":{"url":"https://cdn.holoviz.org/panel/1.8.1/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"e61551fd-cbd5-42b5-b41e-ef100db90be6","attributes":{"url":"https://cdn.holoviz.org/panel/1.8.1/dist/bundled/theme/native.css"}}],"min_width":700,"margin":0,"sizing_mode":"stretch_width","align":"start","children":[{"type":"object","name":"Spacer","id":"01d467dd-f55e-4221-aba5-c76d742ae98b","attributes":{"name":"HSpacer00284","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 300px));\n  -webkit-mask-size: auto calc(min(50%, 300px));\n}",{"id":"21eb50b6-769b-4025-9753-ce45376fbae4"},{"id":"f9ce17a2-d654-4d15-98e1-ab424e6dcd2d"},{"id":"e61551fd-cbd5-42b5-b41e-ef100db90be6"}],"min_width":0,"margin":0,"sizing_mode":"stretch_width","align":"start"}},{"type":"object","name":"Figure","id":"9563be68-0d64-4c5e-a839-236f66c97274","attributes":{"width":700,"height":300,"margin":[5,10],"sizing_mode":"fixed","align":"start","x_range":{"type":"object","name":"Range1d","id":"8bde433b-68e5-4d88-b228-2392fcd390bc","attributes":{"name":"gdp_per_capita","tags":[[["gdp_per_capita",null]],[]],"start":1000.0,"end":110000.0,"reset_start":1000.0,"reset_end":110000.0}},"y_range":{"type":"object","name":"Range1d","id":"5001c895-ebbf-4bba-a758-3bf0f163b0de","attributes":{"name":"life_satisfaction","tags":[[["life_satisfaction",null]],{"type":"map","entries":[["invert_yaxis",false],["autorange",false]]}],"start":4,"end":9,"reset_start":4,"reset_end":9}},"x_scale":{"type":"object","name":"LinearScale","id":"37294941-59f9-4ad2-b661-6483c9e1c4c2"},"y_scale":{"type":"object","name":"LinearScale","id":"93bd0358-9339-40fb-bbea-e32f85fe3ba5"},"title":{"type":"object","name":"Title","id":"2f727553-449d-4a5a-8f2b-edb7b56a8d8e","attributes":{"text_color":"black","text_font_size":"12pt"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"e0e7d817-063d-445d-a6c3-6c3bfbef6b1f","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"5121d061-e9a9-4872-8c3f-9a5e785f4c2c","attributes":{"selected":{"type":"object","name":"Selection","id":"2b5963a4-8032-4b39-94e7-b39b30748112","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"a96d5c4a-da8c-49f0-a56d-31cf1ab04975"},"data":{"type":"map","entries":[["gdp_per_capita",{"type":"ndarray","array":{"type":"bytes","data":"H4sIAAEAAAAC/yu05bpu/eiFQ0z/oa8NkU8dgJRGyNTHDgwg8P6AQ+vrwB11Gk8d1rk/rCrhO+XwTSOmv+nwdgcRoIDVrQsOXNcXF7gWvXR4E7hDjvXRBYeHVSLr9tc9cZAHakxIfQSmJ7A8AesTWnLRYYdc6+uPz4+D+ZeuvACrvy70EmzeK8eHYHOWat11MAaC5J33Hc6eAYK+W2D3ecw85VAIdK/ywdNgexc++wHmL55xEEwne0HcOUfskYMmUEOiyycHoDLbVeknwPzUNZcg/lh/EOyve9bnwbSc/RWwuybabXPwADpIz+mmA8hYj0hIuJhs+uxw+KtGzPq8Q2D5sPinDmlAsMz+tQMA8Hlb6EABAAA="},"shape":[40],"dtype":"float64","order":"little"}],["life_satisfaction",{"type":"ndarray","array":{"type":"bytes","data":"H4sIAAEAAAAC/4VP2xGAMAhzBu/su12CBZjGnepMupPXEvD6ZX5yIUCAaKDyOVH46gMZHMGVt4nEs50iP/dAwlyDdqa1X1j3HvAd6s18mS/QAf3+h7Pl6J20/NPAwfLF98j7ckTv9p/uWe90qGfLfwE0N8ORQAEAAA=="},"shape":[40],"dtype":"float64","order":"little"}],["Country",["Australia","Austria","Belgium","Brazil","Canada","Chile","Colombia","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Israel","Italy","Japan","Korea","Latvia","Lithuania","Luxembourg","Mexico","Netherlands","New Zealand","Norway","Poland","Portugal","Russia","Slovak Republic","Slovenia","South Africa","Spain","Sweden","Switzerland","Turkey","United Kingdom","United States"]]]}}},"view":{"type":"object","name":"CDSView","id":"b48e3979-5951-4612-8fa6-590a1e27d361","attributes":{"filter":{"type":"object","name":"AllIndices","id":"7ee6a252-f075-478e-8409-0d1826ba65bc"}}},"glyph":{"type":"object","name":"Scatter","id":"c2f88b42-351e-4b5c-9a02-d327593ecb66","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"line_color":{"type":"value","value":"#30a2da"},"fill_color":{"type":"value","value":"#30a2da"},"hatch_color":{"type":"value","value":"#30a2da"}}},"selection_glyph":{"type":"object","name":"Scatter","id":"32f4b766-d814-4154-b351-ca032cde23ca","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"angle":{"type":"value","value":0.0},"line_color":{"type":"value","value":"#30a2da"},"line_alpha":{"type":"value","value":1.0},"line_width":{"type":"value","value":1},"line_join":{"type":"value","value":"bevel"},"line_cap":{"type":"value","value":"butt"},"line_dash":{"type":"value","value":[]},"line_dash_offset":{"type":"value","value":0},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":1.0},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":1.0},"hatch_scale":{"type":"value","value":12.0},"hatch_pattern":{"type":"value","value":null},"hatch_weight":{"type":"value","value":1.0},"marker":{"type":"value","value":"circle"}}},"nonselection_glyph":{"type":"object","name":"Scatter","id":"6ef72df2-7a1b-4a84-a58d-3a608b37898f","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"line_color":{"type":"value","value":"#30a2da"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Scatter","id":"8a0b20ee-8711-4f5d-a1f7-d2fb7684fe35","attributes":{"tags":["apply_ranges"],"x":{"type":"field","field":"gdp_per_capita"},"y":{"type":"field","field":"life_satisfaction"},"size":{"type":"value","value":5.477225575051661},"line_color":{"type":"value","value":"#30a2da"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#30a2da"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#30a2da"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"70764d28-f0aa-44b9-a020-e1b7498ffe48","attributes":{"tools":[{"type":"object","name":"WheelZoomTool","id":"ab219c51-fdd4-4441-a262-3e28c0be5c84","attributes":{"tags":["hv_created"],"renderers":"auto","zoom_together":"none"}},{"type":"object","name":"HoverTool","id":"c7ae2dde-e2d3-49f7-a9ed-0f1bffbacfa7","attributes":{"tags":["hv_created"],"renderers":[{"id":"e0e7d817-063d-445d-a6c3-6c3bfbef6b1f"}],"tooltips":[["gdp_per_capita","@{gdp_per_capita}"],["life_satisfaction","@{life_satisfaction}"],["Country","@{Country}"]],"sort_by":null}},{"type":"object","name":"SaveTool","id":"49405d9d-3657-4a64-a5d3-949bd0df4775"},{"type":"object","name":"PanTool","id":"0dbbbf87-c061-457a-8b98-988414d2ae4c"},{"type":"object","name":"BoxZoomTool","id":"03415862-edfd-46e6-aae3-39381e3d3dc7","attributes":{"dimensions":"both","overlay":{"type":"object","name":"BoxAnnotation","id":"7355fdcc-9529-4fea-8dd8-da924102e6b3","attributes":{"syncable":false,"line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","handles":{"type":"object","name":"BoxInteractionHandles","id":"28811f3f-bc8e-4132-a0a3-fe6affd0a3c6","attributes":{"all":{"type":"object","name":"AreaVisuals","id":"08378598-e2f1-4f70-8c58-17786a29fe54","attributes":{"fill_color":"white","hover_fill_color":"lightgray"}}}}}}}},{"type":"object","name":"ResetTool","id":"5286835d-3623-4cd1-81be-a48f263d48a7"}],"active_drag":{"id":"0dbbbf87-c061-457a-8b98-988414d2ae4c"},"active_scroll":{"id":"ab219c51-fdd4-4441-a262-3e28c0be5c84"}}},"left":[{"type":"object","name":"LinearAxis","id":"630459b4-c2a1-4457-b117-c6872fe0b653","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"50da937d-17eb-43b8-8f3b-325f18f7404a","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"66bfe49b-d9d1-4d1e-9ff9-0afaf82685ea"},"axis_label":"life_satisfaction","major_label_policy":{"type":"object","name":"AllLabels","id":"5928e4f2-a303-448d-9228-a224de6e5a12"}}}],"below":[{"type":"object","name":"LinearAxis","id":"a60aec41-4f94-464b-8f0b-da695e8d6877","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"48d3bc48-875a-4587-b9e3-f301cf0e335f","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"4ef98896-459d-47b2-a0f9-9b53c92f4024"},"axis_label":"gdp_per_capita","major_label_policy":{"type":"object","name":"AllLabels","id":"b3bd5f2d-fa3c-4168-b168-8883c0d12d38"}}}],"center":[{"type":"object","name":"Grid","id":"bafd74f1-ffd3-4d43-a371-c5954c63adb7","attributes":{"axis":{"id":"a60aec41-4f94-464b-8f0b-da695e8d6877"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"548a3e14-e20d-490d-811e-755f5730f340","attributes":{"dimension":1,"axis":{"id":"630459b4-c2a1-4457-b117-c6872fe0b653"},"grid_line_color":null}}],"min_border_top":10,"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"output_backend":"webgl"}},{"type":"object","name":"Spacer","id":"ebcb693c-0b21-43fb-ba46-99c7043afba6","attributes":{"name":"HSpacer00285","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 300px));\n  -webkit-mask-size: auto calc(min(50%, 300px));\n}",{"id":"21eb50b6-769b-4025-9753-ce45376fbae4"},{"id":"f9ce17a2-d654-4d15-98e1-ab424e6dcd2d"},{"id":"e61551fd-cbd5-42b5-b41e-ef100db90be6"}],"min_width":0,"margin":0,"sizing_mode":"stretch_width","align":"start"}}]}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"start","kind":"Any","default":0},{"name":"end","kind":"Any","default":100},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"JSComponent1","properties":[{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"ReactComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"AnyWidgetComponent1","properties":[{"name":"use_shadow_dom","kind":"Any","default":true},{"name":"esm_constants","kind":"Any","default":{"type":"map"}}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"max_notifications","kind":"Any","default":5},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_rendered","kind":"Any","default":false},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]},{"type":"model","name":"holoviews.plotting.bokeh.raster.HoverModel","properties":[{"name":"xy","kind":"Any","default":null},{"name":"data","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"678eb215-7f72-499c-854a-3834141162e4","roots":{"4292a98f-9629-4b84-ad12-9d3f580aafa1":"a7f141b2-26ad-4418-9436-5374cb21f19e"},"root_ids":["4292a98f-9629-4b84-ad12-9d3f580aafa1"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
@@ -1108,19 +1108,19 @@ if (window.Jupyter !== undefined) {
 <p>A simple model with only two parameters</p>
 <p>Use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a> model object from scikit-learn.</p>
 <p>This is not <em>really</em> machine learning — it simply finds the <a href="https://en.wikipedia.org/wiki/Ordinary_least_squares">Ordinary Least Squares</a> fit to the data.</p>
-<div id="cell-32" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="6">
+<div id="cell-32" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="11">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-33" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="7">
+<div id="cell-33" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="12">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -1680,7 +1680,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script>
 </div>
 </div>
-<div id="cell-34" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="8">
+<div id="cell-34" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="13">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Our input features (in this case we only have 1)</span></span>
@@ -1697,21 +1697,21 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 (40, 1)</code></pre>
 </div>
 </div>
-<div id="cell-35" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="9">
+<div id="cell-35" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="14">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>(40, 1)</code></pre>
 </div>
 </div>
-<div id="cell-36" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="10">
+<div id="cell-36" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="15">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>(40,)</code></pre>
 </div>
 </div>
@@ -1731,12 +1731,12 @@ Caution
 </div>
 <p>Now, fit the model using the <code>model.fit(X, y)</code> syntax.</p>
 <p>This will “train” our model, using an optimization algorithm to identify the bestfit parameters.</p>
-<div id="cell-39" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="11">
+<div id="cell-39" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="16">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <style>#sk-container-id-2 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -2296,16 +2296,16 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script>
 </div>
 </div>
-<div id="cell-40" class="cell" data-execution_count="12">
+<div id="cell-40" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>array([2.46904428e-05])</code></pre>
 </div>
 </div>
-<div id="cell-41" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="13">
+<div id="cell-41" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="18">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>intercept <span class="op">=</span> model.intercept_</span>
@@ -2333,13 +2333,13 @@ bestfit slope = 2.47e-05</code></pre>
 <li>In the case of the linear model, the score is the R-squared coefficient of the fit</li>
 </ul>
 <p><strong>Note:</strong> you must call the <code>fit()</code> function before calling the <code>score()</code> function.</p>
-<div id="cell-45" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="14">
+<div id="cell-45" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="19">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Rsq <span class="op">=</span> model.score(X, y)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Rsq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>0.5191537823628938</code></pre>
 </div>
 </div>
@@ -2347,7 +2347,7 @@ bestfit slope = 2.47e-05</code></pre>
 <section id="lets-plot-the-data-and-the-predicted-values" class="level3" data-number="13.5">
 <h3 data-number="13.5" class="anchored" data-anchor-id="lets-plot-the-data-and-the-predicted-values"><span class="header-section-number">13.5</span> Let’s plot the data and the predicted values</h3>
 <p>Use the <code>predict()</code> function to predict new values.</p>
-<div id="cell-47" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="15">
+<div id="cell-47" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="20">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The values we want to predict (ranging from our min to max GDP per capita)</span></span>
@@ -2404,13 +2404,13 @@ bestfit slope = 2.47e-05</code></pre>
 <section id="we-didnt-scale-our-input-data-features" class="level4" data-number="13.7.2">
 <h4 data-number="13.7.2" class="anchored" data-anchor-id="we-didnt-scale-our-input-data-features"><span class="header-section-number">13.7.2</span> 2. We didn’t scale our input data features!</h4>
 <p>Scikit learn provides a utility function to split our input data:</p>
-<div id="cell-53" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="16">
+<div id="cell-53" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="23">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-54" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="17">
+<div id="cell-54" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="24">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I'll use a 70/30% split</span></span>
@@ -2418,7 +2418,7 @@ bestfit slope = 2.47e-05</code></pre>
 </details>
 </div>
 <p>These are new DataFrame objects, with lengths determined by the split percentage:</p>
-<div id="cell-56" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="18">
+<div id="cell-56" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="25">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"size of full dataset = "</span>, <span class="bu">len</span>(data))</span>
@@ -2432,7 +2432,7 @@ size of test dataset =  12</code></pre>
 </div>
 </div>
 <p>Now, make our feature and label arrays:</p>
-<div id="cell-58" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="19">
+<div id="cell-58" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="26">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Features</span></span>
@@ -2448,19 +2448,19 @@ size of test dataset =  12</code></pre>
 </details>
 </div>
 <p>Use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"><code>StandardScaler</code></a> to scale the GDP per capita:</p>
-<div id="cell-60" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="20">
+<div id="cell-60" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="27">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-61" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="21">
+<div id="cell-61" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="28">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="23">
+<div id="cell-62" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="29">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale the training features</span></span>
@@ -2471,12 +2471,12 @@ size of test dataset =  12</code></pre>
 </details>
 </div>
 <p>Now, let’s fit on the <em>training set</em> and evaluate on the <em>test set</em></p>
-<div id="cell-64" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="24">
+<div id="cell-64" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="30">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>model.fit(X_train_scaled, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="24">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <style>#sk-container-id-3 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -3036,12 +3036,12 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script>
 </div>
 </div>
-<div id="cell-65" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="25">
+<div id="cell-65" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="31">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>model.score(X_test_scaled, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>0.35959585147159556</code></pre>
 </div>
 </div>
@@ -3052,7 +3052,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <section id="can-we-do-better-lets-do-some-feature-engineering" class="level3" data-number="13.8">
 <h3 data-number="13.8" class="anchored" data-anchor-id="can-we-do-better-lets-do-some-feature-engineering"><span class="header-section-number">13.8</span> Can we do better? Let’s do some feature engineering…</h3>
 <p>We’ll use scikit learn’s <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"><code>PolynomialFeatures</code></a> to add new polynomial features from the GDP per capita.</p>
-<div id="cell-68" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="26">
+<div id="cell-68" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="32">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3060,7 +3060,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </div>
 <section id="lets-try-up-to-degree-3-polynomials-x3" class="level4" data-number="13.8.1">
 <h4 data-number="13.8.1" class="anchored" data-anchor-id="lets-try-up-to-degree-3-polynomials-x3"><span class="header-section-number">13.8.1</span> Let’s try up to degree 3 polynomials (<span class="math inline">\(x^3\)</span>)</h4>
-<div id="cell-70" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="27">
+<div id="cell-70" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="33">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3074,7 +3074,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <li>Scale our features</li>
 <li>Create the polynomial features</li>
 </ol>
-<div id="cell-72" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="28">
+<div id="cell-72" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="34">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Training</span></span>
@@ -3084,21 +3084,21 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>X_test_scaled_poly <span class="op">=</span> poly.fit_transform(scaler.fit_transform(X_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-73" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="29">
+<div id="cell-73" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="35">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>X_train_scaled_poly.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="29">
+<div class="cell-output cell-output-display" data-execution_count="35">
 <pre><code>(28, 4)</code></pre>
 </div>
 </div>
-<div id="cell-74" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="30">
+<div id="cell-74" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="36">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>model.fit(X_train_scaled_poly, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="36">
 <style>#sk-container-id-4 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -3658,12 +3658,12 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script>
 </div>
 </div>
-<div id="cell-75" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="32">
+<div id="cell-75" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="37">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model.score(X_test_scaled_poly, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="37">
 <pre><code>0.5597457659851047</code></pre>
 </div>
 </div>
@@ -3672,20 +3672,20 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <section id="pipelines-making-multiple-transformations-much-easier" class="level3" data-number="13.10">
 <h3 data-number="13.10" class="anchored" data-anchor-id="pipelines-making-multiple-transformations-much-easier"><span class="header-section-number">13.10</span> Pipelines: making multiple transformations <em>much</em> easier</h3>
 <p>We can turn our preprocessing steps into a <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline"><code>Pipeline</code></a> object using the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline"><code>make_pipeline()</code></a> function.</p>
-<div id="cell-78" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="33">
+<div id="cell-78" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="38">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> make_pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-79" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="34">
+<div id="cell-79" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="39">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> make_pipeline(StandardScaler(), PolynomialFeatures(degree<span class="op">=</span><span class="dv">3</span>))</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>pipe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="39">
 <style>#sk-container-id-5 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -4301,13 +4301,13 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </div>
 </div>
 <p>Individual steps can be accessed via their names in a dict-like fashion:</p>
-<div id="cell-81" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="35">
+<div id="cell-81" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="40">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>pipe[<span class="st">'standardscaler'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <style>#sk-container-id-6 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -4857,13 +4857,13 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script>
 </div>
 </div>
-<div id="cell-82" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="36">
+<div id="cell-82" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="41">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>pipe[<span class="st">'polynomialfeatures'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <style>#sk-container-id-7 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -5419,13 +5419,13 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </div>
 </div>
 <p>Let’s apply this pipeline to our predicted GDP values for our plot:</p>
-<div id="cell-84" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="37">
+<div id="cell-84" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="42">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(pipe.fit_transform(X_pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-85" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="38">
+<div id="cell-85" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="43">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> plt.style.context(<span class="st">"fivethirtyeight"</span>):</span>
@@ -5463,7 +5463,7 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </section>
 <section id="how-about-large-polynomial-degrees" class="level3" data-number="13.11">
 <h3 data-number="13.11" class="anchored" data-anchor-id="how-about-large-polynomial-degrees"><span class="header-section-number">13.11</span> How about large polynomial degrees?</h3>
-<div id="cell-88" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="39">
+<div id="cell-88" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="44">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> plt.style.context(<span class="st">"fivethirtyeight"</span>):</span>
@@ -5512,16 +5512,16 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>degree = 3
-Training Score = 0.6458898101593084
+Training Score = 0.6458898101593082
 Test Score = 0.5597457659851047
 
 degree = 5
-Training Score = 0.684620618656437
-Test Score = -3.9465752545551585
+Training Score = 0.6846206186564369
+Test Score = -3.9465752545551185
 
 degree = 10
-Training Score = 0.8020213670053927
-Test Score = -26330.208553806227
+Training Score = 0.8020213670053926
+Test Score = -26330.208549340423
 </code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -5558,7 +5558,7 @@ Test Score = -26330.208553806227
 </ul>
 <p><strong>Important</strong> - Baseline: linear model - This uses <code>LinearModel</code> and scales input features with <code>StandardScaler</code> - Ridge regression: try multiple regularization strength values - Use a pipeline object to apply both a <code>StandardScaler</code> and <code>PolynomialFeatures(degree=3)</code> pre-processing to features</p>
 <p>Set up a grid of GDP per capita points to make predictions for:</p>
-<div id="cell-93" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="41">
+<div id="cell-93" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;fragment&quot;}" data-execution_count="45">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The values we want to predict (ranging from our min to max GDP per capita)</span></span>
@@ -5568,7 +5568,7 @@ Test Score = -26330.208553806227
 <span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>X_pred <span class="op">=</span> gdp_pred[:, np.newaxis]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cell-94" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="42">
+<div id="cell-94" class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;slide&quot;}" data-execution_count="46">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -5653,11 +5653,11 @@ Training Score = 0.4638100579740343
 Test Score = 0.35959585147159556
 
 alpha = 0
-Training Score = 0.6458898101593084
-Test Score = 0.5597457659851044
+Training Score = 0.6458898101593085
+Test Score = 0.5597457659851052
 
 alpha = 10
-Training Score = 0.5120282691427858
+Training Score = 0.5120282691427855
 Test Score = 0.38335642103788325
 
 alpha = 100
