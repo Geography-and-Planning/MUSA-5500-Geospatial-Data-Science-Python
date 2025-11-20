@@ -199,7 +199,7 @@ detailsMd: `
 **Due:** Monday, Nov 24 at 11:59 PM
 ### Description
 ---
-Lectures 12B and 13A will cover predictive modeling of housing prices in Philadelphia. In this assignment,
+Lectures 12B and 13A, B will cover predictive modeling of housing prices in Philadelphia. In this assignment,
 we'll extend that analysis in this section by:
 
 - Optimizing our hyperparameters during the modeling process using cross-validation and a grid search

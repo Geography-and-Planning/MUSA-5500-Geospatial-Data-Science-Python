@@ -58,7 +58,7 @@ This course will provide students with the knowledge and tools to turn data into
 - #### Week 13. Machine Learning (II)
   - Predictive Modeling (II) ([link](public/labs/week-13-machine-learning-scikit/lecture-13B.ipynb))
   - Predictive Modeling (III) ([link](public/labs/week-14-predictive-modeling/lecture-14A.ipynb))
-
+  - Deep neural networks ([link](public/labs/week-14-predictive-modeling/deep-learning.ipynb))
 
 - #### Week 14. Thanksgiving break — No class
 
