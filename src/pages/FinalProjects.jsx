@@ -77,13 +77,15 @@ export default function FinalProject() {
         <div className="dates-grid">
           <div className="date-card">
             <div className="date-label">Proposal</div>
-            <div className="date-value">Thu, Nov 6 (or earlier)</div>
+            <div className="date-value">Thusday, Nov 6 (or earlier)</div>
             <p className="muted">Proposals must be approved in writing before you proceed.</p>
           </div>
           <div className="date-card">
-            <div className="date-label">Final Project</div>
-            <div className="date-value">Sunday, Dec 14 @ 11:59 PM</div>
-            <p className="muted">Dates are tentative and subject to change.</p>
+            <div className="date-label">Final Project Report</div>
+            <div className="date-value">Friday, Dec 12 @ 11:59 PM</div>
+            <p className="muted">A report (~3 pages) summarizing your work, sturctured as introduction, 
+              methodology, results, and conclusion.
+            </p>
           </div>
         </div>
       </section>
@@ -100,6 +102,13 @@ export default function FinalProject() {
             <strong>All project materials</strong> (code, notebooks, spreadsheets, datasets) in your own GitHub repo submited to Canvas.
             Include a <code>README</code> with the URL of your website.
           </li>
+          <li>
+            <strong>Final project presentation</strong>, all groups/people will present their work in the last week of class. 
+            Prepare a ~10 minutes presentation summarizing your project. Eeach group/person will have about 1~2 minutes for Q&A 
+            after the presentation.
+          </li>
+
+
         </ol>
         <div className="callout">
           <strong>Important:</strong> Put your website URL in the submission on Canvas.
