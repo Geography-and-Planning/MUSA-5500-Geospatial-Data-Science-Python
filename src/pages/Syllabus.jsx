@@ -88,7 +88,7 @@ export default function Syllabus() {
         <div>
           <h2>Grading</h2>
           <ul>
-            <li>Homework: 50% (lowest assignment dropped)</li>
+            <li>Homework: 50%</li>
             <li>Final Project: 45%</li>
             <li>Participation: 5% (presence in the class)</li>
           </ul>
